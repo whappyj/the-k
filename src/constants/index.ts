@@ -26,9 +26,26 @@ export const BASE_MATERIAL_PRICES: Record<string, number> = {
   '달빛의 정기': 140000,
   '최고급 다이아몬드': 200000,
   '최고급 사파이어': 100000,
-  '최고급 에메랄드': 5000,
-  '최고급 루비': 5000,
+  '최고급 에메랄드': 10000,
+  '최고급 루비': 10000,
 };
+
+/** 신성한 유니콘의 뿔만 A/B 기본 단가가 서로 달라(130,000 / 140,000) 별도로 둔다. */
+export const BASE_KEY_MATERIAL_PRICE_A = 130000 as const;
+
+/** 달의 장궁 기본 재료의 1개 제작 필요수량. */
+export const BASE_MATERIAL_QTY: Record<string, number> = {
+  '신성한 유니콘의 뿔': 300,
+  '달빛의 정기': 3,
+  '최고급 다이아몬드': 5,
+  '최고급 사파이어': 5,
+  '최고급 에메랄드': 5,
+  '최고급 루비': 5,
+};
+
+/** 최초 실행(저장된 데이터가 전혀 없을 때) 자동 적용되는 기본 환율. */
+export const BASE_RATE_A = 900 as const;
+export const BASE_RATE_B = 1000 as const;
 
 export const DEFAULT_HUNT_AREAS = ['버땅', '타땅', '상아탑', '잊섬'] as const;
 

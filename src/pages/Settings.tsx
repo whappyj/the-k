@@ -3,7 +3,7 @@ import { DataManagement } from '@/components/settings/DataManagement';
 import { JpgShortcuts } from '@/components/settings/JpgShortcuts';
 import { FutureTabs } from '@/components/settings/FutureTabs';
 import { PreferencesForm } from '@/components/settings/PreferencesForm';
-import { SettingsTabs } from '@/components/settings/SettingsTabs';
+import { SettingsTabs, SettingsTabIcons } from '@/components/settings/SettingsTabs';
 import { EstimateConditionSettings } from '@/components/settings/EstimateConditionSettings';
 import { MaterialEditor } from '@/components/estimate/MaterialEditor';
 import { QtySelectCards } from '@/components/estimate/QtySelectCards';
@@ -12,6 +12,8 @@ import { useToast } from '@/hooks/useToast';
 import { useConfirm } from '@/hooks/useConfirm';
 import { APP_VERSION } from '@/constants';
 import type { EstimateMaterial } from '@/types';
+
+const { SettingsIcon, GitCompareArrows, Layers, Grid3X3, MonitorCog, Database } = SettingsTabIcons;
 
 /**
  * pages/Settings.tsx
@@ -41,16 +43,24 @@ export function SettingsPage() {
     const key = group === 'A' ? 'priceA' : 'priceB';
     patchEstimate({ materials: estimate.materials.map((m) => (m.id === keyMaterial.id ? { ...m, [key]: value } : m)) });
   };
+  /** 드롭다운으로 핵심재료를 지정 — 재료 목록의 ★ 버튼과 동일하게 배열 맨 앞으로 옮길 뿐,
+   *  새 필드를 추가하지 않으므로 데이터 구조는 그대로다. */
+  const handleKeyMaterialSelect = (materialId: string) => {
+    const target = estimate.materials.find((m) => m.id === materialId);
+    if (!target) return;
+    patchEstimate({ materials: [target, ...estimate.materials.filter((m) => m.id !== materialId)] });
+  };
 
   return (
     <div id="page-settings">
-      <PageHeader title="설정" subtitle="비교 조건, 재료, 표시 방식, 데이터를 한 곳에서 관리합니다." />
+      <PageHeader title="설정" subtitle="계산식과 재료 정보를 설정합니다." />
 
       <SettingsTabs
         tabs={[
           {
             id: 'basic',
             label: '기본 설정',
+            icon: SettingsIcon,
             content: (
               <div className="flex flex-col gap-5">
                 <JpgShortcuts />
@@ -60,7 +70,8 @@ export function SettingsPage() {
           },
           {
             id: 'condition',
-            label: '비교 조건',
+            label: '비교 기준 (A/B)',
+            icon: GitCompareArrows,
             content: (
               <EstimateConditionSettings
                 materials={estimate.materials}
@@ -68,29 +79,39 @@ export function SettingsPage() {
                 rateB={estimate.rateB}
                 onRateChange={handleRateChange}
                 onKeyPriceChange={handleKeyPriceChange}
+                onKeyMaterialSelect={handleKeyMaterialSelect}
               />
             ),
           },
           {
             id: 'materials',
             label: '재료 목록',
+            icon: Layers,
             content: (
-              <MaterialEditor materials={estimate.materials} onChange={handleMaterialsChange} onReset={handleResetMaterials} onApplyToast={() => showToast('재료 구성을 적용했습니다.', 'success')} />
+              <MaterialEditor
+                materials={estimate.materials}
+                onChange={handleMaterialsChange}
+                onReset={handleResetMaterials}
+                onApplyToast={() => showToast('재료 구성을 적용했습니다.', 'success')}
+              />
             ),
           },
           {
             id: 'qty',
             label: '제작 수량',
+            icon: Grid3X3,
             content: <QtySelectCards value={estimate.qtyTier} onChange={(tier) => patchEstimate({ qtyTier: tier })} />,
           },
           {
             id: 'display',
             label: '표시 설정',
+            icon: MonitorCog,
             content: <PreferencesForm />,
           },
           {
             id: 'data',
             label: '데이터 관리',
+            icon: Database,
             content: <DataManagement />,
           },
         ]}

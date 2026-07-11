@@ -1,24 +1,40 @@
-import { STORAGE_KEY, DEFAULT_SETTINGS, DEFAULT_PURCHASE_SETTINGS, BASE_MATERIAL_NAMES, BASE_MATERIAL_PRICES, BASE_PRESET_NAME } from '@/constants';
+import {
+  STORAGE_KEY,
+  DEFAULT_SETTINGS,
+  DEFAULT_PURCHASE_SETTINGS,
+  BASE_MATERIAL_NAMES,
+  BASE_MATERIAL_PRICES,
+  BASE_MATERIAL_QTY,
+  BASE_KEY_MATERIAL_PRICE_A,
+  BASE_RATE_A,
+  BASE_RATE_B,
+  BASE_PRESET_NAME,
+} from '@/constants';
 import type { AppData, AppSettings, EstimateMaterial } from '@/types';
 import { generateId } from '@/utils/id';
 import { DEFAULT_ITEM_DB } from '@/data/defaultItems';
 
-/** "달의 장궁" 기본 재료 목록을 생성한다 (수량은 사용자가 채우고, 단가는 기본 시세로 시작한다). */
+/** "달의 장궁" 기본 재료 목록을 생성한다.
+ *  대표(핵심) 재료인 "신성한 유니콘의 뿔"만 A/B 기본 단가가 다르고(130,000 / 140,000),
+ *  나머지는 A/B 동일한 기본 시세로 시작한다. 필요수량도 기본값으로 채워진다
+ *  (이 값들은 어디까지나 "최초 1회" 기본값이며, 사용자가 저장한 값이 있으면 항상 그 값이 우선한다). */
 export function freshMaterials(): EstimateMaterial[] {
   return BASE_MATERIAL_NAMES.map((name) => {
     const basePrice = BASE_MATERIAL_PRICES[name] ?? 0;
-    return { id: generateId(), name, qty: 0, priceA: basePrice, priceB: basePrice };
+    const qty = BASE_MATERIAL_QTY[name] ?? 0;
+    const priceA = name === '신성한 유니콘의 뿔' ? BASE_KEY_MATERIAL_PRICE_A : basePrice;
+    return { id: generateId(), name, qty, priceA, priceB: basePrice };
   });
 }
 
-/** 기본 데이터 스키마. 최초 실행 시 사용된다. */
+/** 기본 데이터 스키마. 최초 실행(저장된 데이터가 전혀 없을 때)에만 사용된다. */
 export function defaultAppData(): AppData {
   const materials = freshMaterials();
   return {
     estimate: {
       materials,
-      rateA: 0,
-      rateB: 0,
+      rateA: BASE_RATE_A,
+      rateB: BASE_RATE_B,
       feeA: 0,
       feeB: 0,
       qtyTier: 1,
@@ -29,8 +45,8 @@ export function defaultAppData(): AppData {
           readonly: true,
           favorite: false,
           materials: JSON.parse(JSON.stringify(materials)) as EstimateMaterial[],
-          rateA: 0,
-          rateB: 0,
+          rateA: BASE_RATE_A,
+          rateB: BASE_RATE_B,
           feeA: 0,
           feeB: 0,
           createdAt: new Date().toISOString(),

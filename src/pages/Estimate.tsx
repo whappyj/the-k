@@ -7,7 +7,7 @@ import { PageHeader, Section } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EstimateConditionBar } from '@/components/estimate/EstimateConditionBar';
-import { EstimateComparisonCards } from '@/components/estimate/EstimateComparisonCards';
+import { EstimateMatrixTable } from '@/components/estimate/EstimateMatrixTable';
 import { PresetGrid } from '@/components/estimate/PresetGrid';
 import { ImportExportButtons } from '@/components/common/ImportExportButtons';
 import { exportSection, readThekFile, parseSectionFile } from '@/lib/importExportService';
@@ -103,18 +103,8 @@ export function EstimatePage() {
       </div>
 
       <div className="mb-10">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="text-[13px] font-semibold text-text-sub">결과</div>
-          <span className="text-[12px] font-semibold text-text-faint">{estimate.qtyTier}개 제작 기준</span>
-        </div>
-        <EstimateComparisonCards
-          materials={estimate.materials}
-          rateA={estimate.rateA}
-          rateB={estimate.rateB}
-          feeA={estimate.feeA}
-          feeB={estimate.feeB}
-          qtyTier={estimate.qtyTier}
-        />
+        <div className="mb-3 text-[13px] font-semibold text-text-sub">결과 (블록을 클릭하면 재료 상세가 열립니다)</div>
+        <EstimateMatrixTable materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} feeA={estimate.feeA} feeB={estimate.feeB} />
       </div>
 
       <Section title="사용자 정의 프리셋">

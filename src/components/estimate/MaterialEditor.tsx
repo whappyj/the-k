@@ -41,7 +41,7 @@ export function MaterialEditor({ materials, onChange, onReset, onApplyToast }: M
       <table className="w-full min-w-[620px] border-collapse">
         <thead>
           <tr>
-            {['', '', '재료명', '필요수량', 'A 가격', 'B 가격', ''].map((h, i) => (
+            {['', '', '재료명', '1개 제작 필요수량', 'A 가격', 'B 가격', '작업'].map((h, i) => (
               <th key={h || `action-${i}`} className={`px-2.5 py-2.5 text-left text-xs font-semibold text-[#8A93A3] ${i > 2 && i < 6 ? 'text-right' : ''}`}>
                 {h}
               </th>
@@ -52,7 +52,7 @@ export function MaterialEditor({ materials, onChange, onReset, onApplyToast }: M
           {materials.map((m, i) => {
             const Icon = getMaterialIcon(m.name);
             return (
-            <tr key={m.id} className="border-t border-[#2A2F38] first:border-t-0">
+            <tr key={m.id} className="border-t border-[#2A2F38] transition-colors duration-150 first:border-t-0 hover:bg-white/[0.02]">
               <td className="px-2 py-2">
                 <Button
                   variant="ghost"
