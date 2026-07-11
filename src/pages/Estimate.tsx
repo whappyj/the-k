@@ -6,7 +6,6 @@ import { useJpgExport } from '@/hooks/useJpgExport';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { EstimateConditionBar } from '@/components/estimate/EstimateConditionBar';
 import { EstimateMatrixTable } from '@/components/estimate/EstimateMatrixTable';
 import { PresetGrid } from '@/components/estimate/PresetGrid';
 import { ImportExportButtons } from '@/components/common/ImportExportButtons';
@@ -91,19 +90,14 @@ export function EstimatePage() {
         actions={<ImportExportButtons label="제작 계산기" onExport={handleExportSection} onImportFile={handleImportSection} />}
       />
 
-      <div className="mb-6">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="text-[13px] font-semibold text-text-sub">조건</div>
-          <a href="#settings" className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-text-faint transition-colors hover:text-primary">
-            <SettingsIcon size={13} />
-            비교 조건 · 재료 · 수량은 설정에서 관리
-          </a>
-        </div>
-        <EstimateConditionBar materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} />
+      <div className="mb-3 flex items-center justify-end">
+        <a href="#settings" className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-text-faint transition-colors hover:text-primary">
+          <SettingsIcon size={13} />
+          비교 조건 · 재료 · 수량은 설정에서 관리
+        </a>
       </div>
 
       <div className="mb-10">
-        <div className="mb-3 text-[13px] font-semibold text-text-sub">결과 (블록을 클릭하면 재료 상세가 열립니다)</div>
         <EstimateMatrixTable materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} feeA={estimate.feeA} feeB={estimate.feeB} />
       </div>
 
