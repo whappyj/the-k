@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { ReactNode, KeyboardEvent } from 'react';
 import { Save, ScanText } from 'lucide-react';
 import type { ExperienceFormValues } from '@/types';
@@ -89,22 +89,23 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
         </div>
       </FormSection>
 
-      <FormSection title="2. 경험치 (%, 소수점 최대 4자리)">
-        <div className="grid grid-cols-2 gap-3.5">
+      <FormSection title="2. 경험치 (%, 숫자만 입력하면 자동으로 소수점 4자리가 표시됩니다)">
+        <div className="grid grid-cols-2 gap-3.5 max-[480px]:grid-cols-1">
           <div>
-            <div className="grid grid-cols-[1fr_92px] gap-2.5 max-[420px]:grid-cols-1">
-              <Field label="시작 경험치 (%)">
-                <Input type="number" step={0.0001} min={0} value={values.startExp} placeholder="예: 33.12" onChange={(e) => onChange({ startExp: e.target.value === '' ? '' : Number(e.target.value) })} />
-              </Field>
+            <div className="grid grid-cols-[64px_minmax(0,1fr)] gap-2">
               <Field label="시작 레벨">
                 <Input
                   type="number"
                   min={1}
                   step={1}
                   value={values.startLevel}
-                  placeholder="예: 81"
+                  placeholder="81"
                   onChange={(e) => onChange({ startLevel: e.target.value === '' ? '' : Number(e.target.value) })}
+                  className="px-2 text-center"
                 />
+              </Field>
+              <Field label="시작 경험치 (%)">
+                <ExpMaskedInput value={values.startExp} onChange={(v) => onChange({ startExp: v })} />
               </Field>
             </div>
             <Button variant="ghost" size="sm" className="mt-1.5" onClick={() => setOcrTarget(ocrTarget === 'start' ? null : 'start')}>
@@ -113,19 +114,20 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
             </Button>
           </div>
           <div>
-            <div className="grid grid-cols-[1fr_92px] gap-2.5 max-[420px]:grid-cols-1">
-              <Field label="종료 경험치 (%)">
-                <Input type="number" step={0.0001} min={0} value={values.endExp} placeholder="예: 33.9634" onChange={(e) => onChange({ endExp: e.target.value === '' ? '' : Number(e.target.value) })} />
-              </Field>
+            <div className="grid grid-cols-[64px_minmax(0,1fr)] gap-2">
               <Field label="종료 레벨">
                 <Input
                   type="number"
                   min={1}
                   step={1}
                   value={values.endLevel}
-                  placeholder="예: 81"
+                  placeholder="81"
                   onChange={(e) => onChange({ endLevel: e.target.value === '' ? '' : Number(e.target.value) })}
+                  className="px-2 text-center"
                 />
+              </Field>
+              <Field label="종료 경험치 (%)">
+                <ExpMaskedInput value={values.endExp} onChange={(v) => onChange({ endExp: v })} />
               </Field>
             </div>
             <Button variant="ghost" size="sm" className="mt-1.5" onClick={() => setOcrTarget(ocrTarget === 'end' ? null : 'end')}>
@@ -220,5 +222,87 @@ function PartyInput({ label, value, onChange }: { label: string; value: number; 
       <Label className="mb-1.5 block">{label}</Label>
       <Input type="number" min={0} max={8} value={value} onChange={(e) => onChange(Math.max(0, Math.min(8, Number(e.target.value) || 0)))} />
     </div>
+  );
+}
+
+/**
+ * 경험치 전용 숫자 마스킹 입력.
+ * 사용자는 숫자만(최대 6자리) 입력하고, 오른쪽에서 4자리 앞에 소수점을 자동으로 넣어 보여준다.
+ * 예: "152424" 입력 → "15.2424" 표시. 실제로 onChange에 전달되는 값은 기존과 동일한
+ * 퍼센트 숫자(예: 15.2424)이므로 계산 로직/저장 구조는 전혀 바뀌지 않는다.
+ */
+/** "00.0001"처럼 정수부 2자리(0패딩) + 소수부 4자리로 표시 문자열을 만든다. */
+function formatExpDigits(digits: string): string {
+  if (digits === '') return '';
+  const padded = digits.padStart(5, '0');
+  const frac = padded.slice(-4);
+  const intPart = padded.slice(0, -4).padStart(2, '0');
+  return `${intPart}.${frac}`;
+}
+
+function ExpMaskedInput({ value, onChange }: { value: number | ''; onChange: (v: number | '') => void }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  // 실제 입력된 숫자만 담는 내부 상태. 화면 표시(0패딩된 "00.0001" 등)를 다시 파싱해서
+  // 다음 입력을 계산하면 앞의 0들이 자릿수에 잘못 포함되는 문제가 생기므로,
+  // 항상 이 "순수 숫자 문자열"을 단일 진실 소스로 사용한다.
+  const [rawDigits, setRawDigits] = useState(() => (value === '' ? '' : String(Math.round(value * 10000))));
+
+  // 상위(부모)에서 값이 외부적으로 바뀐 경우(OCR 자동 채우기, 다른 기록 불러오기 등)만 동기화한다.
+  useEffect(() => {
+    const asValue = rawDigits === '' ? '' : parseInt(rawDigits, 10) / 10000;
+    if (value !== asValue) {
+      setRawDigits(value === '' ? '' : String(Math.round((value as number) * 10000)));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const display = formatExpDigits(rawDigits);
+
+  // 값이 바뀌어 화면 표시가 갱신된 뒤에도, 입력 중이라면 커서를 항상 맨 뒤에 유지한다.
+  useEffect(() => {
+    const el = inputRef.current;
+    if (el && document.activeElement === el) {
+      const len = el.value.length;
+      el.setSelectionRange(len, len);
+    }
+  }, [display]);
+
+  const commit = (nextDigits: string) => {
+    setRawDigits(nextDigits);
+    onChange(nextDigits === '' ? '' : parseInt(nextDigits, 10) / 10000);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key >= '0' && e.key <= '9') {
+      e.preventDefault();
+      if (rawDigits.length < 6) commit(rawDigits + e.key);
+    } else if (e.key === 'Backspace') {
+      e.preventDefault();
+      commit(rawDigits.slice(0, -1));
+    } else if (e.key === 'Delete') {
+      e.preventDefault();
+      commit('');
+    }
+    // 화살표, Tab 등 나머지 키는 그대로 통과시킨다.
+  };
+
+  const handlePasteOrOther = (raw: string) => {
+    // 붙여넣기 등 keydown으로 처리되지 않은 입력에 대한 보조 처리 (숫자만 추출, 최대 6자리).
+    const digits = raw.replace(/\D/g, '').slice(0, 6);
+    commit(digits);
+  };
+
+  return (
+    <Input
+      ref={inputRef}
+      type="text"
+      inputMode="numeric"
+      pattern="[0-9]*"
+      value={display}
+      placeholder="예: 152424 → 15.2424"
+      onKeyDown={handleKeyDown}
+      onChange={(e) => handlePasteOrOther(e.target.value)}
+      className="font-display text-lg font-bold tracking-tight"
+    />
   );
 }

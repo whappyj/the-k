@@ -58,7 +58,7 @@ export function PurchaseRecordForm({
   };
 
   return (
-    <Card className="rounded-[24px] border-white/[0.06] p-6 sm:p-7">
+    <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20] p-6 sm:p-7">
       <div className="grid grid-cols-[2fr_1fr_1fr_auto] items-end gap-3 max-[720px]:grid-cols-1">
         <div>
           <Label className="mb-1.5 block">아이디</Label>
@@ -68,7 +68,7 @@ export function PurchaseRecordForm({
             placeholder="판매자 아이디"
             onChange={(e) => onChangeAccountId(e.target.value)}
             onKeyDown={handleAccountKeyDown}
-            className="h-12 rounded-2xl border-transparent bg-white/[0.05] focus:bg-primary/[0.06]"
+            className="h-11 rounded-xl border-[#2A2F38] bg-white/[0.04]"
           />
         </div>
         <div>
@@ -81,23 +81,23 @@ export function PurchaseRecordForm({
             placeholder="0"
             onChange={(e) => onChangeAmount(e.target.value)}
             onKeyDown={handleAmountKeyDown}
-            className="h-12 rounded-2xl border-transparent bg-white/[0.05] focus:bg-primary/[0.06]"
+            className="h-11 rounded-xl border-[#2A2F38] bg-white/[0.04]"
           />
         </div>
         <div>
           <Label className="mb-1.5 block">비고 (자동계산)</Label>
-          <div className="flex h-12 items-center rounded-2xl bg-white/[0.03] px-3.5 text-text-sub">
+          <div className="flex h-11 items-center rounded-xl border border-[#2A2F38] bg-white/[0.03] px-3.5 text-text-sub">
             {previewCashAmount.toLocaleString('ko-KR')}원
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
           {isEditing && (
-            <Button variant="secondary" className="rounded-2xl" onClick={onCancelEdit}>
+            <Button variant="secondary" className="rounded-xl" onClick={onCancelEdit}>
               <X size={18} />
               취소
             </Button>
           )}
-          <Button variant="primary" className="rounded-2xl" onClick={onSubmit}>
+          <Button variant="primary" className="rounded-xl" onClick={onSubmit}>
             {isEditing ? <Check size={18} /> : <Plus size={18} />}
             {isEditing ? '수정 완료' : '추가'}
           </Button>

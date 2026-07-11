@@ -24,7 +24,7 @@ export function ExpMultiplierSimulator() {
   const base = Number(per30min) || 0;
 
   return (
-    <Card>
+    <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20]">
       <Label className="mb-1.5 block">30분당 획득 경험치 (%)</Label>
       <Input
         type="number"
@@ -38,7 +38,7 @@ export function ExpMultiplierSimulator() {
       {base > 0 && (
         <div className="mt-4 grid grid-cols-4 gap-3 max-[640px]:grid-cols-2">
           {MULTIPLIERS.map((m) => (
-            <div key={m.hours} className="rounded-xl border border-border/[0.08] bg-white/[0.03] px-3 py-3 text-center">
+            <div key={m.hours} className="rounded-xl border border-[#2A2F38] bg-white/[0.03] px-3 py-3 text-center">
               <div className="mb-1 text-xs text-text-sub">{m.label}</div>
               <div className="font-display text-lg font-bold text-primary">{formatPercent(base * m.hours * 2)}</div>
             </div>

@@ -93,7 +93,7 @@ export function AnalysisRecentList({ records, onSelect }: { records: ExperienceR
       ) : (
         <div className="grid grid-cols-2 gap-3.5 max-[900px]:grid-cols-1">
           {list.map((r) => (
-            <InteractiveCard key={r.id} onClick={() => onSelect(r.id)} className="flex flex-col gap-2.5">
+            <InteractiveCard key={r.id} onClick={() => onSelect(r.id)} className="flex flex-col gap-2.5 rounded-2xl border-[#2A2F38] bg-[#171A20]">
               <div className="flex items-start justify-between gap-2.5">
                 <div>
                   <div className="text-[15px] font-bold">{r.huntArea}</div>

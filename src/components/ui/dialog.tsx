@@ -32,10 +32,10 @@ export function Dialog({ open, onClose, title, children, footer, narrow }: Dialo
 
   return (
     <div className="fixed inset-0 z-[900] flex items-center justify-center p-5">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 animate-fade-in bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <div
         className={cn(
-          'relative max-h-[84vh] w-full overflow-y-auto rounded-modal border border-border/[0.14] bg-card/90 p-7',
+          'relative max-h-[84vh] w-full animate-scale-in overflow-y-auto rounded-modal border border-border/[0.14] bg-card/90 p-7',
           'shadow-soft backdrop-blur-glass',
           narrow ? 'max-w-[480px]' : 'max-w-[720px]'
         )}

@@ -1,52 +1,26 @@
 import { useRef } from 'react';
-import { ImageDown, Download, Upload } from 'lucide-react';
+import { ImageDown, Download, Upload, Settings as SettingsIcon } from 'lucide-react';
 import { useAppData, useAppDataActions } from '@/hooks/useAppData';
 import { useToast } from '@/hooks/useToast';
-import { useConfirm } from '@/hooks/useConfirm';
 import { useJpgExport } from '@/hooks/useJpgExport';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PriceCards } from '@/components/estimate/PriceCards';
-import { QtySelectCards } from '@/components/estimate/QtySelectCards';
-import { EstimateHero } from '@/components/estimate/EstimateHero';
-import { EstimateResultTable } from '@/components/estimate/EstimateResultTable';
-import { EstimateDetailPanel } from '@/components/estimate/EstimateDetailPanel';
-import { MaterialEditor } from '@/components/estimate/MaterialEditor';
+import { EstimateConditionBar } from '@/components/estimate/EstimateConditionBar';
+import { EstimateComparisonCards } from '@/components/estimate/EstimateComparisonCards';
 import { PresetGrid } from '@/components/estimate/PresetGrid';
-import { CollapsiblePanel } from '@/components/common/CollapsiblePanel';
 import { ImportExportButtons } from '@/components/common/ImportExportButtons';
 import { exportSection, readThekFile, parseSectionFile } from '@/lib/importExportService';
-import { calcEstimateGroup } from '@/lib/calculations';
-import type { EstimateMaterial, EstimatePreset, AppData } from '@/types';
+import type { EstimatePreset, AppData } from '@/types';
 
 export function EstimatePage() {
   const { data } = useAppData();
-  const { patchEstimate, resetEstimateToBase, addPreset, updatePreset, deletePreset, importMerge } = useAppDataActions();
+  const { patchEstimate, addPreset, updatePreset, deletePreset, importMerge } = useAppDataActions();
   const { showToast } = useToast();
-  const { confirm } = useConfirm();
   const { exportPage } = useJpgExport();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const estimate = data.estimate;
-  const resA = calcEstimateGroup(estimate.materials, 'priceA', estimate.rateA, estimate.feeA, estimate.qtyTier);
-  const resB = calcEstimateGroup(estimate.materials, 'priceB', estimate.rateB, estimate.feeB, estimate.qtyTier);
-
-  const handlePriceChange = (group: 'A' | 'B', materialId: string, value: number) => {
-    const key = group === 'A' ? 'priceA' : 'priceB';
-    patchEstimate({ materials: estimate.materials.map((m) => (m.id === materialId ? { ...m, [key]: value } : m)) });
-  };
-  const handleRateChange = (group: 'A' | 'B', value: number) => patchEstimate(group === 'A' ? { rateA: value } : { rateB: value });
-  const handleFeeChange = (group: 'A' | 'B', value: number) => patchEstimate(group === 'A' ? { feeA: value } : { feeB: value });
-
-  const handleMaterialsChange = (materials: EstimateMaterial[]) => patchEstimate({ materials });
-
-  const handleResetMaterials = async () => {
-    if (await confirm('현재 재료 구성을 기본 프리셋("달의 장궁")으로 초기화합니다.')) {
-      resetEstimateToBase();
-      showToast('기본 구성으로 초기화했습니다.', 'success');
-    }
-  };
 
   const handleApplyPreset = (preset: EstimatePreset) => {
     patchEstimate({
@@ -117,48 +91,31 @@ export function EstimatePage() {
         actions={<ImportExportButtons label="제작 계산기" onExport={handleExportSection} onImportFile={handleImportSection} />}
       />
 
-      <div className="mb-8">
-        <EstimateHero materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} />
-      </div>
-
-      <div className="mb-5">
-        <EstimateResultTable materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} feeA={estimate.feeA} feeB={estimate.feeB} />
+      <div className="mb-6">
+        <div className="mb-3 flex items-center justify-between">
+          <div className="text-[13px] font-semibold text-text-sub">조건</div>
+          <a href="#settings" className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-text-faint transition-colors hover:text-primary">
+            <SettingsIcon size={13} />
+            비교 조건 · 재료 · 수량은 설정에서 관리
+          </a>
+        </div>
+        <EstimateConditionBar materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} />
       </div>
 
       <div className="mb-10">
-        <EstimateDetailPanel materials={estimate.materials} resA={resA} resB={resB} />
+        <div className="mb-3 flex items-center justify-between">
+          <div className="text-[13px] font-semibold text-text-sub">결과</div>
+          <span className="text-[12px] font-semibold text-text-faint">{estimate.qtyTier}개 제작 기준</span>
+        </div>
+        <EstimateComparisonCards
+          materials={estimate.materials}
+          rateA={estimate.rateA}
+          rateB={estimate.rateB}
+          feeA={estimate.feeA}
+          feeB={estimate.feeB}
+          qtyTier={estimate.qtyTier}
+        />
       </div>
-
-      <CollapsiblePanel label="설정">
-        <div>
-          <div className="mb-3.5 flex items-center gap-2 text-[15px] font-bold">비교 설정</div>
-          <PriceCards
-            materials={estimate.materials}
-            rateA={estimate.rateA}
-            rateB={estimate.rateB}
-            feeA={estimate.feeA}
-            feeB={estimate.feeB}
-            onPriceChange={handlePriceChange}
-            onRateChange={handleRateChange}
-            onFeeChange={handleFeeChange}
-          />
-        </div>
-
-        <div>
-          <div className="mb-3.5 flex items-center gap-2 text-[15px] font-bold">수량 선택</div>
-          <QtySelectCards value={estimate.qtyTier} onChange={(tier) => patchEstimate({ qtyTier: tier })} />
-        </div>
-
-        <div>
-          <div className="mb-3.5 flex items-center gap-2 text-[15px] font-bold">재료 변경</div>
-          <MaterialEditor
-            materials={estimate.materials}
-            onChange={handleMaterialsChange}
-            onReset={handleResetMaterials}
-            onApplyToast={() => showToast('재료 구성을 적용했습니다.', 'success')}
-          />
-        </div>
-      </CollapsiblePanel>
 
       <Section title="사용자 정의 프리셋">
         <PresetGrid
@@ -172,7 +129,7 @@ export function EstimatePage() {
       </Section>
 
       <Section title="내보내기">
-        <Card className="flex flex-wrap gap-2.5 rounded-[20px] border-[#2A2D35] bg-[#1B1D22]">
+        <Card className="flex flex-wrap gap-2.5 rounded-2xl border-[#2A2F38] bg-[#171A20]">
           <Button variant="warning" onClick={() => exportPage('estimate')}>
             <ImageDown size={18} />
             현재 견적 JPG 저장

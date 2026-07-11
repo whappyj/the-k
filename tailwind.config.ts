@@ -35,6 +35,10 @@ export default {
           DEFAULT: '#A855F7',
           dim: 'rgba(168,85,247,0.14)',
         },
+        gold: {
+          DEFAULT: '#D6A84F',
+          dim: 'rgba(214,168,79,0.14)',
+        },
         text: {
           DEFAULT: 'rgb(var(--c-text) / <alpha-value>)',
           sub: 'rgb(var(--c-text-sub) / <alpha-value>)',
@@ -63,6 +67,14 @@ export default {
       },
       spacing: {
         header: '72px',
+      },
+      keyframes: {
+        'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
+        'scale-in': { from: { opacity: '0', transform: 'scale(0.97) translateY(4px)' }, to: { opacity: '1', transform: 'scale(1) translateY(0)' } },
+      },
+      animation: {
+        'fade-in': 'fade-in 160ms ease-out',
+        'scale-in': 'scale-in 180ms cubic-bezier(0.16,1,0.3,1)',
       },
     },
   },

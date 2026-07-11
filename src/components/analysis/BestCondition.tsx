@@ -13,7 +13,7 @@ export function BestCondition({ records }: { records: ExperienceRecord[] }) {
 
   if (!groups.length) {
     return (
-      <Card className="bg-gradient-to-br from-primary/10 to-success/[0.06] py-14 text-center text-[13px] text-text-faint">
+      <Card className="rounded-2xl border-[#2A2F38] bg-gradient-to-br from-primary/10 to-success/[0.06] py-14 text-center text-[13px] text-text-faint">
         추천을 계산하려면 동일 조건 기록이 {MIN_RECOMMEND_COUNT}회 이상 필요합니다.
       </Card>
     );
@@ -33,7 +33,7 @@ export function BestCondition({ records }: { records: ExperienceRecord[] }) {
   ];
 
   return (
-    <Card className="bg-gradient-to-br from-primary/10 to-success/[0.06]">
+    <Card className="rounded-2xl border-[#2A2F38] bg-gradient-to-br from-primary/10 to-success/[0.06]">
       <div className="mb-[18px] grid grid-cols-3 gap-[18px] max-[900px]:grid-cols-2">
         {items.map((it) => (
           <div key={it.label} className="text-center">

@@ -15,12 +15,12 @@ export function QtySelectCards({ value, onChange }: QtySelectCardsProps) {
           type="button"
           onClick={() => onChange(tier)}
           className={cn(
-            'rounded-[20px] border border-[#2A2D35] bg-[#1B1D22] p-[22px] text-center transition-all duration-200 hover:scale-[1.02]',
+            'rounded-2xl border border-[#2A2F38] bg-[#171A20] p-[22px] text-center transition-all duration-200 hover:scale-[1.02]',
             value === tier && 'border-primary bg-primary-dim'
           )}
         >
           <div className={cn('font-display text-[26px] font-bold', value === tier ? 'text-primary' : 'text-white')}>{tier}개</div>
-          <div className={cn('mt-1 text-[13px]', value === tier ? 'text-primary' : 'text-[#8A8F9C]')}>제작</div>
+          <div className={cn('mt-1 text-[13px]', value === tier ? 'text-primary' : 'text-[#8A93A3]')}>제작</div>
         </button>
       ))}
     </div>

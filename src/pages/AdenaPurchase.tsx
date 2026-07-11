@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { PageHeader, Section } from '@/components/layout/PageHeader';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { useAppData, useAppDataActions } from '@/hooks/useAppData';
 import { useToast } from '@/hooks/useToast';
-import { PurchaseSettingsSlide } from '@/components/adena/PurchaseSettingsSlide';
+import { PurchaseSummaryBar } from '@/components/adena/PurchaseSummaryBar';
 import { PurchaseRecordForm } from '@/components/adena/PurchaseRecordForm';
 import { PurchaseRecordTable } from '@/components/adena/PurchaseRecordTable';
 import { DepositStats } from '@/components/adena/DepositStats';
@@ -116,9 +116,10 @@ export function AdenaPurchasePage() {
         actions={<ImportExportButtons label="아데나 매입" onExport={handleExportSection} onImportFile={handleImportSection} />}
       />
 
-      <PurchaseSettingsSlide settings={data.purchaseSettings} onChange={patchPurchaseSettings} />
+      <PurchaseSummaryBar settings={data.purchaseSettings} onChange={patchPurchaseSettings} />
 
-      <Section title="매입 등록">
+      <div className="mb-10">
+        <div className="mb-3.5 text-[13px] font-semibold text-text-sub">매입 등록</div>
         <PurchaseRecordForm
           accountId={accountId}
           amount={amount}
@@ -130,7 +131,7 @@ export function AdenaPurchasePage() {
           previewCashAmount={(Number(data.purchaseSettings.rate) || 0) * (Number(amount) || 0)}
           focusSignal={focusSignal}
         />
-      </Section>
+      </div>
 
       <div className="mb-3">
         <DepositStats records={data.purchaseRecords} />

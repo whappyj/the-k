@@ -9,10 +9,10 @@ export function AreaDetail({ area, records }: { area: string; records: Experienc
     .slice(0, 5);
 
   return (
-    <div className="mt-4 rounded-2xl border border-border/[0.08] bg-white/[0.03] p-4">
+    <div className="mt-4 rounded-2xl border border-[#2A2F38] bg-white/[0.03] p-4">
       <div className="mb-2 text-[13px] font-bold">"{area}" 최근 기록</div>
       {list.map((r) => (
-        <div key={r.id} className="flex items-center justify-between border-b border-border/[0.08] py-2.5 text-[13px] last:border-none">
+        <div key={r.id} className="flex items-center justify-between border-b border-[#2A2F38] py-2.5 text-[13px] last:border-none">
           <div>
             <div className="font-semibold">{r.startDate} {r.startTime}</div>
             <div className="text-xs text-text-sub">기{r.party.knight}/요{r.party.elf}/법{r.party.wizard}</div>

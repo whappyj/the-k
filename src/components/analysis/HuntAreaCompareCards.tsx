@@ -39,7 +39,7 @@ export function HuntAreaCompareCards({ records }: { records: ExperienceRecord[] 
         return (
           <Card
             key={card.huntArea}
-            className={cn('cursor-pointer border-t-[3px] transition-transform', badge?.className)}
+            className={cn('cursor-pointer rounded-2xl border-[#2A2F38] bg-[#171A20] border-t-[3px] transition-transform', badge?.className)}
             onClick={() => setOpenArea((prev) => (prev === card.huntArea ? null : card.huntArea))}
           >
             <div className="mb-3 flex items-center justify-between">
@@ -53,7 +53,7 @@ export function HuntAreaCompareCards({ records }: { records: ExperienceRecord[] 
 
             <div className="flex flex-col gap-2">
               {card.combos.map((combo, i) => (
-                <div key={combo.label} className="flex items-center justify-between rounded-xl border border-border/[0.08] bg-white/[0.03] px-3 py-2">
+                <div key={combo.label} className="flex items-center justify-between rounded-xl border border-[#2A2F38] bg-white/[0.03] px-3 py-2">
                   <div className="flex items-center gap-2">
                     <span className="text-[13px] text-text-faint">{RANK_ORDER[i] ?? `${i + 1}.`}</span>
                     <span className="text-[13px] font-semibold">{combo.label}</span>

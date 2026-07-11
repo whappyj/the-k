@@ -241,7 +241,7 @@ export function ExperiencePage() {
       />
 
       <div className="mb-10 grid grid-cols-[1.6fr_1fr] items-start gap-5 max-[1100px]:grid-cols-1">
-        <div ref={formRef} className="flex flex-col gap-6">
+        <div ref={formRef} className="flex min-w-0 flex-col gap-6">
           <ExperienceForm
             values={values}
             onChange={patch}

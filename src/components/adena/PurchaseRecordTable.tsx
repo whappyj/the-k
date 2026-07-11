@@ -63,7 +63,7 @@ export function PurchaseRecordTable({ records, editingId, onToggleDeposit, onEdi
       ) : visibleRecords.length === 0 ? (
         <EmptyCell>조건에 맞는 기록이 없습니다.</EmptyCell>
       ) : (
-        <Card className="overflow-x-auto rounded-[24px] border-white/[0.06] px-5 py-2">
+        <Card className="overflow-x-auto rounded-2xl border-[#2A2F38] bg-[#171A20] px-5 py-2">
           <table className="w-full min-w-[560px] border-collapse text-[13px]">
             <thead>
               <tr>

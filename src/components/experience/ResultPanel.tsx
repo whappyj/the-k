@@ -14,7 +14,7 @@ export function ResultPanel({ stats, bibigiEnabled, bibigiCount, molly }: Result
   const { formatPercent, formatDuration } = useFormatters();
 
   return (
-    <div className="sticky top-6 flex flex-col gap-3.5">
+    <div className="sticky top-6 flex min-w-0 flex-col gap-3.5">
       <Card>
         <div className="grid grid-cols-2 gap-3">
           <MiniStat label="총 경과시간" value={stats ? formatDuration(stats.totalSeconds) : '-'} />
