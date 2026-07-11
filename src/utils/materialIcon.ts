@@ -15,5 +15,6 @@ export function getMaterialIcon(name: string): LucideIcon {
   for (let i = 0; i < name.length; i += 1) {
     hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
   }
-  return ICONS[hash % ICONS.length];
+  return ICONS[hash % ICONS.length]!;
+
 }
