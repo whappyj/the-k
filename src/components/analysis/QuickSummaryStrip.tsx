@@ -27,13 +27,14 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
   // 가장 많이 간 사냥터 (최빈값)
   const areaCount = new Map<string, number>();
   records.forEach((r) => areaCount.set(r.huntArea, (areaCount.get(r.huntArea) ?? 0) + 1));
-  let mostVisited: { area: string; count: number } | null = null;
-  areaCount.forEach((count, area) => {
-    if (!mostVisited || count > mostVisited.count) mostVisited = { area, count };
-  });
+  const mostVisited = Array.from(areaCount.entries()).reduce(
+    (best, [area, count]) => (count > best.count ? { area, count } : best),
+    { area: '', count: 0 }
+  );
 
   // 최고 효율 사냥터 (전체 기록 중 시간당 경험치 최댓값을 낸 사냥터)
   const bestOverall = records.length ? records.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b), records[0]) : null;
+
 
   return (
     <div className="mb-6 grid grid-cols-4 gap-5 max-[1100px]:grid-cols-2">
@@ -62,8 +63,8 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
       <SummaryCard icon={MapPin} tone="blue" label="가장 많이 간 사냥터">
         {mostVisited ? (
           <>
-            <div className="truncate text-[18px] font-bold text-white">{mostVisited.area}</div>
-            <div className="mt-0.5 text-[11px] text-text-faint">{mostVisited.count}회 방문</div>
+            <div className="truncate text-[18px] font-bold text-white">{mostVisited?.area}</div>
+            <div className="mt-0.5 text-[11px] text-text-faint">{mostVisited?.count}회 방문</div>
           </>
         ) : (
           <div className="text-[12px] text-text-faint">기록 없음</div>
