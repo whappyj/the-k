@@ -12,7 +12,9 @@ import { HomePage } from '@/pages/Home';
 import { EstimatePage } from '@/pages/Estimate';
 import { ExperiencePage } from '@/pages/Experience';
 import { AnalysisPage } from '@/pages/Analysis';
-import { Calculator24Page } from '@/pages/Calculator24';
+import { ComparePage } from '@/pages/Compare';
+import { StatisticsPage } from '@/pages/Statistics';
+import { LevelUpSimulatorPage } from '@/pages/LevelUpSimulator';
 import { AdenaPurchasePage } from '@/pages/AdenaPurchase';
 import { SettingsPage } from '@/pages/Settings';
 
@@ -26,8 +28,12 @@ function RouteView({ route }: { route: Route }) {
       return <ExperiencePage />;
     case 'analysis':
       return <AnalysisPage />;
+    case 'compare':
+      return <ComparePage />;
+    case 'statistics':
+      return <StatisticsPage />;
     case 'calculator':
-      return <Calculator24Page />;
+      return <LevelUpSimulatorPage />;
     case 'adenaPurchase':
       return <AdenaPurchasePage />;
     case 'settings':

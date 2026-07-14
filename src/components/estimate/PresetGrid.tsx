@@ -75,18 +75,18 @@ export function PresetGrid({ presets, currentEstimate, onAdd, onUpdate, onDelete
     <div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
         {sorted.map((p) => (
-          <Card key={p.id} className={cn('flex flex-col gap-3 rounded-2xl border-[#2A2F38] bg-[#171A20] p-5', p.readonly && 'border-dashed')}>
+          <Card key={p.id} className={cn('flex flex-col gap-3 rounded-2xl border-[#1D2530] bg-[#0B1016] p-5', p.readonly && 'border-dashed')}>
             <div className="flex items-start justify-between gap-2">
               <div>
                 <div className="text-sm font-bold text-white">{p.name}</div>
-                <div className="text-[11px] text-[#8A93A3]">{p.readonly ? '기본 프리셋 · 읽기전용' : '사용자 프리셋'}</div>
+                <div className="text-[11px] text-[#9AA1AC]">{p.readonly ? '기본 프리셋 · 읽기전용' : '사용자 프리셋'}</div>
               </div>
               <Button
                 variant="ghost"
                 size="icon"
                 aria-label="즐겨찾기"
                 onClick={() => onUpdate(p.id, { favorite: !p.favorite })}
-                className={cn(p.favorite ? 'text-warning' : 'text-[#8A93A3]')}
+                className={cn(p.favorite ? 'text-warning' : 'text-[#9AA1AC]')}
               >
                 <Star size={16} fill={p.favorite ? 'currentColor' : 'none'} />
               </Button>

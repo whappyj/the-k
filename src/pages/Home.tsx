@@ -1,4 +1,4 @@
-import { ListChecks, Sparkles, Timer, Coins, Swords, BarChart3, CalendarClock, Wallet } from 'lucide-react';
+import { ListChecks, Sparkles, Timer, Coins, Swords, BarChart3, TrendingUp, Wallet } from 'lucide-react';
 import { useAppData } from '@/hooks/useAppData';
 import { useFormatters } from '@/hooks/useFormatters';
 import { Card, CardTitle, CardDescription, InteractiveCard } from '@/components/ui/card';
@@ -12,7 +12,7 @@ const QUICK_NAV: { route: Route; icon: typeof Coins; title: string; desc: string
   { route: 'estimate', icon: Coins, title: '제작 비교 견적', desc: 'A/B 조건별 제작비 비교' },
   { route: 'experience', icon: Swords, title: '경험치 기록', desc: '사냥 세션 기록 추가' },
   { route: 'analysis', icon: BarChart3, title: '경험치 분석', desc: '사냥터/파티 순위 분석' },
-  { route: 'calculator', icon: CalendarClock, title: '24시간 계산기', desc: '레벨업 예상일 계산' },
+  { route: 'calculator', icon: TrendingUp, title: '레벨업 시뮬레이터', desc: '목표 레벨까지 예상 소요일 계산' },
   { route: 'adenaPurchase', icon: Wallet, title: '아데나 매입', desc: '매입 관리 (준비 중)' },
 ];
 

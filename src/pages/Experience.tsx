@@ -240,7 +240,7 @@ export function ExperiencePage() {
         actions={<ImportExportButtons label="경험치" onExport={handleExportSection} onImportFile={handleImportSection} />}
       />
 
-      <div className="mb-10 grid grid-cols-[1.6fr_1fr] items-start gap-5 max-[1100px]:grid-cols-1">
+      <div className="mb-10 grid grid-cols-[1.2fr_1fr] items-start gap-5 max-[1100px]:grid-cols-1">
         <div ref={formRef} className="flex min-w-0 flex-col gap-6">
           <ExperienceForm
             values={values}
@@ -263,7 +263,7 @@ export function ExperiencePage() {
           </Section>
         </div>
 
-        <ResultPanel stats={stats} bibigiEnabled={values.bibigiEnabled} bibigiCount={values.bibigiCount} molly={values.molly} />
+        <ResultPanel stats={stats} endExp={values.endExp} />
       </div>
 
       <Section title="최근 기록">

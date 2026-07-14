@@ -25,7 +25,7 @@ export function SettingsTabs({ tabs }: { tabs: SettingsTab[] }) {
 
   return (
     <div className="grid grid-cols-[220px_1fr] gap-6 max-[860px]:grid-cols-1">
-      <nav className="flex flex-col gap-1 rounded-2xl border border-[#2A2F38] bg-[#171A20] p-1.5 max-[860px]:flex-row max-[860px]:overflow-x-auto">
+      <nav className="flex flex-col gap-1 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-1.5 max-[860px]:flex-row max-[860px]:overflow-x-auto">
         {tabs.map((t) => {
           const Icon = t.icon;
           const isActive = t.id === current?.id;
@@ -36,7 +36,7 @@ export function SettingsTabs({ tabs }: { tabs: SettingsTab[] }) {
               onClick={() => setActive(t.id)}
               className={cn(
                 'flex shrink-0 items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-left text-[13px] font-semibold transition-all duration-200 active:scale-[0.98]',
-                isActive ? 'bg-gold/[0.14] text-gold' : 'text-[#8A93A3] hover:bg-white/[0.05] hover:text-white'
+                isActive ? 'bg-gold/[0.14] text-gold' : 'text-[#9AA1AC] hover:bg-white/[0.05] hover:text-white'
               )}
             >
               <Icon size={16} />

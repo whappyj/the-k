@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --c-bg: 15 17 21; /* #0F1115 */
-  --c-sidebar: 15 17 21;
-  --c-card: 23 26 33; /* #171A21 */
-  --c-card-secondary: 29 33 43; /* #1D212B */
+  --c-bg: 6 8 11; /* #06080B */
+  --c-sidebar: 6 8 11;
+  --c-card: 11 16 22; /* #0B1016 */
+  --c-card-secondary: 15 21 28; /* #0F151C */
   --c-border: 255 255 255;
-  --c-text: 255 255 255;
-  --c-text-sub: 160 167 181; /* #A0A7B5 */
-  --c-text-faint: 107 114 128;
+  --c-text: 245 246 248; /* #F5F6F8 */
+  --c-text-sub: 154 161 172; /* #9AA1AC */
+  --c-text-faint: 91 98 109; /* #5B626D */
 }
 
 [data-theme='light'] {

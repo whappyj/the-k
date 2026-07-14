@@ -31,32 +31,32 @@ export function EstimateConditionSettings({
 
   return (
     <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
-      <div className="rounded-xl border border-[#2A2F38] bg-white/[0.02] p-4">
-        <div className="mb-4 text-[13px] font-semibold text-[#8A93A3]">아데나 시세 (1만 아데나 기준)</div>
+      <div className="rounded-xl border border-[#1D2530] bg-white/[0.02] p-4">
+        <div className="mb-4 text-[13px] font-semibold text-[#9AA1AC]">아데나 시세 (1만 아데나 기준)</div>
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
             <Label className="text-primary">A 조건</Label>
             <div className="flex items-center gap-1.5">
-              <Input type="number" min={0} value={rateA || ''} placeholder="900" onChange={(e) => onRateChange('A', Number(e.target.value) || 0)} className="rounded-xl border-[#2A2F38] bg-white/[0.04]" />
-              <span className="text-[13px] text-[#8A93A3]">원</span>
+              <Input type="number" min={0} value={rateA || ''} placeholder="900" onChange={(e) => onRateChange('A', Number(e.target.value) || 0)} className="rounded-xl border-[#1D2530] bg-white/[0.04]" />
+              <span className="text-[13px] text-[#9AA1AC]">원</span>
             </div>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-warning">B 조건</Label>
             <div className="flex items-center gap-1.5">
-              <Input type="number" min={0} value={rateB || ''} placeholder="1000" onChange={(e) => onRateChange('B', Number(e.target.value) || 0)} className="rounded-xl border-[#2A2F38] bg-white/[0.04]" />
-              <span className="text-[13px] text-[#8A93A3]">원</span>
+              <Input type="number" min={0} value={rateB || ''} placeholder="1000" onChange={(e) => onRateChange('B', Number(e.target.value) || 0)} className="rounded-xl border-[#1D2530] bg-white/[0.04]" />
+              <span className="text-[13px] text-[#9AA1AC]">원</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="rounded-xl border border-[#2A2F38] bg-white/[0.02] p-4">
-        <div className="mb-4 text-[13px] font-semibold text-[#8A93A3]">핵심 재료 (비교 기준이 되는 재료)</div>
+      <div className="rounded-xl border border-[#1D2530] bg-white/[0.02] p-4">
+        <div className="mb-4 text-[13px] font-semibold text-[#9AA1AC]">핵심 재료 (비교 기준이 되는 재료)</div>
         <Select
           value={keyMaterial?.id ?? ''}
           onChange={(e) => onKeyMaterialSelect(e.target.value)}
-          className="mb-3 rounded-xl border-[#2A2F38] bg-white/[0.04]"
+          className="mb-3 rounded-xl border-[#1D2530] bg-white/[0.04]"
         >
           {materials.map((m) => (
             <option key={m.id} value={m.id}>
@@ -74,7 +74,7 @@ export function EstimateConditionSettings({
               value={keyMaterial?.priceA || ''}
               placeholder="0"
               onChange={(e) => onKeyPriceChange('A', Number(e.target.value) || 0)}
-              className="rounded-xl border-[#2A2F38] bg-white/[0.04]"
+              className="rounded-xl border-[#1D2530] bg-white/[0.04]"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -86,13 +86,13 @@ export function EstimateConditionSettings({
               value={keyMaterial?.priceB || ''}
               placeholder="0"
               onChange={(e) => onKeyPriceChange('B', Number(e.target.value) || 0)}
-              className="rounded-xl border-[#2A2F38] bg-white/[0.04]"
+              className="rounded-xl border-[#1D2530] bg-white/[0.04]"
             />
           </div>
         </div>
       </div>
 
-      <div className="col-span-2 text-[11px] text-[#8A93A3] max-[640px]:col-span-1">
+      <div className="col-span-2 text-[11px] text-[#9AA1AC] max-[640px]:col-span-1">
         ※ 핵심 재료는 비교에서 가장 큰 영향을 주는 재료입니다. (재료 목록에서 ★로 지정한 재료가 자동으로 선택됩니다.)
       </div>
     </div>

@@ -50,7 +50,7 @@ export default {
         display: ['"Space Grotesk"', 'Pretendard', 'sans-serif'],
       },
       borderRadius: {
-        card: '20px',
+        card: '16px',
         btn: '14px',
         input: '12px',
         modal: '24px',

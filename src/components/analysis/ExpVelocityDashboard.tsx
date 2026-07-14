@@ -31,7 +31,7 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
 
   if (!records.length) {
     return (
-      <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20] py-14 text-center text-[13px] text-text-faint">
+      <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016] py-14 text-center text-[13px] text-text-faint">
         경험치 기록이 쌓이면 획득 속도와 예상 완료일이 여기 표시됩니다.
       </Card>
     );
@@ -54,7 +54,7 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
 
   return (
     <div className="flex flex-col gap-4">
-      <Card className="rounded-2xl border-[#2A2F38] bg-gradient-to-br from-primary/10 to-success/[0.06]">
+      <Card className="rounded-2xl border-[#1D2530] bg-gradient-to-br from-primary/10 to-success/[0.06]">
         <div className="grid grid-cols-3 gap-4 max-[640px]:grid-cols-1">
           <div className="text-center">
             <div className="mb-1.5 text-xs text-text-sub">현재</div>
@@ -77,7 +77,7 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
         {windows.map((w) => {
           const eta = computeEta(latest.endExp, w.perDayRate);
           return (
-            <Card key={w.key} className={cn('rounded-2xl border-[#2A2F38] bg-[#171A20]', !w.hasData && 'opacity-60')}>
+            <Card key={w.key} className={cn('rounded-2xl border-[#1D2530] bg-[#0B1016]', !w.hasData && 'opacity-60')}>
               <div className="mb-1 flex items-center justify-between">
                 <CardTitle className="!mb-0">{w.label}</CardTitle>
                 <Badge variant={w.hasData ? 'primary' : 'muted'}>{w.recordCount}건</Badge>
@@ -86,7 +86,7 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
                 {w.key === '24h' ? `합계 +${formatPercent(w.gainPercent)}` : `합계 +${formatPercent(w.gainPercent)} · 하루 평균 +${formatPercent(w.perDayRate)}/일`}
               </CardDescription>
 
-              <div className="mt-3 border-t border-[#2A2F38] pt-3">
+              <div className="mt-3 border-t border-[#1D2530] pt-3">
                 <div className="mb-1 text-xs text-text-sub">예상 완료</div>
                 <div className="font-display text-xl font-bold text-primary">{formatEtaDays(eta.days)}</div>
                 <div className="mt-1 text-[11px] text-text-faint">예상 완료일 {formatEtaDate(eta.etaDate)}</div>
@@ -97,25 +97,25 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
       </div>
 
       <div className="grid grid-cols-4 gap-4 max-[1100px]:grid-cols-2 max-[560px]:grid-cols-1">
-        <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20]">
+        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
           <div className="mb-1.5 text-xs text-text-sub">전체 평균 (기록 시작부터)</div>
           <div className="font-display text-xl font-bold">{formatPercent(overall.perDayRate)}/일</div>
           <div className="mt-1 text-[11px] text-text-faint">총 {formatPercent(overall.totalGain)} · {overall.spanDays.toFixed(1)}일간</div>
         </Card>
 
-        <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20]">
+        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
           <div className="mb-1.5 text-xs text-text-sub">최고 하루 / 최저 하루</div>
           <div className="font-display text-xl font-bold text-success">{bestWorst.bestDay ? `+${formatPercent(bestWorst.bestDay.gain)}` : '-'}</div>
           <div className="mt-1 text-[11px] text-text-faint">최저 {bestWorst.worstDay ? `+${formatPercent(bestWorst.worstDay.gain)}` : '-'}</div>
         </Card>
 
-        <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20]">
+        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
           <div className="mb-1.5 text-xs text-text-sub">최고 주간 / 월간 평균</div>
           <div className="font-display text-xl font-bold text-primary">{formatPercent(bestWorst.bestWeeklyAvg)}/일</div>
           <div className="mt-1 text-[11px] text-text-faint">월간 {formatPercent(bestWorst.bestMonthlyAvg)}/일</div>
         </Card>
 
-        <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20]">
+        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
           <div className="mb-1.5 text-xs text-text-sub">사냥 추세</div>
           <div className={cn('flex items-center gap-1.5 font-display text-xl font-bold', trendMeta.color)}>
             <TrendIcon size={20} />

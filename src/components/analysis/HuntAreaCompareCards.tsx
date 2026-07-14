@@ -39,11 +39,11 @@ export function HuntAreaCompareCards({ records }: { records: ExperienceRecord[] 
         return (
           <Card
             key={card.huntArea}
-            className={cn('cursor-pointer rounded-2xl border-[#2A2F38] bg-[#171A20] border-t-[3px] transition-transform', badge?.className)}
+            className={cn('cursor-pointer rounded-2xl border-[#1D2530] bg-[#0B1016] border-t-[3px] transition-transform', badge?.className)}
             onClick={() => setOpenArea((prev) => (prev === card.huntArea ? null : card.huntArea))}
           >
             <div className="mb-3 flex items-center justify-between">
-              <div className="text-[16px] font-bold">{card.huntArea}</div>
+              <div className="text-[15px] font-bold">{card.huntArea}</div>
               {badge && (
                 <span className="text-2xl" title={badge.label} aria-label={badge.label}>
                   {badge.icon}
@@ -53,7 +53,7 @@ export function HuntAreaCompareCards({ records }: { records: ExperienceRecord[] 
 
             <div className="flex flex-col gap-2">
               {card.combos.map((combo, i) => (
-                <div key={combo.label} className="flex items-center justify-between rounded-xl border border-[#2A2F38] bg-white/[0.03] px-3 py-2">
+                <div key={combo.label} className="flex items-center justify-between rounded-xl border border-[#1D2530] bg-white/[0.03] px-3 py-2">
                   <div className="flex items-center gap-2">
                     <span className="text-[13px] text-text-faint">{RANK_ORDER[i] ?? `${i + 1}.`}</span>
                     <span className="text-[13px] font-semibold">{combo.label}</span>

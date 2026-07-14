@@ -21,7 +21,7 @@ export function ExpGoalCard({ records, currentExpPercent }: { records: Experienc
   const goal = data.expGoal.targetDate ? computeGoal(currentExpPercent, sevenDay.perDayRate, data.expGoal.targetDate) : null;
 
   return (
-    <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20]">
+    <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
       <CardTitle>🎯 목표 달성 예측</CardTitle>
       <CardDescription>목표 날짜를 입력하면 최근 7일 평균 페이스 기준으로 달성 가능 여부를 계산합니다.</CardDescription>
 
@@ -38,7 +38,7 @@ export function ExpGoalCard({ records, currentExpPercent }: { records: Experienc
         <div className="text-[13px] text-text-sub">목표일이 이미 지났습니다.</div>
       ) : (
         <div className="grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
-          <div className="rounded-2xl border border-[#2A2F38] bg-white/[0.03] p-4">
+          <div className="rounded-2xl border border-[#1D2530] bg-white/[0.03] p-4">
             <div className="mb-2 flex justify-between text-[13px]">
               <span className="text-text-sub">현재 평균</span>
               <span className="font-display font-semibold">{formatPercent(goal.currentPerDayRate)}/일</span>
@@ -49,7 +49,7 @@ export function ExpGoalCard({ records, currentExpPercent }: { records: Experienc
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-[#2A2F38] bg-white/[0.03] p-4 text-center">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-[#1D2530] bg-white/[0.03] p-4 text-center">
             <Badge variant={goal.achievable ? 'success' : 'danger'}>{goal.achievable ? '목표 달성 가능' : '목표 달성 어려움'}</Badge>
             {goal.achievable ? (
               <div className="text-[13px] text-text-sub">현재 페이스로 목표일까지 도달 가능합니다.</div>

@@ -217,6 +217,8 @@ export type Route =
   | 'estimate'
   | 'experience'
   | 'analysis'
+  | 'compare'
+  | 'statistics'
   | 'calculator'
   | 'adenaPurchase'
   | 'settings';

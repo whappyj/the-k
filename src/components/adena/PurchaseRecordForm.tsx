@@ -58,7 +58,7 @@ export function PurchaseRecordForm({
   };
 
   return (
-    <Card className="rounded-2xl border-[#2A2F38] bg-[#171A20] p-6 sm:p-7">
+    <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016] p-6 sm:p-7">
       <div className="grid grid-cols-[2fr_1fr_1fr_auto] items-end gap-3 max-[720px]:grid-cols-1">
         <div>
           <Label className="mb-1.5 block">아이디</Label>
@@ -68,7 +68,7 @@ export function PurchaseRecordForm({
             placeholder="판매자 아이디"
             onChange={(e) => onChangeAccountId(e.target.value)}
             onKeyDown={handleAccountKeyDown}
-            className="h-11 rounded-xl border-[#2A2F38] bg-white/[0.04]"
+            className="h-11 rounded-xl border-[#1D2530] bg-white/[0.04]"
           />
         </div>
         <div>
@@ -81,12 +81,12 @@ export function PurchaseRecordForm({
             placeholder="0"
             onChange={(e) => onChangeAmount(e.target.value)}
             onKeyDown={handleAmountKeyDown}
-            className="h-11 rounded-xl border-[#2A2F38] bg-white/[0.04]"
+            className="h-11 rounded-xl border-[#1D2530] bg-white/[0.04]"
           />
         </div>
         <div>
           <Label className="mb-1.5 block">비고 (자동계산)</Label>
-          <div className="flex h-11 items-center rounded-xl border border-[#2A2F38] bg-white/[0.03] px-3.5 text-text-sub">
+          <div className="flex h-11 items-center rounded-xl border border-[#1D2530] bg-white/[0.03] px-3.5 text-text-sub">
             {previewCashAmount.toLocaleString('ko-KR')}원
           </div>
         </div>

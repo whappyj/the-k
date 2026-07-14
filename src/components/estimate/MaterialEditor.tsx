@@ -37,12 +37,12 @@ export function MaterialEditor({ materials, onChange, onReset, onApplyToast }: M
   };
 
   return (
-    <Card className="overflow-x-auto rounded-2xl border-[#2A2F38] bg-[#171A20]">
+    <Card className="overflow-x-auto rounded-2xl border-[#1D2530] bg-[#0B1016]">
       <table className="w-full min-w-[620px] border-collapse">
         <thead>
           <tr>
             {['', '', '재료명', '1개 제작 필요수량', 'A 가격', 'B 가격', '작업'].map((h, i) => (
-              <th key={h || `action-${i}`} className={`px-2.5 py-2.5 text-left text-xs font-semibold text-[#8A93A3] ${i > 2 && i < 6 ? 'text-right' : ''}`}>
+              <th key={h || `action-${i}`} className={`px-2.5 py-2.5 text-left text-xs font-semibold text-[#9AA1AC] ${i > 2 && i < 6 ? 'text-right' : ''}`}>
                 {h}
               </th>
             ))}
@@ -52,34 +52,34 @@ export function MaterialEditor({ materials, onChange, onReset, onApplyToast }: M
           {materials.map((m, i) => {
             const Icon = getMaterialIcon(m.name);
             return (
-            <tr key={m.id} className="border-t border-[#2A2F38] transition-colors duration-150 first:border-t-0 hover:bg-white/[0.02]">
+            <tr key={m.id} className="border-t border-[#1D2530] transition-colors duration-150 first:border-t-0 hover:bg-white/[0.02]">
               <td className="px-2 py-2">
                 <Button
                   variant="ghost"
                   size="icon"
                   aria-label={i === 0 ? '핵심재료' : '핵심재료로 지정'}
                   onClick={() => setKeyMaterial(m.id)}
-                  className={cn(i === 0 ? 'text-gold' : 'text-[#8A93A3]')}
+                  className={cn(i === 0 ? 'text-gold' : 'text-[#9AA1AC]')}
                 >
                   <Star size={18} fill={i === 0 ? 'currentColor' : 'none'} />
                 </Button>
               </td>
               <td className="px-1 py-2">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.05] text-[#8A93A3]">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.05] text-[#9AA1AC]">
                   <Icon size={16} />
                 </span>
               </td>
               <td className="px-2.5 py-2">
-                <Input value={m.name} placeholder="재료명" className="h-11 rounded-xl border-[#2A2F38] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { name: e.target.value })} />
+                <Input value={m.name} placeholder="재료명" className="h-11 rounded-xl border-[#1D2530] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { name: e.target.value })} />
               </td>
               <td className="px-2.5 py-2">
-                <Input type="number" min={0} value={m.qty} placeholder="0" className="ml-auto h-11 max-w-[130px] rounded-xl border-[#2A2F38] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { qty: Number(e.target.value) || 0 })} />
+                <Input type="number" min={0} value={m.qty} placeholder="0" className="ml-auto h-11 max-w-[130px] rounded-xl border-[#1D2530] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { qty: Number(e.target.value) || 0 })} />
               </td>
               <td className="px-2.5 py-2">
-                <Input type="number" min={0} value={m.priceA} placeholder="0" className="ml-auto h-11 max-w-[130px] rounded-xl border-[#2A2F38] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { priceA: Number(e.target.value) || 0 })} />
+                <Input type="number" min={0} value={m.priceA} placeholder="0" className="ml-auto h-11 max-w-[130px] rounded-xl border-[#1D2530] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { priceA: Number(e.target.value) || 0 })} />
               </td>
               <td className="px-2.5 py-2">
-                <Input type="number" min={0} value={m.priceB} placeholder="0" className="ml-auto h-11 max-w-[130px] rounded-xl border-[#2A2F38] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { priceB: Number(e.target.value) || 0 })} />
+                <Input type="number" min={0} value={m.priceB} placeholder="0" className="ml-auto h-11 max-w-[130px] rounded-xl border-[#1D2530] bg-white/[0.04]" onChange={(e) => updateRow(m.id, { priceB: Number(e.target.value) || 0 })} />
               </td>
               <td className="px-2.5 py-2">
                 <Button variant="ghost" size="icon" aria-label="재료 삭제" onClick={() => deleteRow(m.id)} className="text-danger hover:bg-danger-dim">
@@ -91,7 +91,7 @@ export function MaterialEditor({ materials, onChange, onReset, onApplyToast }: M
           })}
         </tbody>
       </table>
-      <div className="px-2.5 pt-2 text-[11px] text-[#8A93A3]">★를 누르면 그 재료가 "핵심재료"가 되어 조건/결과 화면 맨 위에 표시됩니다.</div>
+      <div className="px-2.5 pt-2 text-[11px] text-[#9AA1AC]">★를 누르면 그 재료가 "핵심재료"가 되어 조건/결과 화면 맨 위에 표시됩니다.</div>
 
       <div className="mt-5 flex flex-wrap gap-2.5">
         <Button variant="secondary" size="sm" onClick={addRow}>

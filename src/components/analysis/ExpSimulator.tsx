@@ -47,25 +47,25 @@ export function ExpSimulator({ records }: { records: ExperienceRecord[] }) {
   const expectedDate = remainHours !== null ? new Date(Date.now() + remainHours * 3600000) : null;
 
   return (
-    <Card className="rounded-2xl border-[#2A2F38] border-t-[3px] border-t-purple bg-purple/[0.04]">
+    <Card className="rounded-2xl border-[#1D2530] border-t-[3px] border-t-purple bg-purple/[0.04]">
       <div className="mb-4 grid grid-cols-3 gap-3.5 max-[640px]:grid-cols-1">
-        <div>
+        <div className="min-w-0">
           <Label className="mb-1.5 block">현재 경험치 (%)</Label>
-          <div className="flex items-center gap-1.5">
+          <div className="flex min-w-0 items-center gap-1.5">
             <Input type="number" min={1} step={1} placeholder="레벨" value={currentLevel} onChange={(e) => setCurrentLevel(e.target.value === '' ? '' : Number(e.target.value))} className="w-[70px] shrink-0 px-2 text-center" />
             <Input type="number" step={0.0001} value={current} onChange={(e) => setCurrent(e.target.value === '' ? '' : Number(e.target.value))} />
           </div>
         </div>
-        <div>
+        <div className="min-w-0">
           <Label className="mb-1.5 block">목표 경험치 (%)</Label>
-          <div className="flex items-center gap-1.5">
+          <div className="flex min-w-0 items-center gap-1.5">
             <Input type="number" min={1} step={1} placeholder="레벨" value={targetLevel} onChange={(e) => setTargetLevel(e.target.value === '' ? '' : Number(e.target.value))} className="w-[70px] shrink-0 px-2 text-center" />
             <Input type="number" step={0.0001} value={target} onChange={(e) => setTarget(e.target.value === '' ? '' : Number(e.target.value))} />
           </div>
         </div>
-        <div>
+        <div className="min-w-0">
           <Label className="mb-1.5 block">시간당 경험치 (%)</Label>
-          <div className="flex items-center gap-1.5">
+          <div className="flex min-w-0 items-center gap-1.5">
             <Input type="number" step={0.0001} value={rate} onChange={(e) => setRate(e.target.value === '' ? '' : Number(e.target.value))} />
             <Button variant="secondary" size="icon" aria-label="평균값으로 재설정" onClick={resetRate}>
               <RotateCcw size={16} />

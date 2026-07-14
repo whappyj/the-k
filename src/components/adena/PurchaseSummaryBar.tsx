@@ -48,9 +48,9 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
   };
 
   return (
-    <div className="mb-6 rounded-2xl border border-[#2A2F38] bg-[#171A20] p-5 sm:p-7">
+    <div className="mb-6 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-5 sm:p-7">
       <div className="mb-5 flex items-center justify-between">
-        <div className="text-[13px] font-semibold text-[#8A93A3]">오늘 현황</div>
+        <div className="text-[13px] font-semibold text-[#9AA1AC]">오늘 현황</div>
         <Button variant="secondary" size="sm" onClick={() => setSettingsOpen(true)}>
           <SettingsIcon size={16} />
           설정
@@ -61,7 +61,7 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
         <SummaryItem label="환율 (1만 아데나당)">
           <div className="font-display text-2xl font-bold text-white sm:text-[28px]">
             {rate.toLocaleString('ko-KR')}
-            <span className="ml-1 text-sm font-semibold text-[#8A93A3]">원</span>
+            <span className="ml-1 text-sm font-semibold text-[#9AA1AC]">원</span>
           </div>
         </SummaryItem>
 
@@ -74,7 +74,7 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
               aria-label="카카오톡 ID 복사"
               className={cn(
                 'flex h-8 shrink-0 items-center gap-1 rounded-lg px-2.5 text-[12px] font-semibold transition-colors',
-                copied ? 'bg-success/15 text-success' : 'bg-white/[0.06] text-[#8A93A3] hover:text-white'
+                copied ? 'bg-success/15 text-success' : 'bg-white/[0.06] text-[#9AA1AC] hover:text-white'
               )}
             >
               {copied ? <Check size={14} /> : <Copy size={14} />}
@@ -86,14 +86,14 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
         <SummaryItem label="총 매입 목표량">
           <div className="font-display text-2xl font-bold text-white sm:text-[28px]">
             {toAdena(target).toLocaleString('ko-KR')}
-            <span className="ml-1 text-sm font-semibold text-[#8A93A3]">A</span>
+            <span className="ml-1 text-sm font-semibold text-[#9AA1AC]">A</span>
           </div>
         </SummaryItem>
 
         <SummaryItem label="현재 매입량">
           <div className="font-display text-2xl font-bold text-primary sm:text-[28px]">
             {toAdena(current).toLocaleString('ko-KR')}
-            <span className="ml-1 text-sm font-semibold text-[#8A93A3]">A</span>
+            <span className="ml-1 text-sm font-semibold text-[#9AA1AC]">A</span>
           </div>
         </SummaryItem>
 
@@ -116,7 +116,7 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
 function SummaryItem({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <div className="mb-1.5 text-[11px] font-medium text-[#8A93A3]">{label}</div>
+      <div className="mb-1.5 text-[11px] font-medium text-[#9AA1AC]">{label}</div>
       {children}
     </div>
   );

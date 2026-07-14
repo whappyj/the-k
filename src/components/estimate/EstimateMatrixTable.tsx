@@ -70,9 +70,9 @@ export function EstimateMatrixTable({ materials, rateA, rateB, feeA, feeB }: Est
   return (
     <div className="flex flex-col gap-5">
       {rateGroups.map((rg, ri) => (
-        <div key={ri} className="rounded-2xl border border-[#2A2F38] bg-[#171A20] p-5 sm:p-6">
+        <div key={ri} className="rounded-2xl border border-[#1D2530] bg-[#0B1016] p-5 sm:p-6">
           <div className="mb-4 text-[15px] font-bold text-white">
-            {rg.label} <span className="text-[13px] font-normal text-[#8A93A3]">(1만 아데나 = {rg.rate.toLocaleString('ko-KR')}원)</span>
+            {rg.label} <span className="text-[13px] font-normal text-[#9AA1AC]">(1만 아데나 = {rg.rate.toLocaleString('ko-KR')}원)</span>
           </div>
           <div className="grid grid-cols-2 gap-4 max-[720px]:grid-cols-1">
             {priceGroups.map((pg) => {
@@ -93,18 +93,18 @@ export function EstimateMatrixTable({ materials, rateA, rateB, feeA, feeB }: Est
                     }}
                     className={cn(
                       'rounded-xl border bg-white/[0.02] p-4 text-left transition-colors duration-200 hover:border-primary/40 hover:bg-white/[0.04] active:scale-[0.99]',
-                      isOpen ? 'border-primary/50' : 'border-[#2A2F38]'
+                      isOpen ? 'border-primary/50' : 'border-[#1D2530]'
                     )}
                   >
                     <div className="mb-2.5 flex items-center justify-between gap-2">
                       <span className="text-[13px] font-semibold text-white">
                         {keyMaterial?.name ?? '핵심재료'} {priceLabel}원
                       </span>
-                      {isOpen ? <ChevronUp size={15} className="shrink-0 text-primary" /> : <ChevronDown size={15} className="shrink-0 text-[#8A93A3]" />}
+                      {isOpen ? <ChevronUp size={15} className="shrink-0 text-primary" /> : <ChevronDown size={15} className="shrink-0 text-[#9AA1AC]" />}
                     </div>
                     <table className="w-full border-collapse text-[12px]">
                       <thead>
-                        <tr className="text-[#8A93A3]">
+                        <tr className="text-[#9AA1AC]">
                           <th className="pb-1.5 text-left font-medium">제작 수량</th>
                           <th className="pb-1.5 text-right font-medium">필요 아데나</th>
                           <th className="pb-1.5 text-right font-medium">제작비용</th>
@@ -114,8 +114,8 @@ export function EstimateMatrixTable({ materials, rateA, rateB, feeA, feeB }: Est
                         {QTY_TIERS.map((tier) => {
                           const res = calcEstimateGroup(materials, pg.priceKey, rg.rate, pg.fee, tier);
                           return (
-                            <tr key={tier} className="border-t border-[#2A2F38]/60">
-                              <td className="py-1.5 text-[#8A93A3]">{tier}개 제작</td>
+                            <tr key={tier} className="border-t border-[#1D2530]/60">
+                              <td className="py-1.5 text-[#9AA1AC]">{tier}개 제작</td>
                               <td className="py-1.5 text-right text-white">{formatNumber(res.totalAdena)}</td>
                               <td className="py-1.5 text-right font-semibold text-primary">{formatNumber(toKrw(res.totalAdena, rg.rate))}원</td>
                             </tr>
@@ -180,15 +180,15 @@ export function EstimateMatrixTable({ materials, rateA, rateB, feeA, feeB }: Est
       ))}
 
       {keyMaterial && (
-        <div className="rounded-2xl border border-[#2A2F38] bg-[#171A20] p-5 sm:p-6">
+        <div className="rounded-2xl border border-[#1D2530] bg-[#0B1016] p-5 sm:p-6">
           <div className="mb-4 text-[15px] font-bold text-white">재료 소모량 (개당 기준)</div>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[420px] border-collapse text-[13px]">
               <thead>
-                <tr className="text-[#8A93A3]">
-                  <th className="border-b border-[#2A2F38] px-2 py-2 text-left font-medium">재료명</th>
+                <tr className="text-[#9AA1AC]">
+                  <th className="border-b border-[#1D2530] px-2 py-2 text-left font-medium">재료명</th>
                   {QTY_TIERS.map((tier) => (
-                    <th key={tier} className="border-b border-[#2A2F38] px-2 py-2 text-right font-medium">
+                    <th key={tier} className="border-b border-[#1D2530] px-2 py-2 text-right font-medium">
                       {tier}개 제작 시
                     </th>
                   ))}
@@ -196,10 +196,10 @@ export function EstimateMatrixTable({ materials, rateA, rateB, feeA, feeB }: Est
               </thead>
               <tbody>
                 {materials.map((m) => (
-                  <tr key={m.id} className="border-b border-[#2A2F38]/60 last:border-none">
+                  <tr key={m.id} className="border-b border-[#1D2530]/60 last:border-none">
                     <td className="px-2 py-2 text-white">{m.name}</td>
                     {QTY_TIERS.map((tier) => (
-                      <td key={tier} className="px-2 py-2 text-right text-[#8A93A3]">
+                      <td key={tier} className="px-2 py-2 text-right text-[#9AA1AC]">
                         {formatNumber((Number(m.qty) || 0) * tier)}개
                       </td>
                     ))}

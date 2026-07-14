@@ -113,7 +113,7 @@ export function EstimatePage() {
       </Section>
 
       <Section title="내보내기">
-        <Card className="flex flex-wrap gap-2.5 rounded-2xl border-[#2A2F38] bg-[#171A20]">
+        <Card className="flex flex-wrap gap-2.5 rounded-2xl border-[#1D2530] bg-[#0B1016]">
           <Button variant="warning" onClick={() => exportPage('estimate')}>
             <ImageDown size={18} />
             현재 견적 JPG 저장

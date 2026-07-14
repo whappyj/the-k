@@ -1,12 +1,18 @@
-import type { HTMLAttributes, MouseEvent as ReactMouseEvent } from 'react';
+import type { HTMLAttributes, MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
+/**
+ * components/ui/card.tsx
+ * THE K 공통 Card. Black + Gold, Modern Professional Launcher 톤.
+ * 모든 화면(기록하기/기록목록/비교/통계/제작견적/계산기/설정)이 동일한 Radius/Border/Padding/
+ * Hover/Active를 쓰도록 여기 한 곳에서만 정의한다.
+ */
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        'rounded-card border border-border/[0.08] bg-card/85 p-6 shadow-soft backdrop-blur-glass',
-        'transition-[border-color,box-shadow,transform] duration-200 hover:border-border/[0.14]',
+        'rounded-2xl border border-[#1D2530] bg-[#0B1016] p-8 shadow-[0_4px_14px_rgba(0,0,0,0.28)]',
+        'transition-all duration-200',
         className
       )}
       {...props}
@@ -14,7 +20,7 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   );
 }
 
-/** 클릭 가능한 타일형 카드 (hover scale 1.02 + 강한 그림자). 키보드(TAB/ENTER)로도 실행 가능하다. */
+/** 클릭 가능한 타일형 카드. Hover 시 위로 2px 뜨고 테두리가 골드로, 그림자가 은은하게 짙어진다. */
 export function InteractiveCard({ className, onClick, onKeyDown, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <Card
@@ -28,9 +34,52 @@ export function InteractiveCard({ className, onClick, onKeyDown, ...props }: HTM
         }
         onKeyDown?.(e);
       }}
-      className={cn('cursor-pointer hover:scale-[1.02] hover:shadow-hover', className)}
+      className={cn(
+        'cursor-pointer hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-[0_6px_18px_rgba(0,0,0,0.32)] active:translate-y-0',
+        className
+      )}
       {...props}
     />
+  );
+}
+
+/** "사냥 설정 / 시작 / 종료 / 결과"처럼 화면을 4개 영역으로 나눌 때 쓰는 큰 구획 패널. Card와 동일한 톤이되
+ *  섹션 타이틀 자리(숫자 배지 + 제목)가 이미 갖춰져 있다. */
+export function Panel({
+  step,
+  title,
+  action,
+  accent = 'gold',
+  className,
+  children,
+}: {
+  step?: number;
+  title: string;
+  action?: ReactNode;
+  accent?: 'gold' | 'green' | 'red' | 'blue';
+  className?: string;
+  children: ReactNode;
+}) {
+  const accentClass = {
+    gold: 'bg-gold-dim text-gold',
+    green: 'bg-success-dim text-success',
+    red: 'bg-danger-dim text-danger',
+    blue: 'bg-primary-dim text-primary',
+  }[accent];
+
+  return (
+    <Card className={className}>
+      <div className="mb-5 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          {step != null && (
+            <span className={cn('flex h-6 w-6 items-center justify-center rounded-lg font-display text-[12px] font-bold', accentClass)}>{step}</span>
+          )}
+          <span className="text-[15px] font-bold text-white">{title}</span>
+        </div>
+        {action}
+      </div>
+      {children}
+    </Card>
   );
 }
 
