@@ -5,6 +5,8 @@ import { useAppData, useAppDataActions } from '@/hooks/useAppData';
 import { useToast } from '@/hooks/useToast';
 import { usePendingEdit } from '@/hooks/usePendingEdit';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
+import { HelpButton } from '@/components/common/HelpButton';
+import { HELP_EXPERIENCE } from '@/lib/helpContent';
 import { ExperienceForm } from '@/components/experience/ExperienceForm';
 import { ResultPanel } from '@/components/experience/ResultPanel';
 import { FavoritePartyList } from '@/components/experience/FavoritePartyList';
@@ -237,7 +239,12 @@ export function ExperiencePage() {
       <PageHeader
         title="⚔ 경험치 기록"
         subtitle="사냥 기록을 입력하면 자동으로 경험치 효율을 계산하고 분석 페이지에 반영됩니다."
-        actions={<ImportExportButtons label="경험치" onExport={handleExportSection} onImportFile={handleImportSection} />}
+        actions={
+          <div className="flex items-center gap-2">
+            <ImportExportButtons label="경험치" onExport={handleExportSection} onImportFile={handleImportSection} />
+            <HelpButton content={HELP_EXPERIENCE} />
+          </div>
+        }
       />
 
       <div className="mb-10 grid grid-cols-[1.2fr_1fr] items-start gap-5 max-[1100px]:grid-cols-1">

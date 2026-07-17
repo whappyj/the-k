@@ -57,9 +57,10 @@ export function RecordDetailPanel({ record, allRecords, onEdit }: { record: Expe
         </div>
       </div>
 
-      <div className="mb-5 grid grid-cols-3 gap-3">
-        <DetailStat label="획득 경험치" value={formatPercent(record.gainExp)} />
+      <div className="mb-5 grid grid-cols-4 gap-3 max-[480px]:grid-cols-2">
         <DetailStat label="사냥 시간" value={formatDuration(record.playTime)} />
+        <DetailStat label="획득 경험치" value={formatPercent(record.gainExp)} />
+        <DetailStat label="사냥터" value={record.huntArea} />
         <DetailStat label="레벨" value={`Lv ${record.startLevel}→${record.endLevel}`} />
       </div>
 
@@ -81,7 +82,10 @@ export function RecordDetailPanel({ record, allRecords, onEdit }: { record: Expe
       </div>
 
       {record.memo && (
-        <div className="mb-5 rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5 text-[12.5px] text-text-sub">{record.memo}</div>
+        <div className="mb-5 rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5">
+          <div className="mb-1.5 text-[10.5px] font-bold text-text-faint">메모</div>
+          <div className="text-[12.5px] text-text-sub">{record.memo}</div>
+        </div>
       )}
 
       <div className="rounded-2xl border border-gold/25 bg-gold-dim p-4 text-center">

@@ -3,6 +3,8 @@ import { Trophy, Sword, Shield as ShieldIcon, GitCompareArrows } from 'lucide-re
 import { useAppData } from '@/hooks/useAppData';
 import { useFormatters } from '@/hooks/useFormatters';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
+import { HelpButton } from '@/components/common/HelpButton';
+import { HELP_COMPARE } from '@/lib/helpContent';
 import { Card, Panel } from '@/components/ui/card';
 import { EmptyCell } from '@/components/common/EmptyState';
 import { groupBy, sortGroups, type GroupStats } from '@/lib/analysis';
@@ -32,7 +34,7 @@ export function ComparePage() {
   if (!records.length) {
     return (
       <div id="page-compare">
-        <PageHeader title="⚖ 비교" subtitle="사냥터별 시간당 경험치를 한눈에 비교합니다." />
+        <PageHeader title="⚖ 비교" subtitle="사냥터별 시간당 경험치를 한눈에 비교합니다." actions={<HelpButton content={HELP_COMPARE} />} />
         <EmptyCell>경험치 기록이 쌓이면 사냥터별 효율을 랭킹으로 비교할 수 있습니다.</EmptyCell>
       </div>
     );
@@ -61,7 +63,7 @@ export function ComparePage() {
 
   return (
     <div id="page-compare">
-      <PageHeader title="⚖ 비교" subtitle={`사냥터 랭킹전 — ${groups.length}개 사냥터 · 어디가 가장 효율 좋은지 3초 안에 확인하세요.`} />
+      <PageHeader title="⚖ 비교" subtitle={`사냥터 랭킹전 — ${groups.length}개 사냥터 · 어디가 가장 효율 좋은지 3초 안에 확인하세요.`} actions={<HelpButton content={HELP_COMPARE} />} />
 
       <div className="mb-6 grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
         <ModeTab active={mode === 'area'} icon={Sword} label="사냥터 비교" desc="사냥터별 랭킹으로 비교" onClick={() => setMode('area')} />
@@ -78,7 +80,7 @@ export function ComparePage() {
         const s = partyStats(champion);
         return (
           <Card className="relative mb-5 overflow-hidden border-gold/55 bg-gradient-to-br from-gold-dim via-[#0B1016] to-[#0B1016] p-8 shadow-[0_0_0_1px_rgba(214,168,79,0.3),0_16px_40px_rgba(214,168,79,0.18)] sm:p-10">
-            <div className="absolute right-6 top-6 flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-[12px] font-extrabold tracking-wide text-[#1A1408]">
+            <div className="absolute right-6 top-6 flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-[12px] font-extrabold tracking-wide text-[#1A1408] shadow-[0_0_16px_rgba(214,168,79,0.5)]">
               <Trophy size={15} />
               CHAMPION
             </div>
@@ -168,7 +170,7 @@ export function ComparePage() {
                   <span className="w-7 shrink-0 text-center font-display text-[13px] font-bold text-text-faint">{rank}</span>
                   <span className="w-32 shrink-0 truncate text-[13px] font-semibold">{g.key}</span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
-                    <div className="h-full rounded-full transition-all duration-300" style={{ width: `${Math.max(4, (g.avgPerHour / maxRate) * 100)}%`, background: COLORS[idx % COLORS.length] }} />
+                    <div className="h-full rounded-full transition-all duration-300" style={{ width: `${Math.max(4, (g.avgPerHour / maxRate) * 100)}%`, background: COLORS[idx % COLORS.length] ?? '#4F8CFF' }} />
                   </div>
                   <span className="w-20 shrink-0 text-right font-display text-[13px] font-bold">{formatPercent(g.avgPerHour)}/h</span>
                   <span className="w-14 shrink-0 text-right text-[11px] text-text-faint">{g.count}건</span>
@@ -187,7 +189,7 @@ export function ComparePage() {
               <div className="h-4 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
                 <div
                   className="h-full rounded-full transition-all duration-300"
-                  style={{ width: `${Math.max(4, (g.avgPerHour / maxRate) * 100)}%`, background: g.key === champion?.key ? '#D6A84F' : COLORS[i % COLORS.length] }}
+                  style={{ width: `${Math.max(4, (g.avgPerHour / maxRate) * 100)}%`, background: g.key === champion?.key ? '#D6A84F' : COLORS[i % COLORS.length] ?? '#4F8CFF' }}
                 />
               </div>
               <span className="w-20 shrink-0 text-right font-display text-[12.5px] font-bold">{formatPercent(g.avgPerHour)}</span>

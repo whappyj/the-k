@@ -3,6 +3,8 @@ import { useAppData } from '@/hooks/useAppData';
 import { useFormatters } from '@/hooks/useFormatters';
 import { Card, CardTitle, CardDescription, InteractiveCard } from '@/components/ui/card';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
+import { HelpButton } from '@/components/common/HelpButton';
+import { HELP_HOME } from '@/lib/helpContent';
 import { EmptyCell } from '@/components/common/EmptyState';
 import { ExpDashboardWidget } from '@/components/analysis/ExpDashboardWidget';
 import type { Route } from '@/types';
@@ -33,7 +35,7 @@ export function HomePage() {
 
   return (
     <div id="page-home">
-      <PageHeader title="홈" subtitle="오늘의 사냥 요약과 최근 기록을 한눈에 확인하세요." />
+      <PageHeader title="홈" subtitle="오늘의 사냥 요약과 최근 기록을 한눈에 확인하세요." actions={<HelpButton content={HELP_HOME} />} />
 
       <div className="mb-8">
         <ExpDashboardWidget records={data.experienceRecords} goal={data.expGoal} />

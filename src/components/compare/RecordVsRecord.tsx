@@ -108,9 +108,6 @@ function ComparisonResult({ a, b, allRecords }: { a: ExperienceRecord; b: Experi
   const rateWinner = a.expPerHour === b.expPerHour ? null : a.expPerHour > b.expPerHour ? 'A' : 'B';
   const rateDiffPct = Math.min(a.expPerHour, b.expPerHour) > 0 ? (Math.abs(a.expPerHour - b.expPerHour) / Math.min(a.expPerHour, b.expPerHour)) * 100 : 0;
 
-  const minuteWinner = a.expPerMinute === b.expPerMinute ? null : a.expPerMinute > b.expPerMinute ? 'A' : 'B';
-  const minuteDiffPct = Math.min(a.expPerMinute, b.expPerMinute) > 0 ? (Math.abs(a.expPerMinute - b.expPerMinute) / Math.min(a.expPerMinute, b.expPerMinute)) * 100 : 0;
-
   const playTimeDiff = Math.abs(a.playTime - b.playTime);
   const gainDiff = Math.abs(a.gainExp - b.gainExp);
 
@@ -133,33 +130,26 @@ function ComparisonResult({ a, b, allRecords }: { a: ExperienceRecord; b: Experi
 
   return (
     <div className="flex flex-col gap-5">
-      {/* VS 헤더 */}
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-        <RecordHeadline record={a} label="A" accent="blue" isChampion={rateWinner === 'A'} />
-        <div className="font-display text-[22px] font-extrabold text-text-faint">VS</div>
-        <RecordHeadline record={b} label="B" accent="green" isChampion={rateWinner === 'B'} />
-      </div>
-
-      {/* 시간당 경험치 막대그래프 */}
+      {/* A VS B — 시간당 경험치를 막대와 함께 즉시 비교 (0.5초 안에 승자 파악) */}
       <Card>
-        <div className="mb-3 text-[11px] font-bold uppercase tracking-wide text-text-sub">시간당 경험치 비교</div>
-        <div className="flex flex-col gap-2.5">
-          <BarRow label="A" value={a.expPerHour} max={Math.max(a.expPerHour, b.expPerHour, 1)} color="#4F8CFF" display={`${formatPercent(a.expPerHour)}/h`} />
-          <BarRow label="B" value={b.expPerHour} max={Math.max(a.expPerHour, b.expPerHour, 1)} color="#2ECC71" display={`${formatPercent(b.expPerHour)}/h`} />
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-5">
+          <HeadToHead record={a} label="A" accent="#4F8CFF" isChampion={rateWinner === 'A'} maxRate={Math.max(a.expPerHour, b.expPerHour, 1)} />
+          <div className="font-display text-[20px] font-extrabold text-text-faint">VS</div>
+          <HeadToHead record={b} label="B" accent="#2ECC71" isChampion={rateWinner === 'B'} align="right" maxRate={Math.max(a.expPerHour, b.expPerHour, 1)} />
         </div>
+        {rateWinner && (
+          <div className="mt-4 text-center text-[13px] font-bold text-gold">
+            🏆 {rateWinner} 승리 · 시간당 경험치 +{rateDiffPct.toFixed(1)}% 더 높음
+          </div>
+        )}
       </Card>
 
-      {/* 비교 항목 */}
+      {/* 핵심 비교 항목 */}
       <Card>
-        <CompareRow label="시간당 경험치" a={`${formatPercent(a.expPerHour)}/h`} b={`${formatPercent(b.expPerHour)}/h`} result={rateWinner ? `${rateWinner} 승 +${rateDiffPct.toFixed(1)}%` : '동일'} resultTone={rateWinner ? 'win' : 'neutral'} />
-        <CompareRow label="분당 경험치" a={`${formatPercent(a.expPerMinute)}/min`} b={`${formatPercent(b.expPerMinute)}/min`} result={minuteWinner ? `${minuteWinner} 승 +${minuteDiffPct.toFixed(1)}%` : '동일'} resultTone={minuteWinner ? 'win' : 'neutral'} />
-        <CompareRow label="사냥 시간" a={formatDuration(a.playTime)} b={formatDuration(b.playTime)} result={`차이 ${formatDuration(playTimeDiff)}`} resultTone="neutral" />
         <CompareRow label="총 획득 경험치" a={formatPercent(a.gainExp)} b={formatPercent(b.gainExp)} result={`차이 ${formatPercent(gainDiff)}`} resultTone="neutral" />
+        <CompareRow label="사냥 시간" a={formatDuration(a.playTime)} b={formatDuration(b.playTime)} result={`차이 ${formatDuration(playTimeDiff)}`} resultTone="neutral" />
         <CompareRow label="레벨" a={`Lv ${a.startLevel}→${a.endLevel}`} b={`Lv ${b.startLevel}→${b.endLevel}`} />
-        <CompareRow label="기사 / 요정 / 법사" a={`${a.party.knight}/${a.party.elf}/${a.party.wizard}`} b={`${b.party.knight}/${b.party.elf}/${b.party.wizard}`} />
-        <CompareRow label="몰이" a={a.molly ? 'ON' : 'OFF'} b={b.molly ? 'ON' : 'OFF'} />
-        <CompareRow label="비비기" a={a.bibigi.enabled ? `ON(${a.bibigi.count})` : 'OFF'} b={b.bibigi.enabled ? `ON(${b.bibigi.count})` : 'OFF'} />
-        {(a.memo || b.memo) && <CompareRow label="메모" a={a.memo || '-'} b={b.memo || '-'} />}
+        <CompareRow label="사냥터" a={a.huntArea} b={b.huntArea} />
       </Card>
 
       {/* 추천 */}
@@ -179,31 +169,27 @@ function ComparisonResult({ a, b, allRecords }: { a: ExperienceRecord; b: Experi
   );
 }
 
-function RecordHeadline({ record, label, accent, isChampion }: { record: ExperienceRecord; label: string; accent: 'blue' | 'green'; isChampion: boolean }) {
+function HeadToHead({ record, label, accent, isChampion, align = 'left', maxRate }: { record: ExperienceRecord; label: string; accent: string; isChampion: boolean; align?: 'left' | 'right'; maxRate: number }) {
   const { formatPercent } = useFormatters();
-  const accentColor = accent === 'blue' ? 'text-primary' : 'text-success';
   return (
-    <Card className={cn('relative text-center', isChampion && 'border-gold/50')}>
-      {isChampion && (
-        <span className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0B1016] bg-gold text-[#1A1408]">
-          <Trophy size={14} />
+    <div className={cn('min-w-0', align === 'right' && 'text-right')}>
+      <div className={cn('mb-1.5 flex items-center gap-1.5', align === 'right' && 'flex-row-reverse')}>
+        <span className="text-[11px] font-bold uppercase tracking-wide" style={{ color: accent }}>
+          {label}
         </span>
-      )}
-      <div className={cn('mb-1 text-[11px] font-bold uppercase tracking-wide', accentColor)}>{label}</div>
-      <div className="mb-1 truncate text-[15px] font-bold text-white">{record.huntArea}</div>
-      <div className="font-display text-[28px] font-bold text-white">{formatPercent(record.expPerHour)}/h</div>
-    </Card>
-  );
-}
-
-function BarRow({ label, value, max, color, display }: { label: string; value: number; max: number; color: string; display: string }) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="w-5 shrink-0 text-center text-[12px] font-bold text-text-sub">{label}</span>
-      <div className="h-4 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
-        <div className="h-full rounded-full transition-all duration-300" style={{ width: `${Math.max(4, (value / max) * 100)}%`, background: color }} />
+        {isChampion && <Trophy size={13} className="text-gold" />}
       </div>
-      <span className="w-20 shrink-0 text-right font-display text-[12.5px] font-bold">{display}</span>
+      <div className="mb-2 truncate text-[13px] font-semibold text-text-sub">{record.huntArea}</div>
+      <div className="mb-2 font-display text-[36px] font-bold leading-none" style={{ color: isChampion ? '#D6A84F' : accent }}>
+        {formatPercent(record.expPerHour)}
+        <span className="text-[14px] opacity-70">/h</span>
+      </div>
+      <div className="h-2.5 overflow-hidden rounded-full bg-white/[0.06]">
+        <div
+          className={cn('h-full rounded-full transition-all duration-300', align === 'right' && 'ml-auto')}
+          style={{ width: `${Math.max(6, (record.expPerHour / maxRate) * 100)}%`, background: isChampion ? '#D6A84F' : accent }}
+        />
+      </div>
     </div>
   );
 }

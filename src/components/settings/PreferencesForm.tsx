@@ -76,8 +76,8 @@ export function PreferencesForm() {
         </Select>
       </Row>
 
-      <div className="mt-4 flex items-center justify-between gap-4 border-t border-border/[0.08] pt-4">
-        <div>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-border/[0.08] pt-4">
+        <div className="min-w-0">
           <div className="text-sm font-semibold">설정 내보내기 / 불러오기</div>
           <div className="mt-0.5 text-xs text-text-sub">위 환경설정 값만 담습니다 (다른 화면 데이터는 포함되지 않습니다).</div>
         </div>

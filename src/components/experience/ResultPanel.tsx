@@ -38,7 +38,7 @@ export function ResultPanel({ stats, endExp }: ResultPanelProps) {
 
         <div className="mb-5 rounded-2xl border border-gold/25 bg-gradient-to-br from-gold-dim to-transparent p-7 text-center">
           <div className="mb-2 text-[12px] font-bold uppercase tracking-wide text-gold/80">시간당 경험치</div>
-          <div className="font-display text-[60px] font-bold leading-none text-gold">
+          <div className="font-display text-[64px] font-bold leading-none text-gold">
             {stats ? formatPercent(stats.expPerHour) : '-'}
             <span className="text-[24px] text-gold/70">/h</span>
           </div>

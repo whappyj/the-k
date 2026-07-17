@@ -11,7 +11,7 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        'rounded-2xl border border-[#1D2530] bg-[#0B1016] p-8 shadow-[0_4px_14px_rgba(0,0,0,0.28)]',
+        'rounded-[20px] border border-[#1D2530] bg-[#0B1016] p-6 shadow-[0_4px_14px_rgba(0,0,0,0.28)]',
         'transition-all duration-200',
         className
       )}

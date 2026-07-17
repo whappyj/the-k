@@ -16,25 +16,23 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
   const today = todayStr();
 
   const todayRecords = records.filter((r) => r.startDate === today);
-  const todayBest = todayRecords.length ? todayRecords.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b), todayRecords[0]) : null;
+  const todayBest = todayRecords.length ? todayRecords.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b)) : null;
 
   const weekAgo = new Date();
   weekAgo.setDate(weekAgo.getDate() - 7);
   const weekAgoStr = weekAgo.toISOString().slice(0, 10);
   const weekRecords = records.filter((r) => r.startDate >= weekAgoStr);
-  const weekBest = weekRecords.length ? weekRecords.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b), weekRecords[0]) : null;
+  const weekBest = weekRecords.length ? weekRecords.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b)) : null;
 
   // 가장 많이 간 사냥터 (최빈값)
   const areaCount = new Map<string, number>();
   records.forEach((r) => areaCount.set(r.huntArea, (areaCount.get(r.huntArea) ?? 0) + 1));
-  const mostVisited = Array.from(areaCount.entries()).reduce(
-    (best, [area, count]) => (count > best.count ? { area, count } : best),
-    { area: '', count: 0 }
-  );
+  const areaEntries = Array.from(areaCount.entries());
+  const mostVisitedEntry = areaEntries.length ? areaEntries.reduce((best, entry) => (entry[1] > best[1] ? entry : best)) : null;
+  const mostVisited = mostVisitedEntry ? { area: mostVisitedEntry[0], count: mostVisitedEntry[1] } : null;
 
   // 최고 효율 사냥터 (전체 기록 중 시간당 경험치 최댓값을 낸 사냥터)
-  const bestOverall = records.length ? records.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b), records[0]) : null;
-
+  const bestOverall = records.length ? records.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b)) : null;
 
   return (
     <div className="mb-6 grid grid-cols-4 gap-5 max-[1100px]:grid-cols-2">
@@ -63,8 +61,8 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
       <SummaryCard icon={MapPin} tone="blue" label="가장 많이 간 사냥터">
         {mostVisited ? (
           <>
-            <div className="truncate text-[18px] font-bold text-white">{mostVisited?.area}</div>
-            <div className="mt-0.5 text-[11px] text-text-faint">{mostVisited?.count}회 방문</div>
+            <div className="truncate text-[18px] font-bold text-white">{mostVisited.area}</div>
+            <div className="mt-0.5 text-[11px] text-text-faint">{mostVisited.count}회 방문</div>
           </>
         ) : (
           <div className="text-[12px] text-text-faint">기록 없음</div>

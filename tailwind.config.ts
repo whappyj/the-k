@@ -50,7 +50,7 @@ export default {
         display: ['"Space Grotesk"', 'Pretendard', 'sans-serif'],
       },
       borderRadius: {
-        card: '16px',
+        card: '20px',
         btn: '14px',
         input: '12px',
         modal: '24px',
@@ -71,10 +71,12 @@ export default {
       keyframes: {
         'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
         'scale-in': { from: { opacity: '0', transform: 'scale(0.97) translateY(4px)' }, to: { opacity: '1', transform: 'scale(1) translateY(0)' } },
+        'slide-in': { from: { transform: 'translateX(100%)' }, to: { transform: 'translateX(0)' } },
       },
       animation: {
         'fade-in': 'fade-in 160ms ease-out',
         'scale-in': 'scale-in 180ms cubic-bezier(0.16,1,0.3,1)',
+        'slide-in': 'slide-in 220ms cubic-bezier(0.16,1,0.3,1)',
       },
     },
   },

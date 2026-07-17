@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAppData } from '@/hooks/useAppData';
 import { usePendingEdit } from '@/hooks/usePendingEdit';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { HelpButton } from '@/components/common/HelpButton';
+import { HELP_ANALYSIS } from '@/lib/helpContent';
 import { RecordDetailPanel } from '@/components/analysis/RecordDetailPanel';
 import { AnalysisRecentList } from '@/components/analysis/RecentList';
 import { EmptyCell } from '@/components/common/EmptyState';
@@ -28,7 +30,7 @@ export function AnalysisPage() {
   if (!records.length) {
     return (
       <div id="page-analysis">
-        <PageHeader title="📜 기록 목록" subtitle="저장된 사냥 기록을 검색·필터·정렬하여 관리합니다." />
+        <PageHeader title="📜 기록 목록" subtitle="저장된 사냥 기록을 검색·필터·정렬하여 관리합니다." actions={<HelpButton content={HELP_ANALYSIS} />} />
         <EmptyCell>경험치 기록이 쌓이면 여기서 검색하고 관리할 수 있습니다. 먼저 경험치 기록 페이지에서 기록을 입력해주세요.</EmptyCell>
       </div>
     );
@@ -36,7 +38,7 @@ export function AnalysisPage() {
 
   return (
     <div id="page-analysis">
-      <PageHeader title="📜 기록 목록" subtitle="저장된 사냥 기록을 검색·필터·정렬하여 관리합니다." />
+      <PageHeader title="📜 기록 목록" subtitle="저장된 사냥 기록을 검색·필터·정렬하여 관리합니다." actions={<HelpButton content={HELP_ANALYSIS} />} />
 
       <div className="grid grid-cols-[1fr_380px] items-start gap-6 max-[1280px]:grid-cols-1">
         <AnalysisRecentList records={records} onSelect={setSelectedId} selectedId={selectedId} />

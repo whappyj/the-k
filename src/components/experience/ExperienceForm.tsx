@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import type { ReactNode, KeyboardEvent } from 'react';
-import { Save, ScanText, Play, Square, User, Users, MapPin, FileText } from 'lucide-react';
+import { Save, Play, Square, User, Users, MapPin, FileText } from 'lucide-react';
 import type { ExperienceFormValues } from '@/types';
 import { MAX_PARTY } from '@/constants';
 import { Card } from '@/components/ui/card';
@@ -9,8 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { ExpOcrPanel } from '@/components/experience/ExpOcrPanel';
-import type { ExpOcrResult } from '@/lib/ocrExp';
 import { toDateTimeLocalValue, splitDateTimeLocalValue } from '@/utils/date';
 import { cn } from '@/utils/cn';
 
@@ -33,7 +31,6 @@ interface ExperienceFormProps {
  * 돌아가도 값이 사라지지 않는다. 계산 로직/필드는 전부 기존 그대로다.
  */
 export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, onSave, onReset, onCancelEdit }: ExperienceFormProps) {
-  const [ocrTarget, setOcrTarget] = useState<'start' | 'end' | null>(null);
   const [startManual, setStartManual] = useState(false);
   const [endManual, setEndManual] = useState(false);
   const [mode, setMode] = useState<'solo' | 'party'>(() => (values.knight + values.elf + values.wizard > 0 ? 'party' : 'solo'));
@@ -46,14 +43,6 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
       e.preventDefault();
       onSave();
     }
-  };
-
-  const handleOcrResult = (target: 'start' | 'end', result: ExpOcrResult) => {
-    if (result.reading.value === null) return;
-    const expPatch = target === 'start' ? { startExp: result.reading.value } : { endExp: result.reading.value };
-    const levelPatch = result.detectedLevel !== null ? (target === 'start' ? { startLevel: result.detectedLevel } : { endLevel: result.detectedLevel }) : {};
-    onChange({ ...expPatch, ...levelPatch });
-    setOcrTarget(null);
   };
 
   const captureNow = (which: 'start' | 'end') => {
@@ -148,9 +137,6 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
           onLevelChange={(v) => onChange({ startLevel: v })}
           expValue={values.startExp}
           onExpChange={(v) => onChange({ startExp: v })}
-          ocrOpen={ocrTarget === 'start'}
-          onToggleOcr={() => setOcrTarget(ocrTarget === 'start' ? null : 'start')}
-          onOcrResult={(r) => handleOcrResult('start', r)}
         />
         <TimeSection
           title="종료"
@@ -166,9 +152,6 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
           onLevelChange={(v) => onChange({ endLevel: v })}
           expValue={values.endExp}
           onExpChange={(v) => onChange({ endExp: v })}
-          ocrOpen={ocrTarget === 'end'}
-          onToggleOcr={() => setOcrTarget(ocrTarget === 'end' ? null : 'end')}
-          onOcrResult={(r) => handleOcrResult('end', r)}
         />
       </div>
       <div className="mb-6 text-[11px] text-text-faint">
@@ -183,20 +166,20 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
       <div className="mb-6 mt-1 text-right text-[11px] text-text-faint">{values.memo.length} / 300</div>
 
       {/* ⑥ 저장 */}
-      <div className="flex justify-end gap-2">
+      <div className="mb-3 flex justify-end gap-2">
         {isEditing && (
-          <Button variant="ghost" onClick={onCancelEdit}>
+          <Button variant="ghost" size="sm" onClick={onCancelEdit}>
             수정 취소
           </Button>
         )}
-        <Button variant="ghost" onClick={onReset}>
+        <Button variant="ghost" size="sm" onClick={onReset}>
           초기화
         </Button>
-        <Button variant="gold" onClick={onSave}>
-          <Save size={18} />
-          {isEditing ? '수정 완료' : '기록 저장'}
-        </Button>
       </div>
+      <Button variant="gold" className="w-full" onClick={onSave}>
+        <Save size={18} />
+        {isEditing ? '수정 완료' : '기록 저장'}
+      </Button>
     </Card>
   );
 }
@@ -246,9 +229,6 @@ function TimeSection({
   onLevelChange,
   expValue,
   onExpChange,
-  ocrOpen,
-  onToggleOcr,
-  onOcrResult,
 }: {
   title: string;
   accent: 'green' | 'red';
@@ -263,9 +243,6 @@ function TimeSection({
   onLevelChange: (v: number | '') => void;
   expValue: number | '';
   onExpChange: (v: number | '') => void;
-  ocrOpen: boolean;
-  onToggleOcr: () => void;
-  onOcrResult: (r: ExpOcrResult) => void;
 }) {
   const hasTime = Boolean(date && time);
   return (
@@ -309,17 +286,6 @@ function TimeSection({
           <ExpMaskedInput value={expValue} onChange={onExpChange} />
         </Field>
       </div>
-
-      <Button variant="ghost" size="sm" className="mt-2" onClick={onToggleOcr}>
-        <ScanText size={14} />
-        스크린샷으로 채우기
-      </Button>
-
-      {ocrOpen && (
-        <div className="mt-3 rounded-xl border border-[#1D2530] bg-white/[0.03] p-4">
-          <ExpOcrPanel onRecognized={onOcrResult} />
-        </div>
-      )}
     </div>
   );
 }
@@ -342,23 +308,40 @@ function PartyInput({ label, value, onChange }: { label: string; value: number; 
   );
 }
 
-/** "00.0001"처럼 정수부 2자리(0패딩) + 소수부 4자리로 표시 문자열을 만든다. */
+/**
+ * 새 입력 방식: 숫자를 입력한 순서대로 "정수부 2자리 → 소수부 4자리" 순서로 왼쪽부터 채운다.
+ * 1자리("1")까지는 정수부의 끝자리로 들어가 우측 정렬(01.0000), 3자리째부터는 소수부 앞자리부터
+ * 순서대로 채운다. 예: 1→01.0000, 12→12.0000, 123→12.3000, 1234→12.3400, 123456→12.3456
+ */
 function formatExpDigits(digits: string): string {
   if (digits === '') return '';
-  const padded = digits.padStart(5, '0');
-  const frac = padded.slice(-4);
-  const intPart = padded.slice(0, -4).padStart(2, '0');
-  return `${intPart}.${frac}`;
+  const intPart = digits.slice(0, 2).padStart(2, '0');
+  const fracPart = digits.slice(2).padEnd(4, '0');
+  return `${intPart}.${fracPart}`;
+}
+
+/** formatExpDigits와 동일한 규칙으로 숫자 문자열을 실제 값(number)으로 변환한다. */
+function digitsToValue(digits: string): number {
+  const intPart = digits.slice(0, 2).padStart(2, '0');
+  const fracPart = digits.slice(2).padEnd(4, '0');
+  return Number(intPart) + Number(fracPart) / 10000;
+}
+
+/** 이미 저장된 값(예: 15.2424)을 다시 열었을 때 표시용 digits 버퍼로 되돌린다. */
+function valueToDigits(value: number): string {
+  const intPart = Math.max(0, Math.min(99, Math.floor(value)));
+  const fracPart = Math.round((value - intPart) * 10000);
+  return `${String(intPart).padStart(2, '0')}${String(fracPart).padStart(4, '0')}`;
 }
 
 function ExpMaskedInput({ value, onChange }: { value: number | ''; onChange: (v: number | '') => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [rawDigits, setRawDigits] = useState(() => (value === '' ? '' : String(Math.round(value * 10000))));
+  const [rawDigits, setRawDigits] = useState(() => (value === '' ? '' : valueToDigits(value as number)));
 
   useEffect(() => {
-    const asValue = rawDigits === '' ? '' : parseInt(rawDigits, 10) / 10000;
+    const asValue = rawDigits === '' ? '' : digitsToValue(rawDigits);
     if (value !== asValue) {
-      setRawDigits(value === '' ? '' : String(Math.round((value as number) * 10000)));
+      setRawDigits(value === '' ? '' : valueToDigits(value as number));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
@@ -375,7 +358,7 @@ function ExpMaskedInput({ value, onChange }: { value: number | ''; onChange: (v:
 
   const commit = (nextDigits: string) => {
     setRawDigits(nextDigits);
-    onChange(nextDigits === '' ? '' : parseInt(nextDigits, 10) / 10000);
+    onChange(nextDigits === '' ? '' : digitsToValue(nextDigits));
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {

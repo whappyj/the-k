@@ -14,6 +14,7 @@ export function AnalysisRecentList({ records, onSelect, selectedId }: { records:
   const { formatPercent, formatDuration } = useFormatters();
   const [search, setSearch] = useState('');
   const [area, setArea] = useState('');
+  const [mode, setMode] = useState(''); // '' | 'solo' | 'party'
   const [bibigi, setBibigi] = useState('');
   const [molly, setMolly] = useState('');
   const [from, setFrom] = useState('');
@@ -21,14 +22,18 @@ export function AnalysisRecentList({ records, onSelect, selectedId }: { records:
   const [knight, setKnight] = useState('');
   const [elf, setElf] = useState('');
   const [wizard, setWizard] = useState('');
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const areas = useMemo(() => Array.from(new Set(records.map((r) => r.huntArea))).sort(), [records]);
-  const hasFilter = Boolean(search || area || bibigi || molly || from || to || knight || elf || wizard);
+  const hasFilter = Boolean(search || area || mode || bibigi || molly || from || to || knight || elf || wizard);
 
   const filtered = useMemo(() => {
     return records
       .filter((r) => {
         if (area && r.huntArea !== area) return false;
+        const isParty = r.party.knight + r.party.elf + r.party.wizard > 0;
+        if (mode === 'solo' && isParty) return false;
+        if (mode === 'party' && !isParty) return false;
         if (bibigi === 'on' && !r.bibigi.enabled) return false;
         if (bibigi === 'off' && r.bibigi.enabled) return false;
         if (molly === 'on' && !r.molly) return false;
@@ -45,7 +50,7 @@ export function AnalysisRecentList({ records, onSelect, selectedId }: { records:
         return true;
       })
       .sort((a, b) => new Date(`${b.startDate}T${b.startTime}`).getTime() - new Date(`${a.startDate}T${a.startTime}`).getTime());
-  }, [records, area, bibigi, molly, from, to, knight, elf, wizard, search]);
+  }, [records, area, mode, bibigi, molly, from, to, knight, elf, wizard, search]);
 
   const list = hasFilter ? filtered : filtered.slice(0, 20);
 
@@ -60,32 +65,50 @@ export function AnalysisRecentList({ records, onSelect, selectedId }: { records:
           <option value="">사냥터 전체</option>
           {areas.map((a) => <option key={a} value={a}>{a}</option>)}
         </Select>
-        <Select value={bibigi} onChange={(e) => setBibigi(e.target.value)}>
-          <option value="">비비기 전체</option>
-          <option value="on">비비기 ON</option>
-          <option value="off">비비기 OFF</option>
+        <Select value={mode} onChange={(e) => setMode(e.target.value)}>
+          <option value="">사냥방식 전체</option>
+          <option value="solo">단독사냥</option>
+          <option value="party">파티사냥</option>
         </Select>
-        <Select value={molly} onChange={(e) => setMolly(e.target.value)}>
-          <option value="">몰이 전체</option>
-          <option value="on">몰이 ON</option>
-          <option value="off">몰이 OFF</option>
-        </Select>
-        <div className="flex flex-col gap-1.5">
-          <Input type="date" title="기간 시작" value={from} onChange={(e) => setFrom(e.target.value)} />
-          <Input type="date" title="기간 종료" value={to} onChange={(e) => setTo(e.target.value)} />
-        </div>
-        <Select value={knight} onChange={(e) => setKnight(e.target.value)}>
-          <option value="">기사 전체</option>
-          {NUM_OPTIONS.map((n) => <option key={n} value={n}>기사 {n}</option>)}
-        </Select>
-        <Select value={elf} onChange={(e) => setElf(e.target.value)}>
-          <option value="">요정 전체</option>
-          {NUM_OPTIONS.map((n) => <option key={n} value={n}>요정 {n}</option>)}
-        </Select>
-        <Select value={wizard} onChange={(e) => setWizard(e.target.value)}>
-          <option value="">법사 전체</option>
-          {NUM_OPTIONS.map((n) => <option key={n} value={n}>법사 {n}</option>)}
-        </Select>
+
+        <button
+          type="button"
+          onClick={() => setShowAdvanced((v) => !v)}
+          className="rounded-xl border border-[#1D2530] bg-white/[0.02] px-3.5 py-2.5 text-left text-[12.5px] font-semibold text-text-sub transition-colors duration-200 hover:bg-white/[0.04] hover:text-white"
+        >
+          {showAdvanced ? '▲ 고급 필터 접기' : '▼ 고급 필터 (직업·몰이·비비기·기간)'}
+        </button>
+
+        {showAdvanced && (
+          <>
+            <Select value={bibigi} onChange={(e) => setBibigi(e.target.value)}>
+              <option value="">비비기 전체</option>
+              <option value="on">비비기 ON</option>
+              <option value="off">비비기 OFF</option>
+            </Select>
+            <Select value={molly} onChange={(e) => setMolly(e.target.value)}>
+              <option value="">몰이 전체</option>
+              <option value="on">몰이 ON</option>
+              <option value="off">몰이 OFF</option>
+            </Select>
+            <div className="flex flex-col gap-1.5">
+              <Input type="date" title="기간 시작" value={from} onChange={(e) => setFrom(e.target.value)} />
+              <Input type="date" title="기간 종료" value={to} onChange={(e) => setTo(e.target.value)} />
+            </div>
+            <Select value={knight} onChange={(e) => setKnight(e.target.value)}>
+              <option value="">기사 전체</option>
+              {NUM_OPTIONS.map((n) => <option key={n} value={n}>기사 {n}</option>)}
+            </Select>
+            <Select value={elf} onChange={(e) => setElf(e.target.value)}>
+              <option value="">요정 전체</option>
+              {NUM_OPTIONS.map((n) => <option key={n} value={n}>요정 {n}</option>)}
+            </Select>
+            <Select value={wizard} onChange={(e) => setWizard(e.target.value)}>
+              <option value="">법사 전체</option>
+              {NUM_OPTIONS.map((n) => <option key={n} value={n}>법사 {n}</option>)}
+            </Select>
+          </>
+        )}
       </div>
 
       <div className="min-w-0">

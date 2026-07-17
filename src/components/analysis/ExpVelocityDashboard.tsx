@@ -1,6 +1,6 @@
 import type { ExperienceRecord } from '@/types';
 import { useFormatters } from '@/hooks/useFormatters';
-import { Card, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { computeVelocityWindows, computeEta, computeOverallAverage, computeBestWorstStats, computeTrend } from '@/lib/expVelocity';
@@ -73,56 +73,65 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
         </div>
       </Card>
 
-      <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1">
-        {windows.map((w) => {
-          const eta = computeEta(latest.endExp, w.perDayRate);
-          return (
-            <Card key={w.key} className={cn('rounded-2xl border-[#1D2530] bg-[#0B1016]', !w.hasData && 'opacity-60')}>
-              <div className="mb-1 flex items-center justify-between">
-                <CardTitle className="!mb-0">{w.label}</CardTitle>
-                <Badge variant={w.hasData ? 'primary' : 'muted'}>{w.recordCount}건</Badge>
+      <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
+        <CardTitle className="!mb-3">기간별 획득 속도 &amp; 예상 완료</CardTitle>
+        <div className="grid grid-cols-3 gap-4 max-[640px]:grid-cols-1">
+          {windows.map((w) => {
+            const eta = computeEta(latest.endExp, w.perDayRate);
+            return (
+              <div key={w.key} className={cn('rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5', !w.hasData && 'opacity-60')}>
+                <div className="mb-1 flex items-center justify-between">
+                  <span className="text-[12px] font-bold text-text-sub">{w.label}</span>
+                  <Badge variant={w.hasData ? 'primary' : 'muted'}>{w.recordCount}건</Badge>
+                </div>
+                <div className="mb-2 text-[11px] text-text-faint">
+                  {w.key === '24h' ? `합계 +${formatPercent(w.gainPercent)}` : `합계 +${formatPercent(w.gainPercent)} · 일평균 +${formatPercent(w.perDayRate)}`}
+                </div>
+                <div className="border-t border-[#1D2530] pt-2">
+                  <div className="font-display text-[16px] font-bold text-primary">{formatEtaDays(eta.days)}</div>
+                  <div className="mt-0.5 text-[10.5px] text-text-faint">{formatEtaDate(eta.etaDate)}</div>
+                </div>
               </div>
-              <CardDescription>
-                {w.key === '24h' ? `합계 +${formatPercent(w.gainPercent)}` : `합계 +${formatPercent(w.gainPercent)} · 하루 평균 +${formatPercent(w.perDayRate)}/일`}
-              </CardDescription>
+            );
+          })}
+        </div>
+      </Card>
 
-              <div className="mt-3 border-t border-[#1D2530] pt-3">
-                <div className="mb-1 text-xs text-text-sub">예상 완료</div>
-                <div className="font-display text-xl font-bold text-primary">{formatEtaDays(eta.days)}</div>
-                <div className="mt-1 text-[11px] text-text-faint">예상 완료일 {formatEtaDate(eta.etaDate)}</div>
-              </div>
-            </Card>
-          );
-        })}
-      </div>
-
-      <div className="grid grid-cols-4 gap-4 max-[1100px]:grid-cols-2 max-[560px]:grid-cols-1">
+      <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
         <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
-          <div className="mb-1.5 text-xs text-text-sub">전체 평균 (기록 시작부터)</div>
-          <div className="font-display text-xl font-bold">{formatPercent(overall.perDayRate)}/일</div>
-          <div className="mt-1 text-[11px] text-text-faint">총 {formatPercent(overall.totalGain)} · {overall.spanDays.toFixed(1)}일간</div>
-        </Card>
-
-        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
-          <div className="mb-1.5 text-xs text-text-sub">최고 하루 / 최저 하루</div>
-          <div className="font-display text-xl font-bold text-success">{bestWorst.bestDay ? `+${formatPercent(bestWorst.bestDay.gain)}` : '-'}</div>
-          <div className="mt-1 text-[11px] text-text-faint">최저 {bestWorst.worstDay ? `+${formatPercent(bestWorst.worstDay.gain)}` : '-'}</div>
-        </Card>
-
-        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
-          <div className="mb-1.5 text-xs text-text-sub">최고 주간 / 월간 평균</div>
-          <div className="font-display text-xl font-bold text-primary">{formatPercent(bestWorst.bestWeeklyAvg)}/일</div>
-          <div className="mt-1 text-[11px] text-text-faint">월간 {formatPercent(bestWorst.bestMonthlyAvg)}/일</div>
-        </Card>
-
-        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
-          <div className="mb-1.5 text-xs text-text-sub">사냥 추세</div>
-          <div className={cn('flex items-center gap-1.5 font-display text-xl font-bold', trendMeta.color)}>
-            <TrendIcon size={20} />
-            {trendMeta.label}
+          <CardTitle className="!mb-3">전체 평균 &amp; 최고·최저</CardTitle>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <div className="mb-1 text-[11px] text-text-sub">전체 평균 (기록 시작부터)</div>
+              <div className="font-display text-lg font-bold">{formatPercent(overall.perDayRate)}/일</div>
+              <div className="mt-0.5 text-[10.5px] text-text-faint">총 {formatPercent(overall.totalGain)} · {overall.spanDays.toFixed(1)}일간</div>
+            </div>
+            <div>
+              <div className="mb-1 text-[11px] text-text-sub">최고 하루 / 최저 하루</div>
+              <div className="font-display text-lg font-bold text-success">{bestWorst.bestDay ? `+${formatPercent(bestWorst.bestDay.gain)}` : '-'}</div>
+              <div className="mt-0.5 text-[10.5px] text-text-faint">최저 {bestWorst.worstDay ? `+${formatPercent(bestWorst.worstDay.gain)}` : '-'}</div>
+            </div>
           </div>
-          <div className="mt-1 text-[11px] text-text-faint">
-            7일 {formatPercent(recentAvg)}/일 · 30일 {formatPercent(baselineAvg)}/일
+        </Card>
+
+        <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
+          <CardTitle className="!mb-3">주간/월간 평균 &amp; 추세</CardTitle>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <div className="mb-1 text-[11px] text-text-sub">최고 주간 / 월간 평균</div>
+              <div className="font-display text-lg font-bold text-primary">{formatPercent(bestWorst.bestWeeklyAvg)}/일</div>
+              <div className="mt-0.5 text-[10.5px] text-text-faint">월간 {formatPercent(bestWorst.bestMonthlyAvg)}/일</div>
+            </div>
+            <div>
+              <div className="mb-1 text-[11px] text-text-sub">사냥 추세</div>
+              <div className={cn('flex items-center gap-1.5 font-display text-lg font-bold', trendMeta.color)}>
+                <TrendIcon size={16} />
+                {trendMeta.label}
+              </div>
+              <div className="mt-0.5 text-[10.5px] text-text-faint">
+                7일 {formatPercent(recentAvg)}/일 · 30일 {formatPercent(baselineAvg)}/일
+              </div>
+            </div>
           </div>
         </Card>
       </div>

@@ -19,7 +19,7 @@ export function ImportExportButtons({ label, onExport, onImportFile, disabled }:
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       <Button variant="secondary" size="sm" onClick={onExport} disabled={disabled} aria-label={`${label} 내보내기`}>
         <Download size={16} />
         📤 내보내기

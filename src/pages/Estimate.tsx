@@ -1,25 +1,50 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { ImageDown, Download, Upload, Settings as SettingsIcon } from 'lucide-react';
 import { useAppData, useAppDataActions } from '@/hooks/useAppData';
 import { useToast } from '@/hooks/useToast';
+import { useConfirm } from '@/hooks/useConfirm';
 import { useJpgExport } from '@/hooks/useJpgExport';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
+import { HelpButton } from '@/components/common/HelpButton';
+import { HELP_ESTIMATE } from '@/lib/helpContent';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EstimateMatrixTable } from '@/components/estimate/EstimateMatrixTable';
-import { PresetGrid } from '@/components/estimate/PresetGrid';
+import { EstimateSettingsDrawer } from '@/components/estimate/EstimateSettingsDrawer';
 import { ImportExportButtons } from '@/components/common/ImportExportButtons';
 import { exportSection, readThekFile, parseSectionFile } from '@/lib/importExportService';
-import type { EstimatePreset, AppData } from '@/types';
+import type { EstimatePreset, EstimateMaterial, AppData } from '@/types';
 
 export function EstimatePage() {
   const { data } = useAppData();
-  const { patchEstimate, addPreset, updatePreset, deletePreset, importMerge } = useAppDataActions();
+  const { patchEstimate, addPreset, updatePreset, deletePreset, importMerge, resetEstimateToBase } = useAppDataActions();
   const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const { exportPage } = useJpgExport();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const estimate = data.estimate;
+
+  const handleMaterialsChange = (materials: EstimateMaterial[]) => patchEstimate({ materials });
+  const handleResetMaterials = async () => {
+    if (await confirm('현재 재료 구성을 기본 프리셋("달의 장궁")으로 초기화합니다.')) {
+      resetEstimateToBase();
+      showToast('기본 구성으로 초기화했습니다.', 'success');
+    }
+  };
+  const handleRateChange = (group: 'A' | 'B', value: number) => patchEstimate(group === 'A' ? { rateA: value } : { rateB: value });
+  const handleKeyPriceChange = (group: 'A' | 'B', value: number) => {
+    const keyMaterial = estimate.materials[0];
+    if (!keyMaterial) return;
+    const key = group === 'A' ? 'priceA' : 'priceB';
+    patchEstimate({ materials: estimate.materials.map((m) => (m.id === keyMaterial.id ? { ...m, [key]: value } : m)) });
+  };
+  const handleKeyMaterialSelect = (materialId: string) => {
+    const target = estimate.materials.find((m) => m.id === materialId);
+    if (!target) return;
+    patchEstimate({ materials: [target, ...estimate.materials.filter((m) => m.id !== materialId)] });
+  };
 
   const handleApplyPreset = (preset: EstimatePreset) => {
     patchEstimate({
@@ -87,30 +112,37 @@ export function EstimatePage() {
       <PageHeader
         title="제작 비교 견적"
         subtitle="재료 가격과 환율을 동시에 비교합니다."
-        actions={<ImportExportButtons label="제작 계산기" onExport={handleExportSection} onImportFile={handleImportSection} />}
+        actions={
+          <div className="flex items-center gap-2">
+            <Button variant="gold" onClick={() => setSettingsOpen(true)}>
+              <SettingsIcon size={16} />
+              비교 설정
+            </Button>
+            <ImportExportButtons label="제작 계산기" onExport={handleExportSection} onImportFile={handleImportSection} />
+            <HelpButton content={HELP_ESTIMATE} />
+          </div>
+        }
       />
 
-      <div className="mb-3 flex items-center justify-end">
-        <a href="#settings" className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-text-faint transition-colors hover:text-primary">
-          <SettingsIcon size={13} />
-          비교 조건 · 재료 · 수량은 설정에서 관리
-        </a>
-      </div>
+      <EstimateSettingsDrawer
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        estimate={estimate}
+        onRateChange={handleRateChange}
+        onKeyPriceChange={handleKeyPriceChange}
+        onKeyMaterialSelect={handleKeyMaterialSelect}
+        onMaterialsChange={handleMaterialsChange}
+        onResetMaterials={handleResetMaterials}
+        onQtyChange={(tier) => patchEstimate({ qtyTier: tier })}
+        onAddPreset={addPreset}
+        onUpdatePreset={updatePreset}
+        onDeletePreset={deletePreset}
+        onApplyPreset={handleApplyPreset}
+      />
 
       <div className="mb-10">
         <EstimateMatrixTable materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} feeA={estimate.feeA} feeB={estimate.feeB} />
       </div>
-
-      <Section title="사용자 정의 프리셋">
-        <PresetGrid
-          presets={estimate.presets}
-          currentEstimate={estimate}
-          onAdd={addPreset}
-          onUpdate={updatePreset}
-          onDelete={deletePreset}
-          onApply={handleApplyPreset}
-        />
-      </Section>
 
       <Section title="내보내기">
         <Card className="flex flex-wrap gap-2.5 rounded-2xl border-[#1D2530] bg-[#0B1016]">

@@ -6,16 +6,20 @@ import { ROUTE_LABEL, APP_VERSION } from '@/constants';
 import { useAppData } from '@/hooks/useAppData';
 import { cn } from '@/utils/cn';
 
-const NAV_ITEMS: { route: Route; icon: LucideIcon }[] = [
+const TOP_ITEMS: { route: Route; icon: LucideIcon }[] = [
   { route: 'home', icon: Home },
   { route: 'estimate', icon: Coins },
+];
+
+const EXPERIENCE_GROUP: { route: Route; icon: LucideIcon }[] = [
   { route: 'experience', icon: Swords },
   { route: 'analysis', icon: ListChecks },
   { route: 'compare', icon: Scale },
   { route: 'statistics', icon: BarChart3 },
   { route: 'calculator', icon: TrendingUp },
-  { route: 'adenaPurchase', icon: Wallet },
 ];
+
+const BOTTOM_ITEMS: { route: Route; icon: LucideIcon }[] = [{ route: 'adenaPurchase', icon: Wallet }];
 
 interface SidebarProps {
   route: Route;
@@ -44,12 +48,29 @@ export function Sidebar({ route, onNavigate }: SidebarProps) {
       </div>
 
       <nav className="flex shrink-0 flex-row items-center gap-0.5 min-[900px]:flex-1 min-[900px]:flex-col min-[900px]:items-stretch">
-        {NAV_ITEMS.map(({ route: r, icon: Icon }) => (
+        {TOP_ITEMS.map(({ route: r, icon: Icon }) => (
           <SidebarLink key={r} active={route === r} onClick={() => onNavigate(r)}>
             <Icon size={24} />
             <span>{ROUTE_LABEL[r]}</span>
           </SidebarLink>
         ))}
+
+        <div className="hidden px-3 pb-1.5 pt-4 text-[11px] font-bold tracking-wide text-text-faint min-[900px]:block">경험치</div>
+        {EXPERIENCE_GROUP.map(({ route: r, icon: Icon }) => (
+          <SidebarLink key={r} active={route === r} onClick={() => onNavigate(r)} indent>
+            <Icon size={20} />
+            <span>{ROUTE_LABEL[r]}</span>
+          </SidebarLink>
+        ))}
+
+        <div className="min-[900px]:mt-3">
+          {BOTTOM_ITEMS.map(({ route: r, icon: Icon }) => (
+            <SidebarLink key={r} active={route === r} onClick={() => onNavigate(r)}>
+              <Icon size={24} />
+              <span>{ROUTE_LABEL[r]}</span>
+            </SidebarLink>
+          ))}
+        </div>
       </nav>
 
       <div className="flex shrink-0 items-center min-[900px]:block">
@@ -74,10 +95,12 @@ function SidebarLink({
   active,
   onClick,
   children,
+  indent,
 }: {
   active: boolean;
   onClick: () => void;
   children: ReactNode;
+  indent?: boolean;
 }) {
   return (
     <button
@@ -86,6 +109,7 @@ function SidebarLink({
       className={cn(
         'relative flex h-11 shrink-0 items-center gap-3 whitespace-nowrap rounded-xl px-3 text-base font-medium text-text-sub transition-colors duration-200',
         'hover:bg-white/[0.05] hover:text-text',
+        indent && 'min-[900px]:ml-2 min-[900px]:h-10 min-[900px]:pl-3 min-[900px]:text-[14px]',
         active && 'bg-gold-dim text-gold hover:bg-gold-dim hover:text-gold'
       )}
     >
