@@ -1,4 +1,4 @@
-import { Home, Coins, Swords, ListChecks, BarChart3, TrendingUp, Wallet, Settings as SettingsIcon, Scale } from 'lucide-react';
+import { Home, Coins, Swords, ListChecks, BarChart3, TrendingUp, Wallet, Settings as SettingsIcon, Scale, MapPin } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { Route } from '@/types';
@@ -15,6 +15,7 @@ const EXPERIENCE_GROUP: { route: Route; icon: LucideIcon }[] = [
   { route: 'experience', icon: Swords },
   { route: 'analysis', icon: ListChecks },
   { route: 'compare', icon: Scale },
+  { route: 'huntAreaEfficiency', icon: MapPin },
   { route: 'statistics', icon: BarChart3 },
   { route: 'calculator', icon: TrendingUp },
 ];

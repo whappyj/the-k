@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAppData } from '@/hooks/useAppData';
-import { formatNumber, formatPercent, formatDuration } from '@/utils/format';
+import { formatNumber, formatPercent, formatDuration, formatAdenaAmount } from '@/utils/format';
 
 /** 현재 settings(numberFormat, decimalPlaces)를 반영한 포맷 함수들을 반환한다. */
 export function useFormatters() {
@@ -13,5 +13,5 @@ export function useFormatters() {
     [decimalPlaces]
   );
 
-  return { formatNumber: fmtNumber, formatPercent: fmtPercent, formatDuration };
+  return { formatNumber: fmtNumber, formatPercent: fmtPercent, formatDuration, formatAdenaAmount };
 }

@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "items": [
+    {
+      "id": "moonbow",
+      "name": "달의 장궁",
+      "materials": [
+        { "name": "신성한 유니콘의 뿔", "qty": 300, "priceA": 130000, "priceB": 140000 },
+        { "name": "달빛의 정기", "qty": 3, "priceA": 140000, "priceB": 140000 },
+        { "name": "최고급 다이아몬드", "qty": 5, "priceA": 200000, "priceB": 200000 },
+        { "name": "최고급 사파이어", "qty": 5, "priceA": 100000, "priceB": 100000 },
+        { "name": "최고급 에메랄드", "qty": 5, "priceA": 10000, "priceB": 10000 },
+        { "name": "최고급 루비", "qty": 5, "priceA": 10000, "priceB": 10000 }
+      ],
+      "rateA": 900,
+      "rateB": 1000,
+      "feeA": 0,
+      "feeB": 0,
+      "qtyTier": 1
+    }
+  ]
+}

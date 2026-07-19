@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
-import { ImageDown, Download, Upload, Settings as SettingsIcon } from 'lucide-react';
+import { ImageDown, Download, Upload, Settings as SettingsIcon, AlertTriangle, RefreshCw } from 'lucide-react';
 import { useAppData, useAppDataActions } from '@/hooks/useAppData';
 import { useToast } from '@/hooks/useToast';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useJpgExport } from '@/hooks/useJpgExport';
+import { useEstimateSyncStatus } from '@/hooks/useEstimateDataSync';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
 import { HelpButton } from '@/components/common/HelpButton';
 import { HELP_ESTIMATE } from '@/lib/helpContent';
@@ -21,6 +22,7 @@ export function EstimatePage() {
   const { showToast } = useToast();
   const { confirm } = useConfirm();
   const { exportPage } = useJpgExport();
+  const { status: estimateSyncStatus, retry: retryEstimateSync, errorMessage: estimateSyncError } = useEstimateSyncStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -123,6 +125,27 @@ export function EstimatePage() {
           </div>
         }
       />
+
+      {estimateSyncStatus === 'error' && (
+        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-danger/30 bg-danger-dim p-5 min-[560px]:flex-row min-[560px]:items-center min-[560px]:justify-between">
+          <div className="flex items-start gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-danger/20 text-danger">
+              <AlertTriangle size={18} />
+            </span>
+            <div>
+              <div className="text-[14px] font-bold text-danger">최신 견적 데이터를 불러오지 못했습니다</div>
+              <div className="mt-1 text-[12.5px] text-text-sub">
+                estimate-data.json을 읽는 데 실패해 화면에 표시된 재료·가격·환율이 정확하지 않을 수 있습니다. 아래 값을 그대로 신뢰하지 마세요.
+                {estimateSyncError && <span className="mt-1 block text-[11px] text-text-faint">({estimateSyncError})</span>}
+              </div>
+            </div>
+          </div>
+          <Button variant="secondary" size="sm" onClick={retryEstimateSync} className="shrink-0">
+            <RefreshCw size={14} />
+            다시 시도
+          </Button>
+        </div>
+      )}
 
       <EstimateSettingsDrawer
         open={settingsOpen}

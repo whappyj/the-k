@@ -76,9 +76,13 @@ export function LevelUpSimulatorPage() {
   const now = new Date();
   const result = target !== null && remainingPercent !== null ? simulateLevelUp(now, perHour, remainingPercent, battleMinutes, dailyCap) : null;
 
+  // 목표 레벨에서 끊지 않고, 목표 달성 이후에도 같은 사냥 조건으로 계속 이어서
+  // 다음 레벨들의 완료 예정일까지 Timeline에 표시한다("기능 복원" — 예전 동작 그대로).
+  const EXTRA_LEVELS_AFTER_TARGET = 4;
   const levelSteps: { level: number; result: ReturnType<typeof simulateLevelUp> }[] = [];
   if (target !== null && target > lvNow) {
-    for (let lv = lvNow + 1; lv <= target; lv++) {
+    const lastLevel = target + EXTRA_LEVELS_AFTER_TARGET;
+    for (let lv = lvNow + 1; lv <= lastLevel; lv++) {
       const remainToLv = (lv - lvNow) * 100 - expNow;
       levelSteps.push({ level: lv, result: simulateLevelUp(now, perHour, remainToLv, battleMinutes, dailyCap) });
     }

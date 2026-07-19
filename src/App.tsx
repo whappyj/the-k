@@ -2,6 +2,7 @@ import { AppDataProvider } from '@/hooks/useAppData';
 import { ToastProvider } from '@/hooks/useToast';
 import { ConfirmProvider } from '@/hooks/useConfirm';
 import { PendingEditProvider } from '@/hooks/usePendingEdit';
+import { EstimateSyncProvider } from '@/hooks/useEstimateDataSync';
 import { AppShell } from '@/components/layout/AppShell';
 import { Toaster } from '@/components/ui/toaster';
 import { useRoute } from '@/hooks/useRoute';
@@ -14,6 +15,7 @@ import { ExperiencePage } from '@/pages/Experience';
 import { AnalysisPage } from '@/pages/Analysis';
 import { ComparePage } from '@/pages/Compare';
 import { StatisticsPage } from '@/pages/Statistics';
+import { HuntAreaEfficiencyPage } from '@/pages/HuntAreaEfficiency';
 import { LevelUpSimulatorPage } from '@/pages/LevelUpSimulator';
 import { AdenaPurchasePage } from '@/pages/AdenaPurchase';
 import { SettingsPage } from '@/pages/Settings';
@@ -32,6 +34,8 @@ function RouteView({ route }: { route: Route }) {
       return <ComparePage />;
     case 'statistics':
       return <StatisticsPage />;
+    case 'huntAreaEfficiency':
+      return <HuntAreaEfficiencyPage />;
     case 'calculator':
       return <LevelUpSimulatorPage />;
     case 'adenaPurchase':
@@ -57,14 +61,16 @@ function Shell() {
 export default function App() {
   return (
     <AppDataProvider>
-      <ToastProvider>
-        <ConfirmProvider>
-          <PendingEditProvider>
-            <Shell />
-            <Toaster />
-          </PendingEditProvider>
-        </ConfirmProvider>
-      </ToastProvider>
+      <EstimateSyncProvider>
+        <ToastProvider>
+          <ConfirmProvider>
+            <PendingEditProvider>
+              <Shell />
+              <Toaster />
+            </PendingEditProvider>
+          </ConfirmProvider>
+        </ToastProvider>
+      </EstimateSyncProvider>
     </AppDataProvider>
   );
 }

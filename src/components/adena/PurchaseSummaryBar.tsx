@@ -5,16 +5,12 @@ import type { PurchaseSettings } from '@/types';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/useToast';
 import { PurchaseSettingsDialog } from '@/components/adena/PurchaseSettingsDialog';
+import { formatAdenaAmount } from '@/utils/format';
 import { cn } from '@/utils/cn';
 
 interface PurchaseSummaryBarProps {
   settings: PurchaseSettings;
   onChange: (patch: Partial<PurchaseSettings>) => void;
-}
-
-/** 만 단위로 저장된 수량을 실제 아데나 개수로 표시한다 (표시 전용 변환 — 저장값/계산식은 그대로). */
-function toAdena(manUnit: number): number {
-  return manUnit * 10000;
 }
 
 /**
@@ -23,6 +19,7 @@ function toAdena(manUnit: number): number {
  * 다섯 가지를 읽기 전용으로 보여주고, 값 수정은 오른쪽 "설정" 버튼의 모달에서만 한다
  * (환율/목표매입량/카카오톡ID 세 가지만 관리 — 현재매입량은 매입 등록/수정/삭제 시 기존 로직이
  * 그대로 자동 계산한다. 계산/저장 방식은 전혀 바뀌지 않는다).
+ * 수량 표시는 저장값(만 단위)에 "만 아데나"만 붙이는 형식으로 통일했다(formatAdenaAmount).
  */
 export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarProps) {
   const { showToast } = useToast();
@@ -84,17 +81,11 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
         </SummaryItem>
 
         <SummaryItem label="총 매입 목표량">
-          <div className="font-display text-2xl font-bold text-white sm:text-[28px]">
-            {toAdena(target).toLocaleString('ko-KR')}
-            <span className="ml-1 text-sm font-semibold text-[#9AA1AC]">A</span>
-          </div>
+          <div className="font-display text-2xl font-bold text-white sm:text-[28px]">{formatAdenaAmount(target)}</div>
         </SummaryItem>
 
         <SummaryItem label="현재 매입량">
-          <div className="font-display text-2xl font-bold text-primary sm:text-[28px]">
-            {toAdena(current).toLocaleString('ko-KR')}
-            <span className="ml-1 text-sm font-semibold text-[#9AA1AC]">A</span>
-          </div>
+          <div className="font-display text-2xl font-bold text-primary sm:text-[28px]">{formatAdenaAmount(current)}</div>
         </SummaryItem>
 
         <SummaryItem label="진행률">

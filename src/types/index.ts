@@ -205,6 +205,7 @@ export interface PurchaseRecord {
   cashAmount: number; // 지급 금액(원)
   depositCompleted: boolean;
   createdAt: string;
+  memo?: string; // 선택 메모(비고)
 }
 
 /** 경험치 목표(목표일) — 페이지를 새로고침해도 유지되도록 별도 저장한다. */
@@ -219,6 +220,7 @@ export type Route =
   | 'analysis'
   | 'compare'
   | 'statistics'
+  | 'huntAreaEfficiency'
   | 'calculator'
   | 'adenaPurchase'
   | 'settings';

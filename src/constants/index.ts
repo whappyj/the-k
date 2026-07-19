@@ -60,6 +60,7 @@ export const ROUTE_LABEL: Record<Route, string> = {
   analysis: '기록 목록',
   compare: '비교',
   statistics: '통계',
+  huntAreaEfficiency: '사냥터 효율',
   calculator: '레벨업 시뮬레이터',
   adenaPurchase: '아데나 매입',
   settings: '설정',
@@ -72,12 +73,13 @@ export const ROUTE_EXPORT_LABEL: Record<Route, string> = {
   analysis: 'Analysis',
   compare: 'Compare',
   statistics: 'Statistics',
+  huntAreaEfficiency: 'HuntAreaEfficiency',
   calculator: 'Calculator24',
   adenaPurchase: 'AdenaPurchase',
   settings: 'Settings',
 };
 
-export const ROUTES: Route[] = ['home', 'estimate', 'experience', 'analysis', 'compare', 'statistics', 'calculator', 'adenaPurchase', 'settings'];
+export const ROUTES: Route[] = ['home', 'estimate', 'experience', 'analysis', 'compare', 'statistics', 'huntAreaEfficiency', 'calculator', 'adenaPurchase', 'settings'];
 
 export const DEFAULT_SETTINGS: AppSettings = {
   theme: 'dark',

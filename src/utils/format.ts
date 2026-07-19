@@ -21,3 +21,13 @@ export function formatPercent(v: number | null | undefined, digits = 4): string 
   const sign = n > 0 ? '+' : '';
   return `${sign}${n.toFixed(digits)}%`;
 }
+
+/**
+ * 아데나 매입 수량(만 단위로 저장된 값)을 화면 표시용 문자열로 바꾼다.
+ * 저장/계산은 그대로 "만 단위 숫자"이며, 표시할 때만 "OOO만 아데나" 형태로 붙인다.
+ * 예: 300 -> "300만 아데나". 일반 화면/OBS 화면/TXT·CSV·Excel 내보내기/상세보기 전부 이 함수로 통일한다.
+ */
+export function formatAdenaAmount(manUnit: number | null | undefined): string {
+  const n = !manUnit || Number.isNaN(manUnit) || !Number.isFinite(manUnit) ? 0 : manUnit;
+  return `${n.toLocaleString('ko-KR')}만 아데나`;
+}
