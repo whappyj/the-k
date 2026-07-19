@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Route } from '@/types';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { TopBar } from '@/components/layout/TopBar';
+import { Footer } from '@/components/layout/Footer';
 
 interface AppShellProps {
   route: Route;
@@ -16,6 +17,7 @@ export function AppShell({ route, onNavigate, children }: AppShellProps) {
       <main className="w-full min-w-0 max-w-[1600px] px-4 pb-16 min-[900px]:px-10 min-[900px]:pb-20 min-[1920px]:max-w-[1700px] min-[1920px]:px-14 min-[2560px]:max-w-[1900px] min-[2560px]:px-20">
         <TopBar route={route} />
         {children}
+        <Footer />
       </main>
     </div>
   );

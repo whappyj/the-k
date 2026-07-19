@@ -27,7 +27,7 @@ const FORMATS: { key: ExportFormat; icon: typeof FileSpreadsheet; label: string;
  * components/adena/ExportPanel.tsx ("내보내기")
  * Excel/TXT/CSV/JSON 4가지 형식 중 골라 내보낸다. TXT는 메모장 미리보기 + 복사가 가능하다.
  * 전부 src/lib/adenaExport.ts(순수 표시·포맷 전용)를 통해 만들어지며, 저장된 매입 기록을
- * 그대로 옮겨 적을 뿐 새 계산식은 없다.
+ * 그대로 옮겨 적을 뿐 새 계산식은 없다. JSON 포맷이 백업 역할을 겸한다.
  */
 export function ExportPanel({ open, onClose, records, settings }: ExportPanelProps) {
   const { showToast } = useToast();

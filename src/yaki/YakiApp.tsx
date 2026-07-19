@@ -1,5 +1,6 @@
 import { PinGate } from '@/yaki/PinGate';
 import { EstimateDataEditor } from '@/yaki/EstimateDataEditor';
+import { Footer } from '@/components/layout/Footer';
 
 /**
  * yaki/YakiApp.tsx
@@ -9,10 +10,13 @@ import { EstimateDataEditor } from '@/yaki/EstimateDataEditor';
  */
 export function YakiApp() {
   return (
-    <div className="min-h-screen bg-[#06080B] text-text">
-      <PinGate>
-        <EstimateDataEditor />
-      </PinGate>
+    <div className="flex min-h-screen flex-col bg-[#06080B] text-text">
+      <div className="flex-1">
+        <PinGate>
+          <EstimateDataEditor />
+        </PinGate>
+      </div>
+      <Footer />
     </div>
   );
 }

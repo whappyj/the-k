@@ -25,7 +25,7 @@ type ViewMode = 'register' | 'deposit';
  * pages/AdenaPurchase.tsx
  * 아데나 매입 관리 화면. data.purchaseSettings / data.purchaseRecords와 양방향 바인딩되며,
  * 비고(환율×수량)/남은수량/총사용금액까지 전부 계산되어 실시간으로 반영된다.
- * "매입 등록" / "입금 관리" 두 화면으로 분리하고, 방송 캡처용 "OBS 레이아웃"(전체화면
+ * "매입 등록" / "입금 관리" 두 화면으로 분리하고, 방송 캡처용 "방송용 레이아웃"(전체화면
  * 오버레이)을 추가했다 — 계산·저장 로직은 기존 그대로, UI 구성만 재배치한 것이다.
  */
 export function AdenaPurchasePage() {
@@ -163,7 +163,7 @@ export function AdenaPurchasePage() {
     <div id="page-adenaPurchase">
       <PageHeader
         title="아데나 매입"
-        subtitle="매입 등록 · 입금 관리 · 방송용 OBS 레이아웃"
+        subtitle="매입 등록 · 입금 관리 · 방송용 레이아웃"
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="secondary" size="sm" onClick={() => setFeatureGuideOpen(true)}>
@@ -176,13 +176,13 @@ export function AdenaPurchasePage() {
             </Button>
             <Button variant="gold" size="sm" onClick={() => setObsOpen(true)}>
               <Tv size={15} />
-              OBS 레이아웃
+              방송용 레이아웃
             </Button>
             <Button variant="secondary" size="sm" onClick={() => setExportOpen(true)}>
               <Download size={15} />
               내보내기
             </Button>
-            <ImportExportButtons label="아데나 매입" onExport={handleExportSection} onImportFile={handleImportSection} />
+            <ImportExportButtons label="아데나 매입" onExport={handleExportSection} onImportFile={handleImportSection} hideExport />
           </div>
         }
       />

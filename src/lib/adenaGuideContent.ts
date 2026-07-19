@@ -64,10 +64,10 @@ export const FEATURE_GUIDE: FeatureGuideItem[] = [
   },
   {
     title: '아데나 매입',
-    what: '판매자별 매입 등록, 입금 관리, 방송용 OBS 레이아웃, 내보내기까지 지원하는 매입 관리 화면입니다.',
+    what: '판매자별 매입 등록, 입금 관리, 방송용 방송용 레이아웃, 내보내기까지 지원하는 매입 관리 화면입니다.',
     when: '아데나를 매입할 때, 특히 방송 중 시청자 매입을 실시간으로 접수할 때 사용합니다.',
     howToInput: '아이디 입력 → Enter → 수량(만 아데나) 입력 → Enter로 바로 등록됩니다.',
-    steps: ['매입 등록 탭에서 아이디/수량 입력 후 등록', '입금 관리 탭에서 입금 여부 체크', '필요 시 OBS 레이아웃으로 전환해 방송 캡처'],
+    steps: ['매입 등록 탭에서 아이디/수량 입력 후 등록', '입금 관리 탭에서 입금 여부 체크', '필요 시 방송용 레이아웃으로 전환해 방송 캡처'],
     tip: '수량은 숫자만 입력하면 되고, 화면에는 자동으로 "OOO만 아데나"로 표시됩니다.',
   },
   {
@@ -122,11 +122,11 @@ export interface BroadcastProgramGuide {
 export const BROADCAST_GUIDE: BroadcastProgramGuide[] = [
   {
     name: 'OBS Studio',
-    browserSource: '소스 목록에서 + → "브라우저" 추가 → URL에 이 앱의 아데나 매입 화면 주소 입력 → OBS 레이아웃 URL을 사용하면 방송용 화면만 캡처됩니다.',
+    browserSource: '소스 목록에서 + → "브라우저" 추가 → URL에 이 앱의 아데나 매입 화면 주소 입력 → 방송용 레이아웃 URL을 사용하면 방송용 화면만 캡처됩니다.',
     windowCapture: '브라우저 소스가 여의치 않다면 "창 캡처"로 이 앱을 띄운 브라우저 창을 그대로 캡처할 수 있습니다.',
     resolution: '1920×1080 기준으로 제작되었으며, 브라우저 소스 크기도 동일하게 맞추면 글씨가 뭉개지지 않습니다.',
-    obsLayoutUsage: '아데나 매입 화면에서 "OBS 레이아웃" 버튼을 눌러 전환한 뒤, 그 화면의 URL(또는 창)을 그대로 캡처하세요.',
-    liveRegistration: 'OBS 레이아웃 화면에서도 아이디→Enter→수량→Enter로 방송 중 실시간 등록이 가능합니다.',
+    obsLayoutUsage: '아데나 매입 화면에서 "방송용 레이아웃" 버튼을 눌러 전환한 뒤, 그 화면의 URL(또는 창)을 그대로 캡처하세요.',
+    liveRegistration: '방송용 레이아웃 화면에서도 아이디→Enter→수량→Enter로 방송 중 실시간 등록이 가능합니다.',
     viewerCheck: '시청자는 화면에 노출된 리스트에서 본인 닉네임과 수량·상태를 직접 확인할 수 있습니다(검색 없이도 찾기 쉽도록 큰 글씨로 구성).',
     overlayTip: '브라우저 소스로 추가하는 방법을 가장 추천합니다 — 창 캡처보다 화질이 선명하고 리소스도 적게 씁니다.',
   },
@@ -134,8 +134,8 @@ export const BROADCAST_GUIDE: BroadcastProgramGuide[] = [
     name: 'SOOP(구 아프리카TV) 프릭샷',
     browserSource: '프릭샷 화면 소스 추가에서 "웹 브라우저" 항목을 선택해 URL을 등록하면 됩니다.',
     windowCapture: '웹 브라우저 소스가 지원되지 않는 버전이라면 "화면 캡처"로 창 전체를 캡처하세요.',
-    resolution: '1920×1080 권장이며, 세로 방송(모바일 레이아웃)에서는 OBS 레이아웃이 자동으로 세로 폭에 맞춰 줄어듭니다.',
-    obsLayoutUsage: '매입 화면에서 OBS 레이아웃으로 전환 후 그 화면만 소스로 등록하세요.',
+    resolution: '1920×1080 권장이며, 세로 방송(모바일 레이아웃)에서는 방송용 레이아웃이 자동으로 세로 폭에 맞춰 줄어듭니다.',
+    obsLayoutUsage: '매입 화면에서 방송용 레이아웃으로 전환 후 그 화면만 소스로 등록하세요.',
     liveRegistration: '방송 중에도 매입 등록/수정/삭제가 그대로 가능합니다.',
     viewerCheck: '시청자는 오버레이에 노출된 리스트에서 실시간으로 매입 순서를 확인할 수 있습니다.',
     overlayTip: '웹 브라우저 소스 방식을 권장합니다.',
@@ -145,7 +145,7 @@ export const BROADCAST_GUIDE: BroadcastProgramGuide[] = [
     browserSource: '소스 추가 → "브라우저 소스(BrowserSource)" 선택 → URL 입력 → 폭/높이를 1920×1080으로 설정합니다.',
     windowCapture: '브라우저 소스 대신 "창 캡처"도 지원됩니다.',
     resolution: '1920×1080 기준 제작, 다른 해상도에서도 반응형으로 잘림 없이 표시됩니다.',
-    obsLayoutUsage: 'OBS와 사용법이 거의 동일합니다 — OBS 레이아웃 화면 주소를 브라우저 소스에 등록하세요.',
+    obsLayoutUsage: 'OBS와 사용법이 거의 동일합니다 — 방송용 레이아웃 화면 주소를 브라우저 소스에 등록하세요.',
     liveRegistration: '방송 중 실시간 등록/수정/삭제 그대로 지원됩니다.',
     viewerCheck: '리스트가 크게 표시되어 시청자가 검색 없이도 본인 닉네임을 찾기 쉽습니다.',
     overlayTip: '브라우저 소스를 가장 추천합니다.',
@@ -155,7 +155,7 @@ export const BROADCAST_GUIDE: BroadcastProgramGuide[] = [
     browserSource: '소스 추가 → "웹페이지(Webpage)" 선택 → URL 입력합니다.',
     windowCapture: '"화면 영역" 또는 "창" 캡처로도 대체 가능합니다.',
     resolution: '1920×1080 권장.',
-    obsLayoutUsage: 'OBS 레이아웃 화면을 웹페이지 소스로 등록하세요.',
+    obsLayoutUsage: '방송용 레이아웃 화면을 웹페이지 소스로 등록하세요.',
     liveRegistration: '방송 중 실시간 매입 등록이 그대로 가능합니다.',
     viewerCheck: '큰 글씨의 리스트로 시청자가 쉽게 확인 가능합니다.',
     overlayTip: '웹페이지 소스 방식을 권장합니다.',
@@ -165,7 +165,7 @@ export const BROADCAST_GUIDE: BroadcastProgramGuide[] = [
     browserSource: 'Input 추가 → "Web Browser" 선택 → URL 입력합니다.',
     windowCapture: '"Capture Window"로도 대체 가능합니다.',
     resolution: '1920×1080 권장.',
-    obsLayoutUsage: 'OBS 레이아웃 화면 URL을 Web Browser Input으로 등록하세요.',
+    obsLayoutUsage: '방송용 레이아웃 화면 URL을 Web Browser Input으로 등록하세요.',
     liveRegistration: '방송 중 실시간 매입 등록이 그대로 가능합니다.',
     viewerCheck: '큰 글씨 리스트로 시청자가 쉽게 확인 가능합니다.',
     overlayTip: 'Web Browser Input 방식을 권장합니다.',
@@ -173,8 +173,12 @@ export const BROADCAST_GUIDE: BroadcastProgramGuide[] = [
 ];
 
 export const EXPORT_FORMAT_GUIDE = [
-  { format: 'Excel (.xlsx)', usage: '엑셀에서 정산·집계 작업을 하거나 다른 팀원과 파일로 공유할 때 사용합니다.' },
-  { format: 'CSV (.csv)', usage: '엑셀 외의 다른 프로그램(구글 시트, 회계 프로그램 등)과 호환이 필요할 때 사용합니다.' },
-  { format: 'TXT (.txt)', usage: '방송 채팅/커뮤니티 게시글 등에 텍스트로 그대로 붙여넣어 공유할 때 사용합니다.' },
-  { format: 'JSON (.json)', usage: '데이터를 있는 그대로 백업하거나, 다른 도구에서 원본 데이터를 다시 활용하고 싶을 때 사용합니다.' },
+  { format: 'Excel (.xlsx)', usage: '엑셀에서 수정하거나 정리할 때 사용합니다.' },
+  { format: 'CSV (.csv)', usage: '다른 프로그램이나 데이터 분석에 사용할 때 사용합니다.' },
+  { format: '메모장 (.txt)', usage: '방송 공유용입니다. 모바일에서도 한글이 깨지지 않도록 저장됩니다.' },
+  {
+    format: 'JSON (.json)',
+    usage:
+      '프로젝트 백업 및 복원용입니다. 다른 사람이 사용하는 데이터를 그대로 사용하려면 해당 JSON이 등록된 사이트(URL)가 필요합니다. 설정 → JSON 가져오기에서 해당 URL을 등록하면 최신 데이터를 불러올 수 있습니다.',
+  },
 ];

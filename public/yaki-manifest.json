@@ -1,0 +1,10 @@
+{
+  "name": "THE K 관리자",
+  "short_name": "THE K 관리자",
+  "description": "THE K 관리자 — 제작 견적 데이터 관리",
+  "start_url": "./yaki.html",
+  "display": "standalone",
+  "background_color": "#06080B",
+  "theme_color": "#06080B",
+  "icons": [{ "src": "./yaki-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

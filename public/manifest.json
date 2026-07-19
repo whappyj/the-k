@@ -1,0 +1,10 @@
+{
+  "name": "THE K",
+  "short_name": "THE K",
+  "description": "THE K — 리니지 클래식 도우미",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#06080B",
+  "theme_color": "#06080B",
+  "icons": [{ "src": "./logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

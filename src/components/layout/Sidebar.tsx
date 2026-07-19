@@ -44,7 +44,7 @@ export function Sidebar({ route, onNavigate }: SidebarProps) {
         </div>
         <div className="hidden min-[900px]:block">
           <div className="text-base font-bold tracking-tight text-white">THE K</div>
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-gold/70">Lineage Classic</div>
+          <div className="text-[10px] font-semibold uppercase tracking-widest text-gold/70">리니지 클래식 도우미</div>
         </div>
       </div>
 

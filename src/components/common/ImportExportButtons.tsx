@@ -8,6 +8,8 @@ interface ImportExportButtonsProps {
   onExport: () => void;
   onImportFile: (file: File) => void;
   disabled?: boolean;
+  /** true면 "📤 내보내기" 버튼을 숨기고 "📥 불러오기"만 남긴다(기본값 false — 다른 화면은 영향 없음). */
+  hideExport?: boolean;
 }
 
 /**
@@ -15,15 +17,17 @@ interface ImportExportButtonsProps {
  * 경험치/아데나매입/아이템비교/제작계산기/설정 화면이 전부 이 컴포넌트 하나를 공유해서
  * 내보내기(📤)/불러오기(📥) UI가 어디서나 동일하게 동작한다.
  */
-export function ImportExportButtons({ label, onExport, onImportFile, disabled }: ImportExportButtonsProps) {
+export function ImportExportButtons({ label, onExport, onImportFile, disabled, hideExport }: ImportExportButtonsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="flex flex-wrap gap-2">
-      <Button variant="secondary" size="sm" onClick={onExport} disabled={disabled} aria-label={`${label} 내보내기`}>
-        <Download size={16} />
-        📤 내보내기
-      </Button>
+      {!hideExport && (
+        <Button variant="secondary" size="sm" onClick={onExport} disabled={disabled} aria-label={`${label} 내보내기`}>
+          <Download size={16} />
+          📤 내보내기
+        </Button>
+      )}
       <Button variant="secondary" size="sm" onClick={() => fileInputRef.current?.click()} aria-label={`${label} 불러오기`}>
         <Upload size={16} />
         📥 불러오기

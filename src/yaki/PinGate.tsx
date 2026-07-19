@@ -39,7 +39,8 @@ export function PinGate({ children }: { children: React.ReactNode }) {
           </span>
           <div>
             <div className="text-[18px] font-bold text-white">THE K 관리자</div>
-            <div className="mt-1 text-[13px] text-text-sub">PIN 번호를 입력해주세요</div>
+            <div className="mt-0.5 text-[11px] font-semibold uppercase tracking-widest text-gold/70">제작 견적 데이터 관리</div>
+            <div className="mt-2 text-[13px] text-text-sub">PIN 번호를 입력해주세요</div>
           </div>
         </div>
 
