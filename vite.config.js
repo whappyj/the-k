@@ -15,4 +15,14 @@ export default defineConfig({
     server: {
         port: 5173,
     },
+    build: {
+        rollupOptions: {
+            // yaki.html은 메인 앱(index.html)과 완전히 분리된 별도 진입점이다.
+            // 메인 앱의 라우팅(useRoute.ts)이나 전역 상태와는 무관하게 독립적으로 동작한다.
+            input: {
+                main: path.resolve(__dirname, 'index.html'),
+                yaki: path.resolve(__dirname, 'yaki.html'),
+            },
+        },
+    },
 });

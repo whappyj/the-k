@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Pencil, Scale } from 'lucide-react';
 import type { ExperienceFormValues, ExperienceRecord } from '@/types';
 import { DEFAULT_HUNT_AREAS, MAX_PARTY } from '@/constants';
 import { useAppData, useAppDataActions } from '@/hooks/useAppData';
@@ -12,11 +13,13 @@ import { ExperienceForm } from '@/components/experience/ExperienceForm';
 import { ResultPanel } from '@/components/experience/ResultPanel';
 import { FavoritePartyList } from '@/components/experience/FavoritePartyList';
 import { RecordList } from '@/components/experience/RecordList';
+import { RecordVsRecord } from '@/components/compare/RecordVsRecord';
 import { ImportExportButtons } from '@/components/common/ImportExportButtons';
 import { exportSection, readThekFile, parseSectionFile } from '@/lib/importExportService';
 import { computeExperienceStats, validateExperienceForm } from '@/lib/calculations';
 import { generateId } from '@/utils/id';
 import { todayStr, nowTimeStr } from '@/utils/date';
+import { cn } from '@/utils/cn';
 
 /** 가장 최근에 종료된 기록을 찾는다 (레벨/시작경험치 자동 이어받기용). */
 function findLastRecord(records: ExperienceRecord[]): ExperienceRecord | null {
@@ -92,6 +95,7 @@ export function ExperiencePage() {
     return { ...emptyForm(carry), ...(data.recordDraft ?? {}) };
   });
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [tab, setTab] = useState<'input' | 'compare'>('input');
   const formRef = useRef<HTMLDivElement>(null);
 
   const patch = (p: Partial<ExperienceFormValues>) => setValues((prev) => ({ ...prev, ...p }));
@@ -247,47 +251,74 @@ export function ExperiencePage() {
         }
       />
 
-      <div className="mb-12 grid grid-cols-[1.2fr_1fr] items-start gap-6 max-[1100px]:grid-cols-1">
-        <div ref={formRef} className="flex min-w-0 flex-col gap-6">
-          <ExperienceForm
-            values={values}
-            onChange={patch}
-            huntAreaOptions={huntAreaOptions}
-            isEditing={editingId !== null}
-            onSave={handleSave}
-            onReset={resetForm}
-            onCancelEdit={resetForm}
-          />
-          <Section title="⭐ 즐겨찾는 파티 구성">
+      <div className="mb-6 grid grid-cols-2 gap-3 max-[500px]:grid-cols-1">
+        <TabButton active={tab === 'input'} icon={Pencil} label="기록 입력" onClick={() => setTab('input')} />
+        <TabButton active={tab === 'compare'} icon={Scale} label="비교" onClick={() => setTab('compare')} />
+      </div>
+
+      {tab === 'compare' ? (
+        <RecordVsRecord records={data.experienceRecords} />
+      ) : (
+        <>
+          <div className="mb-12 grid grid-cols-[1.2fr_1fr] items-start gap-6 max-[1100px]:grid-cols-1">
+            <div ref={formRef} className="flex min-w-0 flex-col gap-6">
+              <ExperienceForm
+                values={values}
+                onChange={patch}
+                huntAreaOptions={huntAreaOptions}
+                isEditing={editingId !== null}
+                onSave={handleSave}
+                onReset={resetForm}
+                onCancelEdit={resetForm}
+              />
+              <Section title="⭐ 즐겨찾는 파티 구성">
+                <Card className="p-8">
+                  <FavoritePartyList
+                    favorites={data.favoriteParties}
+                    current={currentParty}
+                    onAdd={addFavorite}
+                    onUpdate={updateFavorite}
+                    onDelete={deleteFavorite}
+                    onLoad={(fav) => patch({ knight: fav.knight, elf: fav.elf, wizard: fav.wizard, bibigiEnabled: fav.bibigiEnabled, bibigiCount: fav.bibigiCount, molly: fav.molly })}
+                  />
+                </Card>
+              </Section>
+            </div>
+
+            <ResultPanel stats={stats} endExp={values.endExp} />
+          </div>
+
+          <Section title="최근 기록">
             <Card className="p-8">
-              <FavoritePartyList
-                favorites={data.favoriteParties}
-                current={currentParty}
-                onAdd={addFavorite}
-                onUpdate={updateFavorite}
-                onDelete={deleteFavorite}
-                onLoad={(fav) => patch({ knight: fav.knight, elf: fav.elf, wizard: fav.wizard, bibigiEnabled: fav.bibigiEnabled, bibigiCount: fav.bibigiCount, molly: fav.molly })}
+              <RecordList
+                records={data.experienceRecords}
+                onEdit={(id) => {
+                  const record = data.experienceRecords.find((r) => r.id === id);
+                  if (record) loadRecordIntoForm(record);
+                }}
+                onDuplicate={handleDuplicate}
+                onDelete={handleDelete}
               />
             </Card>
           </Section>
-        </div>
-
-        <ResultPanel stats={stats} endExp={values.endExp} />
-      </div>
-
-      <Section title="최근 기록">
-        <Card className="p-8">
-          <RecordList
-            records={data.experienceRecords}
-            onEdit={(id) => {
-              const record = data.experienceRecords.find((r) => r.id === id);
-              if (record) loadRecordIntoForm(record);
-            }}
-            onDuplicate={handleDuplicate}
-            onDelete={handleDelete}
-          />
-        </Card>
-      </Section>
+        </>
+      )}
     </div>
+  );
+}
+
+function TabButton({ active, icon: Icon, label, onClick }: { active: boolean; icon: typeof Pencil; label: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'flex items-center justify-center gap-2.5 rounded-2xl border p-4 text-[14px] font-bold transition-all duration-200',
+        active ? 'border-primary/50 bg-primary-dim text-primary' : 'border-[#1D2530] bg-[#0B1016] text-text-sub hover:bg-white/[0.045]'
+      )}
+    >
+      <Icon size={18} />
+      {label}
+    </button>
   );
 }
