@@ -3,6 +3,7 @@ import type { ExperienceFormValues, ExperienceRecord } from '@/types';
 import { DEFAULT_HUNT_AREAS, MAX_PARTY } from '@/constants';
 import { useAppData, useAppDataActions } from '@/hooks/useAppData';
 import { useToast } from '@/hooks/useToast';
+import { Card } from '@/components/ui/card';
 import { usePendingEdit } from '@/hooks/usePendingEdit';
 import { PageHeader, Section } from '@/components/layout/PageHeader';
 import { HelpButton } from '@/components/common/HelpButton';
@@ -238,8 +239,7 @@ export function ExperiencePage() {
     <div id="page-experience">
       <PageHeader
         title="⚔ 경험치 기록"
-        subtitle="사냥 기록을 입력하면 자동으로 경험치 효율을 계산하고 분석 페이지에 반영됩니다."
-        actions={
+                actions={
           <div className="flex items-center gap-2">
             <ImportExportButtons label="경험치" onExport={handleExportSection} onImportFile={handleImportSection} />
             <HelpButton content={HELP_EXPERIENCE} />
@@ -247,7 +247,7 @@ export function ExperiencePage() {
         }
       />
 
-      <div className="mb-10 grid grid-cols-[1.2fr_1fr] items-start gap-5 max-[1100px]:grid-cols-1">
+      <div className="mb-12 grid grid-cols-[1.2fr_1fr] items-start gap-6 max-[1100px]:grid-cols-1">
         <div ref={formRef} className="flex min-w-0 flex-col gap-6">
           <ExperienceForm
             values={values}
@@ -259,14 +259,16 @@ export function ExperiencePage() {
             onCancelEdit={resetForm}
           />
           <Section title="⭐ 즐겨찾는 파티 구성">
-            <FavoritePartyList
-              favorites={data.favoriteParties}
-              current={currentParty}
-              onAdd={addFavorite}
-              onUpdate={updateFavorite}
-              onDelete={deleteFavorite}
-              onLoad={(fav) => patch({ knight: fav.knight, elf: fav.elf, wizard: fav.wizard, bibigiEnabled: fav.bibigiEnabled, bibigiCount: fav.bibigiCount, molly: fav.molly })}
-            />
+            <Card className="p-8">
+              <FavoritePartyList
+                favorites={data.favoriteParties}
+                current={currentParty}
+                onAdd={addFavorite}
+                onUpdate={updateFavorite}
+                onDelete={deleteFavorite}
+                onLoad={(fav) => patch({ knight: fav.knight, elf: fav.elf, wizard: fav.wizard, bibigiEnabled: fav.bibigiEnabled, bibigiCount: fav.bibigiCount, molly: fav.molly })}
+              />
+            </Card>
           </Section>
         </div>
 
@@ -274,15 +276,17 @@ export function ExperiencePage() {
       </div>
 
       <Section title="최근 기록">
-        <RecordList
-          records={data.experienceRecords}
-          onEdit={(id) => {
-            const record = data.experienceRecords.find((r) => r.id === id);
-            if (record) loadRecordIntoForm(record);
-          }}
-          onDuplicate={handleDuplicate}
-          onDelete={handleDelete}
-        />
+        <Card className="p-8">
+          <RecordList
+            records={data.experienceRecords}
+            onEdit={(id) => {
+              const record = data.experienceRecords.find((r) => r.id === id);
+              if (record) loadRecordIntoForm(record);
+            }}
+            onDuplicate={handleDuplicate}
+            onDelete={handleDelete}
+          />
+        </Card>
       </Section>
     </div>
   );

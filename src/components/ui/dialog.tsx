@@ -31,16 +31,16 @@ export function Dialog({ open, onClose, title, children, footer, narrow }: Dialo
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[900] flex items-center justify-center p-5">
+    <div className="fixed inset-0 z-[900] flex items-center justify-center p-6">
       <div className="absolute inset-0 animate-fade-in bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <div
         className={cn(
-          'relative max-h-[84vh] w-full animate-scale-in overflow-y-auto rounded-modal border border-border/[0.14] bg-card/90 p-7',
+          'relative max-h-[84vh] w-full animate-scale-in overflow-y-auto rounded-modal border border-border/[0.14] bg-card/90 p-8',
           'shadow-soft backdrop-blur-glass',
           narrow ? 'max-w-[480px]' : 'max-w-[720px]'
         )}
       >
-        <div className="mb-5 flex items-center justify-between">
+        <div className="mb-6 flex items-center justify-between">
           <div className="text-[17px] font-bold">{title}</div>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="닫기">
             <X size={18} />

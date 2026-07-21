@@ -11,8 +11,8 @@ export function FeatureGuideDialog({ open, onClose }: { open: boolean; onClose: 
     <Dialog open={open} onClose={onClose} title="📖 기능 도움말">
       <div className="flex flex-col gap-6">
         {FEATURE_GUIDE.map((item) => (
-          <section key={item.title} className="rounded-2xl border border-[#1D2530] bg-white/[0.02] p-5">
-            <div className="mb-3 text-[15px] font-bold text-gold">{item.title}</div>
+          <section key={item.title} className="rounded-2xl border border-[#1D2530] bg-white/[0.02] p-6">
+            <div className="mb-4 text-[15px] font-bold text-primary">{item.title}</div>
             <dl className="flex flex-col gap-2.5 text-[13px]">
               <Row label="무엇을 하나요" value={item.what} />
               <Row label="언제 쓰나요" value={item.when} />
@@ -34,8 +34,8 @@ export function FeatureGuideDialog({ open, onClose }: { open: boolean; onClose: 
           </section>
         ))}
 
-        <section className="rounded-2xl border border-[#1D2530] bg-white/[0.02] p-5">
-          <div className="mb-3 text-[15px] font-bold text-gold">내보내기 포맷별 용도</div>
+        <section className="rounded-2xl border border-[#1D2530] bg-white/[0.02] p-6">
+          <div className="mb-4 text-[15px] font-bold text-primary">내보내기 포맷별 용도</div>
           <div className="flex flex-col gap-2">
             {EXPORT_FORMAT_GUIDE.map((f) => (
               <div key={f.format} className="flex flex-col gap-0.5 border-b border-[#1D2530] pb-2 text-[13px] last:border-none last:pb-0">
@@ -54,7 +54,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div>
       <dt className="mb-1 font-semibold text-text-sub">{label}</dt>
-      <dd className={highlight ? 'text-gold' : 'text-text'}>{value}</dd>
+      <dd className={highlight ? 'text-primary' : 'text-text'}>{value}</dd>
     </div>
   );
 }

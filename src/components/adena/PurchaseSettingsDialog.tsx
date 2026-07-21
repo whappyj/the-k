@@ -20,7 +20,7 @@ interface PurchaseSettingsDialogProps {
 export function PurchaseSettingsDialog({ open, onClose, settings, onChange }: PurchaseSettingsDialogProps) {
   return (
     <Dialog open={open} onClose={onClose} title="아데나 매입 설정" narrow>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-1.5">
           <Label>환율 (1만 아데나당)</Label>
           <Input type="number" min={0} value={settings.rate || ''} placeholder="예: 900" onChange={(e) => onChange({ rate: Number(e.target.value) || 0 })} />

@@ -35,7 +35,7 @@ export function InteractiveCard({ className, onClick, onKeyDown, ...props }: HTM
         onKeyDown?.(e);
       }}
       className={cn(
-        'cursor-pointer hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-[0_6px_18px_rgba(0,0,0,0.32)] active:translate-y-0',
+        'cursor-pointer hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-[0_6px_18px_rgba(0,0,0,0.32)] active:translate-y-0',
         className
       )}
       {...props}
@@ -49,19 +49,19 @@ export function Panel({
   step,
   title,
   action,
-  accent = 'gold',
+  accent = 'primary',
   className,
   children,
 }: {
   step?: number;
   title: string;
   action?: ReactNode;
-  accent?: 'gold' | 'green' | 'red' | 'blue';
+  accent?: 'primary' | 'green' | 'red' | 'blue';
   className?: string;
   children: ReactNode;
 }) {
   const accentClass = {
-    gold: 'bg-gold-dim text-gold',
+    primary: 'bg-primary-dim text-primary',
     green: 'bg-success-dim text-success',
     red: 'bg-danger-dim text-danger',
     blue: 'bg-primary-dim text-primary',
@@ -69,7 +69,7 @@ export function Panel({
 
   return (
     <Card className={className}>
-      <div className="mb-5 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           {step != null && (
             <span className={cn('flex h-6 w-6 items-center justify-center rounded-lg font-display text-[12px] font-bold', accentClass)}>{step}</span>

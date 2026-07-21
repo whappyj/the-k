@@ -45,10 +45,10 @@ export function EstimateSettingsDrawer({
   onApplyPreset,
 }: EstimateSettingsDrawerProps) {
   return (
-    <Drawer open={open} onClose={onClose} title="⚙ 비교 설정" footer={<Button variant="gold" onClick={onClose}>적용</Button>}>
+    <Drawer open={open} onClose={onClose} title="⚙ 비교 설정" footer={<Button variant="primary" onClick={onClose}>적용</Button>}>
       <div className="flex flex-col gap-8">
         <section>
-          <div className="mb-3 text-[13px] font-bold text-text-sub">환율 · 아이템 시세</div>
+          <div className="mb-4 text-[13px] font-bold text-text-sub">환율 · 아이템 시세</div>
           <EstimateConditionSettings
             materials={estimate.materials}
             rateA={estimate.rateA}
@@ -60,18 +60,18 @@ export function EstimateSettingsDrawer({
         </section>
 
         <section>
-          <div className="mb-3 text-[13px] font-bold text-text-sub">제작 수량</div>
+          <div className="mb-4 text-[13px] font-bold text-text-sub">제작 수량</div>
           <QtySelectCards value={estimate.qtyTier} onChange={onQtyChange} />
         </section>
 
         <section>
-          <div className="mb-3 text-[13px] font-bold text-text-sub">프리셋</div>
+          <div className="mb-4 text-[13px] font-bold text-text-sub">프리셋</div>
           <PresetGrid presets={estimate.presets} currentEstimate={estimate} onAdd={onAddPreset} onUpdate={onUpdatePreset} onDelete={onDeletePreset} onApply={onApplyPreset} />
         </section>
 
         <section>
           <details className="group">
-            <summary className="mb-3 cursor-pointer list-none text-[13px] font-bold text-text-sub">
+            <summary className="mb-4 cursor-pointer list-none text-[13px] font-bold text-text-sub">
               <span className="inline-flex items-center gap-1.5">
                 <span className="transition-transform duration-200 group-open:rotate-90">▶</span>
                 재료 가격 (펼치기)

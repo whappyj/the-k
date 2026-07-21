@@ -37,34 +37,34 @@ export function RecordDetailPanel({ record, allRecords, onEdit }: { record: Expe
         : `평균보다 ${Math.abs(diffPct).toFixed(0)}% 낮은 기록입니다.`;
 
   return (
-    <Card>
+    <Card className="p-8">
       <div className="mb-4 flex items-center justify-between">
         <div>
           <div className="text-[11px] text-text-faint">선택한 기록</div>
           <div className="text-[18px] font-bold text-white">{record.huntArea}</div>
         </div>
         <Button variant="ghost" size="sm" onClick={() => onEdit(record.id)}>
-          <Pencil size={13} />
+          <Pencil size={16} />
           수정하기
         </Button>
       </div>
 
-      <div className="mb-5 rounded-2xl border border-gold/25 bg-gradient-to-br from-gold-dim to-transparent p-6 text-center">
-        <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-gold/80">시간당 경험치</div>
-        <div className="font-display text-[40px] font-bold leading-none text-gold">
+      <div className="mb-6 rounded-2xl border border-primary/25 bg-gradient-to-br from-primary-dim to-transparent p-6 text-center">
+        <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-primary/80">시간당 경험치</div>
+        <div className="font-display text-[40px] font-bold leading-none text-primary">
           {formatPercent(record.expPerHour)}
-          <span className="text-[16px] text-gold/70">/h</span>
+          <span className="text-[16px] text-primary/70">/h</span>
         </div>
       </div>
 
-      <div className="mb-5 grid grid-cols-4 gap-3 max-[480px]:grid-cols-2">
+      <div className="mb-6 grid grid-cols-4 gap-4 max-[480px]:grid-cols-2">
         <DetailStat label="사냥 시간" value={formatDuration(record.playTime)} />
         <DetailStat label="획득 경험치" value={formatPercent(record.gainExp)} />
         <DetailStat label="사냥터" value={record.huntArea} />
         <DetailStat label="레벨" value={`Lv ${record.startLevel}→${record.endLevel}`} />
       </div>
 
-      <div className="mb-5 grid grid-cols-3 gap-2 border-t border-[#1D2530] pt-4 text-center text-[11px] text-text-faint">
+      <div className="mb-6 grid grid-cols-3 gap-2 border-t border-[#1D2530] pt-4 text-center text-[11px] text-text-faint">
         <div>
           <div className="font-display text-[13px] font-bold text-white">
             {record.party.knight}/{record.party.elf}/{record.party.wizard}
@@ -82,16 +82,16 @@ export function RecordDetailPanel({ record, allRecords, onEdit }: { record: Expe
       </div>
 
       {record.memo && (
-        <div className="mb-5 rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5">
+        <div className="mb-6 rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5">
           <div className="mb-1.5 text-[10.5px] font-bold text-text-faint">메모</div>
           <div className="text-[12.5px] text-text-sub">{record.memo}</div>
         </div>
       )}
 
-      <div className="rounded-2xl border border-gold/25 bg-gold-dim p-4 text-center">
+      <div className="rounded-2xl border border-primary/25 bg-primary-dim p-4 text-center">
         <div className="mb-1.5 flex items-center justify-center gap-0.5">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} size={15} className={cn(i < stars ? 'fill-gold text-gold' : 'text-text-faint')} />
+            <Star key={i} size={16} className={cn(i < stars ? 'fill-primary text-primary' : 'text-text-faint')} />
           ))}
         </div>
         <div className={cn('mb-1 font-display text-[16px] font-bold', diffPct >= 0 ? 'text-success' : 'text-danger')}>
@@ -108,7 +108,7 @@ function DetailStat({ label, value, strong }: { label: string; value: string; st
   return (
     <div className="rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5">
       <div className="mb-1 text-[10.5px] text-text-faint">{label}</div>
-      <div className={cn('font-display text-[15px] font-bold', strong ? 'text-gold' : 'text-white')}>{value}</div>
+      <div className={cn('font-display text-[15px] font-bold', strong ? 'text-primary' : 'text-white')}>{value}</div>
     </div>
   );
 }

@@ -43,7 +43,7 @@ export function LevelUpCard({ form, core, levelUp }: { form: CalculatorFormValue
         <Item label="남은 시간" value={levelUp?.remainHours != null ? `${levelUp.remainHours.toFixed(1)}시간` : '-'} />
       </div>
 
-      <div className="my-[18px] border-y border-border/[0.08] py-5 text-center">
+      <div className="my-[18px] border-y border-border/[0.08] py-6 text-center">
         <div className="mb-2 text-xs text-text-sub">예상 레벨업 날짜</div>
         <div className="font-display text-[28px] font-bold text-success">
           {!levelUp || levelUp.remainExp === 0

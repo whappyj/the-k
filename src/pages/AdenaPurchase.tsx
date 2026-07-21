@@ -167,19 +167,19 @@ export function AdenaPurchasePage() {
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="secondary" size="sm" onClick={() => setFeatureGuideOpen(true)}>
-              <HelpCircle size={15} />
+              <HelpCircle size={16} />
               기능 도움말
             </Button>
             <Button variant="secondary" size="sm" onClick={() => setBroadcastGuideOpen(true)}>
-              <Radio size={15} />
+              <Radio size={16} />
               방송 도움말
             </Button>
-            <Button variant="gold" size="sm" onClick={() => setObsOpen(true)}>
-              <Tv size={15} />
+            <Button variant="primary" size="sm" onClick={() => setObsOpen(true)}>
+              <Tv size={16} />
               방송용 레이아웃
             </Button>
             <Button variant="secondary" size="sm" onClick={() => setExportOpen(true)}>
-              <Download size={15} />
+              <Download size={16} />
               내보내기
             </Button>
             <ImportExportButtons label="아데나 매입" onExport={handleExportSection} onImportFile={handleImportSection} hideExport />
@@ -193,14 +193,14 @@ export function AdenaPurchasePage() {
         <button
           type="button"
           onClick={() => setViewMode('register')}
-          className={cn('h-[38px] rounded-full px-5 text-[13px] font-semibold text-text-sub transition-colors', viewMode === 'register' && 'bg-primary text-white')}
+          className={cn('h-[38px] rounded-full px-6 text-[13px] font-semibold text-text-sub transition-colors', viewMode === 'register' && 'bg-primary text-white')}
         >
           매입 등록
         </button>
         <button
           type="button"
           onClick={() => setViewMode('deposit')}
-          className={cn('h-[38px] rounded-full px-5 text-[13px] font-semibold text-text-sub transition-colors', viewMode === 'deposit' && 'bg-primary text-white')}
+          className={cn('h-[38px] rounded-full px-6 text-[13px] font-semibold text-text-sub transition-colors', viewMode === 'deposit' && 'bg-primary text-white')}
         >
           입금 / 미입금 관리
         </button>
@@ -214,8 +214,8 @@ export function AdenaPurchasePage() {
           <PurchaseRecordTable records={data.purchaseRecords} editingId={editingId} onEdit={handleEdit} onDelete={handleDelete} />
           <PurchaseTotalsBar records={data.purchaseRecords} settings={data.purchaseSettings} />
 
-          <div className="mt-6 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-5">
-            <div className="mb-3 text-[14px] font-bold text-white">💡 사용 안내</div>
+          <div className="mt-6 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-6">
+            <div className="mb-4 text-[14px] font-bold text-white">💡 사용 안내</div>
             <ul className="flex flex-col gap-1.5 text-[12.5px] text-text-sub">
               <li>• 수량 입력은 &apos;만 아데나&apos; 단위입니다.</li>
               <li>• Enter 입력 시 바로 추가됩니다.</li>

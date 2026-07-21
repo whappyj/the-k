@@ -63,7 +63,7 @@ export function BestCondition({ records }: { records: ExperienceRecord[] }) {
         ))}
         <span className="ml-2 text-[12px] font-bold uppercase tracking-wide text-gold">추천 사냥터</span>
       </div>
-      <div className="mb-3 text-center text-[24px] font-bold text-white">{area}</div>
+      <div className="mb-4 text-center text-[24px] font-bold text-white">{area}</div>
       <div className="mb-1 text-center font-display text-[56px] font-bold leading-none text-gold">{formatPercent(best.avgPerHour)}</div>
       <div className="mb-2 text-center text-[14px] font-semibold text-success">
         평균보다 {diffPct >= 0 ? '+' : ''}
@@ -71,7 +71,7 @@ export function BestCondition({ records }: { records: ExperienceRecord[] }) {
       </div>
       <div className="mb-6 text-center text-[12.5px] italic text-text-sub">"{reason}"</div>
 
-      <div className="mb-5 grid grid-cols-2 gap-3">
+      <div className="mb-6 grid grid-cols-2 gap-4">
         <div className="flex items-center gap-2.5 rounded-xl border border-[#1D2530] bg-white/[0.02] px-3.5 py-3">
           <trendMeta.icon size={16} className={trendMeta.tone} />
           <div>

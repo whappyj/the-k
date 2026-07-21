@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Search, Star, ArrowLeft } from 'lucide-react';
+import { Search, Star, ArrowLeft, MapPin } from 'lucide-react';
 import { useAppData } from '@/hooks/useAppData';
 import { useFormatters } from '@/hooks/useFormatters';
 import { useHuntAreaFavorites } from '@/hooks/useHuntAreaFavorites';
@@ -9,7 +9,7 @@ import { HELP_HUNT_AREA_EFFICIENCY } from '@/lib/helpContent';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
-import { EmptyCell } from '@/components/common/EmptyState';
+import { EmptyCell, EmptyState } from '@/components/common/EmptyState';
 import type { ExperienceRecord } from '@/types';
 import { cn } from '@/utils/cn';
 
@@ -100,8 +100,8 @@ export function HuntAreaEfficiencyPage() {
   if (!records.length) {
     return (
       <div id="page-hunt-area-efficiency">
-        <PageHeader title="🗺 사냥터 효율" subtitle="사냥터별 시간당 경험치 측정 이력을 비교합니다." actions={<HelpButton content={HELP_HUNT_AREA_EFFICIENCY} />} />
-        <EmptyCell>경험치 기록이 쌓이면 사냥터별 효율을 비교할 수 있습니다.</EmptyCell>
+        <PageHeader title="🗺 사냥터 효율" actions={<HelpButton content={HELP_HUNT_AREA_EFFICIENCY} />} />
+        <EmptyState icon={MapPin} title="사냥터 기록이 없습니다" description="경험치 기록이 쌓이면 사냥터별 효율을 비교할 수 있습니다." />
       </div>
     );
   }
@@ -118,34 +118,34 @@ export function HuntAreaEfficiencyPage() {
               onClick={() => setSelectedArea(null)}
               className="flex h-11 items-center gap-1.5 rounded-xl border border-[#1D2530] bg-white/[0.02] px-4 text-[13px] font-semibold text-text-sub transition-colors hover:bg-white/[0.05]"
             >
-              <ArrowLeft size={15} />
+              <ArrowLeft size={16} />
               목록으로
             </button>
           }
         />
 
-        <Card>
+        <Card className="p-8">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] border-collapse text-[13px]">
+            <table className="w-full min-w-[640px] border-collapse text-[14px]">
               <thead>
-                <tr className="border-b border-[#1D2530] text-left text-[11.5px] text-text-faint">
-                  <th className="px-3 py-2.5 font-semibold">날짜</th>
-                  <th className="px-3 py-2.5 font-semibold">시작레벨</th>
-                  <th className="px-3 py-2.5 font-semibold">종료레벨</th>
-                  <th className="px-3 py-2.5 font-semibold">사냥시간</th>
-                  <th className="px-3 py-2.5 text-right font-semibold">경험치(%/h)</th>
-                  <th className="px-3 py-2.5 font-semibold">메모</th>
+                <tr className="border-b border-[#1D2530] text-left text-[12px] text-text-faint">
+                  <th className="px-4 py-2.5 font-semibold">날짜</th>
+                  <th className="px-4 py-2.5 font-semibold">시작레벨</th>
+                  <th className="px-4 py-2.5 font-semibold">종료레벨</th>
+                  <th className="px-4 py-2.5 font-semibold">사냥시간</th>
+                  <th className="px-4 py-2.5 text-right font-semibold">경험치(%/h)</th>
+                  <th className="px-4 py-2.5 font-semibold">메모</th>
                 </tr>
               </thead>
               <tbody>
                 {selected.records.map((r) => (
-                  <tr key={r.id} className="border-b border-[#1D2530] last:border-none hover:bg-white/[0.02]">
-                    <td className="px-3 py-3 text-text-sub">{r.startDate}</td>
-                    <td className="px-3 py-3">Lv {r.startLevel}</td>
-                    <td className="px-3 py-3">Lv {r.endLevel}</td>
-                    <td className="px-3 py-3 text-text-sub">{formatDuration(r.playTime)}</td>
-                    <td className="px-3 py-3 text-right font-display font-bold text-gold">{formatPercent(r.expPerHour)}/h</td>
-                    <td className="max-w-[220px] truncate px-3 py-3 text-text-faint">{r.memo || '-'}</td>
+                  <tr key={r.id} className="border-b border-[#1D2530] last:border-none">
+                    <td className="px-4 py-2.5 text-text-sub">{r.startDate}</td>
+                    <td className="px-4 py-2.5">Lv {r.startLevel}</td>
+                    <td className="px-4 py-2.5">Lv {r.endLevel}</td>
+                    <td className="px-4 py-2.5 text-text-sub">{formatDuration(r.playTime)}</td>
+                    <td className="px-4 py-2.5 text-right font-display font-bold text-primary">{formatPercent(r.expPerHour)}/h</td>
+                    <td className="max-w-[220px] break-words px-4 py-2.5 text-text-faint">{r.memo || '-'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -158,42 +158,42 @@ export function HuntAreaEfficiencyPage() {
 
   return (
     <div id="page-hunt-area-efficiency">
-      <PageHeader title="🗺 사냥터 효율" subtitle="사냥터별 시간당 경험치 측정 이력을 비교합니다." actions={<HelpButton content={HELP_HUNT_AREA_EFFICIENCY} />} />
+      <PageHeader title="🗺 사냥터 효율" actions={<HelpButton content={HELP_HUNT_AREA_EFFICIENCY} />} />
 
-      <div className="mb-5 flex flex-col gap-3 min-[720px]:flex-row min-[720px]:items-center">
+      <Card className="mb-8 flex flex-col gap-4 p-6 min-[720px]:flex-row min-[720px]:items-center">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-text-faint" />
           <Input className="pl-10" placeholder="사냥터 검색" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
-        <Select value={sortMode} onChange={(e) => setSortMode(e.target.value as SortMode)} className="min-[720px]:w-[200px]">
+        <Select value={sortMode} onChange={(e) => setSortMode(e.target.value as SortMode)} className="min-[720px]:w-[220px]">
           <option value="avg">평균 경험치 높은 순</option>
           <option value="recent">최근 측정 순</option>
           <option value="name">사냥터 이름순</option>
           <option value="count">측정횟수순</option>
         </Select>
-      </div>
+      </Card>
 
       {filtered.length === 0 ? (
         <EmptyCell>검색 결과가 없습니다.</EmptyCell>
       ) : (
-        <Card>
+        <Card className="p-8">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[720px] border-collapse text-[13px]">
+            <table className="w-full min-w-[720px] border-collapse text-[14px]">
               <thead>
-                <tr className="border-b border-[#1D2530] text-left text-[11.5px] text-text-faint">
-                  <th className="px-3 py-2.5 font-semibold">사냥터</th>
-                  <th className="px-3 py-2.5 text-right font-semibold">측정횟수</th>
-                  <th className="px-3 py-2.5 text-right font-semibold">평균(%/h)</th>
-                  <th className="px-3 py-2.5 text-right font-semibold">최고(%/h)</th>
-                  <th className="px-3 py-2.5 text-right font-semibold">최저(%/h)</th>
-                  <th className="px-3 py-2.5 text-right font-semibold">최근(%/h)</th>
+                <tr className="border-b border-[#1D2530] text-left text-[12px] text-text-faint">
+                  <th className="px-4 py-2.5 font-semibold">사냥터</th>
+                  <th className="px-4 py-2.5 text-right font-semibold">측정횟수</th>
+                  <th className="px-4 py-2.5 text-right font-semibold">평균(%/h)</th>
+                  <th className="px-4 py-2.5 text-right font-semibold">최고(%/h)</th>
+                  <th className="px-4 py-2.5 text-right font-semibold">최저(%/h)</th>
+                  <th className="px-4 py-2.5 text-right font-semibold">최근(%/h)</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((s) => (
-                  <tr key={s.area} className="cursor-pointer border-b border-[#1D2530] last:border-none hover:bg-white/[0.03]" onClick={() => setSelectedArea(s.area)}>
-                    <td className="px-3 py-3">
-                      <div className="flex items-center gap-2">
+                  <tr key={s.area} className="cursor-pointer border-b border-[#1D2530] last:border-none hover:bg-white/[0.045]" onClick={() => setSelectedArea(s.area)}>
+                    <td className="px-4 py-2.5">
+                      <div className="flex items-center gap-2.5">
                         <button
                           type="button"
                           onClick={(e) => {
@@ -201,18 +201,18 @@ export function HuntAreaEfficiencyPage() {
                             toggleFavorite(s.area);
                           }}
                           aria-label={isFavorite(s.area) ? '즐겨찾기 해제' : '즐겨찾기 추가'}
-                          className="shrink-0"
+                          className="shrink-0 rounded-md p-0.5 transition-opacity hover:opacity-70"
                         >
-                          <Star size={15} className={cn(isFavorite(s.area) ? 'fill-gold text-gold' : 'text-text-faint')} />
+                          <Star size={16} className={cn(isFavorite(s.area) ? 'fill-primary text-primary' : 'text-text-faint')} />
                         </button>
                         <span className="font-bold text-white">{s.area}</span>
                       </div>
                     </td>
-                    <td className="px-3 py-3 text-right text-text-sub">{s.count}회</td>
-                    <td className="px-3 py-3 text-right font-display font-bold text-gold">{formatPercent(s.avgPerHour)}</td>
-                    <td className="px-3 py-3 text-right text-success">{formatPercent(s.bestPerHour)}</td>
-                    <td className="px-3 py-3 text-right text-danger">{formatPercent(s.worstPerHour)}</td>
-                    <td className="px-3 py-3 text-right text-text-sub">{formatPercent(s.latestPerHour)}</td>
+                    <td className="px-4 py-2.5 text-right text-text-sub">{s.count}회</td>
+                    <td className="px-4 py-2.5 text-right font-display font-bold text-primary">{formatPercent(s.avgPerHour)}</td>
+                    <td className="px-4 py-2.5 text-right text-success">{formatPercent(s.bestPerHour)}</td>
+                    <td className="px-4 py-2.5 text-right text-danger">{formatPercent(s.worstPerHour)}</td>
+                    <td className="px-4 py-2.5 text-right text-text-sub">{formatPercent(s.latestPerHour)}</td>
                   </tr>
                 ))}
               </tbody>

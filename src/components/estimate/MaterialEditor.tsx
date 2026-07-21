@@ -59,7 +59,7 @@ export function MaterialEditor({ materials, onChange, onReset, onApplyToast }: M
                   size="icon"
                   aria-label={i === 0 ? '핵심재료' : '핵심재료로 지정'}
                   onClick={() => setKeyMaterial(m.id)}
-                  className={cn(i === 0 ? 'text-gold' : 'text-[#9AA1AC]')}
+                  className={cn(i === 0 ? 'text-primary' : 'text-[#9AA1AC]')}
                 >
                   <Star size={18} fill={i === 0 ? 'currentColor' : 'none'} />
                 </Button>
@@ -93,12 +93,12 @@ export function MaterialEditor({ materials, onChange, onReset, onApplyToast }: M
       </table>
       <div className="px-2.5 pt-2 text-[11px] text-[#9AA1AC]">★를 누르면 그 재료가 "핵심재료"가 되어 조건/결과 화면 맨 위에 표시됩니다.</div>
 
-      <div className="mt-5 flex flex-wrap gap-2.5">
+      <div className="mt-6 flex flex-wrap gap-2.5">
         <Button variant="secondary" size="sm" onClick={addRow}>
           <Plus size={18} />
           재료 추가
         </Button>
-        <Button variant="success" size="sm" onClick={onApplyToast}>
+        <Button variant="primary" size="sm" onClick={onApplyToast}>
           <Check size={18} />
           적용
         </Button>

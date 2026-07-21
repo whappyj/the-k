@@ -74,7 +74,7 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
       </Card>
 
       <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
-        <CardTitle className="!mb-3">기간별 획득 속도 &amp; 예상 완료</CardTitle>
+        <CardTitle className="!mb-4">기간별 획득 속도 &amp; 예상 완료</CardTitle>
         <div className="grid grid-cols-3 gap-4 max-[640px]:grid-cols-1">
           {windows.map((w) => {
             const eta = computeEta(latest.endExp, w.perDayRate);
@@ -99,8 +99,8 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
 
       <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
         <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
-          <CardTitle className="!mb-3">전체 평균 &amp; 최고·최저</CardTitle>
-          <div className="grid grid-cols-2 gap-3">
+          <CardTitle className="!mb-4">전체 평균 &amp; 최고·최저</CardTitle>
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <div className="mb-1 text-[11px] text-text-sub">전체 평균 (기록 시작부터)</div>
               <div className="font-display text-lg font-bold">{formatPercent(overall.perDayRate)}/일</div>
@@ -115,8 +115,8 @@ export function ExpVelocityDashboard({ records }: { records: ExperienceRecord[] 
         </Card>
 
         <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016]">
-          <CardTitle className="!mb-3">주간/월간 평균 &amp; 추세</CardTitle>
-          <div className="grid grid-cols-2 gap-3">
+          <CardTitle className="!mb-4">주간/월간 평균 &amp; 추세</CardTitle>
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <div className="mb-1 text-[11px] text-text-sub">최고 주간 / 월간 평균</div>
               <div className="font-display text-lg font-bold text-primary">{formatPercent(bestWorst.bestWeeklyAvg)}/일</div>

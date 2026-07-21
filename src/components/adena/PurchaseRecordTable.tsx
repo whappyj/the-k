@@ -53,7 +53,7 @@ export function PurchaseRecordTable({ records, editingId, onEdit, onDelete, larg
   const headSize = large ? 'text-[13px]' : 'text-xs';
 
   return (
-    <Card className={cn('overflow-x-auto rounded-2xl border-[#1D2530] bg-[#0B1016] px-5 py-2', large && 'px-7')}>
+    <Card className={cn('overflow-x-auto rounded-2xl border-[#1D2530] bg-[#0B1016] px-6 py-2', large && 'px-8')}>
       <table className={cn('w-full min-w-[640px] border-collapse', textSize)}>
         <thead>
           <tr>

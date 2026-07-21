@@ -26,7 +26,7 @@ export function HelpButton({ content }: { content: HelpContent }) {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="사용설명서"
-        className="inline-flex h-12 w-auto shrink-0 items-center gap-2.5 rounded-[12px] bg-gold px-6 text-base font-bold text-[#1A1408] shadow-md transition-all duration-200 hover:scale-[1.03] hover:shadow-xl hover:brightness-110 active:scale-[0.98]"
+        className="inline-flex h-12 w-auto shrink-0 items-center gap-2.5 rounded-[12px] bg-primary px-6 text-base font-bold text-white shadow-md transition-all duration-200 hover:scale-[1.03] hover:shadow-xl hover:brightness-110 active:scale-[0.98]"
       >
         <BookOpen size={20} />
         📖 사용설명서
@@ -34,7 +34,7 @@ export function HelpButton({ content }: { content: HelpContent }) {
       <Dialog open={open} onClose={() => setOpen(false)} title="❓ 도움말">
         <div className="flex flex-col gap-6">
           <HelpSection icon={BookOpen} tone="blue" title="사용법" items={content.usage} />
-          <HelpSection icon={Calculator} tone="gold" title="계산 방식" items={content.calculation} />
+          <HelpSection icon={Calculator} tone="primary" title="계산 방식" items={content.calculation} />
           <HelpSection icon={AlertTriangle} tone="red" title="주의사항" items={content.caution} />
         </div>
       </Dialog>
@@ -44,7 +44,7 @@ export function HelpButton({ content }: { content: HelpContent }) {
 
 const TONE_CLASS = {
   blue: 'bg-primary-dim text-primary',
-  gold: 'bg-gold-dim text-gold',
+  primary: 'bg-primary-dim text-primary',
   red: 'bg-danger-dim text-danger',
 } as const;
 
@@ -53,7 +53,7 @@ function HelpSection({ icon: Icon, tone, title, items }: { icon: typeof BookOpen
     <section>
       <div className="mb-2.5 flex items-center gap-2">
         <span className={`flex h-7 w-7 items-center justify-center rounded-lg ${TONE_CLASS[tone]}`}>
-          <Icon size={14} />
+          <Icon size={16} />
         </span>
         <span className="text-[14px] font-bold text-white">{title}</span>
       </div>

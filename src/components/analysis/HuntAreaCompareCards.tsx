@@ -42,7 +42,7 @@ export function HuntAreaCompareCards({ records }: { records: ExperienceRecord[] 
             className={cn('cursor-pointer rounded-2xl border-[#1D2530] bg-[#0B1016] border-t-[3px] transition-transform', badge?.className)}
             onClick={() => setOpenArea((prev) => (prev === card.huntArea ? null : card.huntArea))}
           >
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between">
               <div className="text-[15px] font-bold">{card.huntArea}</div>
               {badge && (
                 <span className="text-2xl" title={badge.label} aria-label={badge.label}>
@@ -67,7 +67,7 @@ export function HuntAreaCompareCards({ records }: { records: ExperienceRecord[] 
             </div>
 
             {badge && (
-              <div className="mt-3 flex items-center justify-center gap-1.5 rounded-xl bg-white/[0.03] py-2 text-[13px] font-bold">
+              <div className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-white/[0.03] py-2 text-[13px] font-bold">
                 <span>{badge.icon}</span>
                 <span>{badge.label}</span>
                 {card.rank === 'best' && card.diffFromNext !== null && <span className="text-success">(+{card.diffFromNext.toFixed(1)}%)</span>}

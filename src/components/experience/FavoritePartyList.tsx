@@ -42,7 +42,7 @@ export function FavoritePartyList({ favorites, current, onAdd, onUpdate, onDelet
 
   return (
     <div>
-      <div className="mb-3 flex flex-col gap-2">
+      <div className="mb-4 flex flex-col gap-2">
         {favorites.length === 0 && <EmptyCell>저장된 즐겨찾기가 없습니다.</EmptyCell>}
         {favorites.map((fav) => (
           <div key={fav.id} className="flex items-center justify-between gap-2.5 rounded-xl border border-border/[0.08] bg-white/[0.03] px-3 py-2.5">

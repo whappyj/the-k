@@ -50,7 +50,7 @@ export function DepositManagementView({ records, onToggleDeposit }: DepositManag
             key={f}
             type="button"
             onClick={() => setFilter(f)}
-            className={cn('h-[38px] rounded-full px-5 text-[13px] font-semibold text-text-sub transition-colors', filter === f && 'bg-primary text-white')}
+            className={cn('h-[38px] rounded-full px-6 text-[13px] font-semibold text-text-sub transition-colors', filter === f && 'bg-primary text-white')}
           >
             {FILTER_LABEL[f]}
           </button>
@@ -60,7 +60,7 @@ export function DepositManagementView({ records, onToggleDeposit }: DepositManag
       {visible.length === 0 ? (
         <EmptyCell>{filter === 'pending' ? '미입금 기록이 없습니다.' : '입금완료 기록이 없습니다.'}</EmptyCell>
       ) : (
-        <Card className="overflow-x-auto rounded-2xl border-[#1D2530] bg-[#0B1016] px-5 py-2">
+        <Card className="overflow-x-auto rounded-2xl border-[#1D2530] bg-[#0B1016] px-6 py-2">
           <table className="w-full min-w-[560px] border-collapse text-[13px]">
             <thead>
               <tr>

@@ -38,15 +38,18 @@ export function Sidebar({ route, onNavigate }: SidebarProps) {
         'min-[900px]:items-stretch min-[900px]:overflow-visible min-[900px]:border-b-0 min-[900px]:border-r min-[900px]:px-4 min-[900px]:py-6'
       )}
     >
-      <div className="mb-0 flex shrink-0 items-center gap-2.5 pr-3 min-[900px]:mb-7 min-[900px]:px-2.5">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] border border-gold/30 bg-gradient-to-br from-gold to-[#B9873A] font-display text-[15px] font-bold text-[#1A1408] shadow-[0_2px_8px_rgba(214,168,79,0.35)]">
-          K
+      <button
+        type="button"
+        onClick={() => onNavigate('home')}
+        className="mb-0 flex shrink-0 items-center gap-3 rounded-2xl border border-transparent pr-3 text-left transition-colors min-[900px]:mb-6 min-[900px]:w-full min-[900px]:border-border/[0.06] min-[900px]:bg-white/[0.025] min-[900px]:px-3 min-[900px]:py-3 min-[900px]:pr-3 min-[900px]:hover:bg-white/[0.04]"
+        aria-label="홈으로 이동"
+      >
+        <img src="/logo.png" alt="THE K" className="h-12 w-12 shrink-0 rounded-[10px] object-cover" />
+        <div className="hidden min-[900px]:flex min-[900px]:flex-col min-[900px]:justify-center">
+          <div className="text-base font-bold leading-tight tracking-tight text-white">THE K</div>
+          <div className="mt-0.5 text-[10px] font-semibold uppercase leading-tight tracking-widest text-primary/70">리니지 클래식 도우미</div>
         </div>
-        <div className="hidden min-[900px]:block">
-          <div className="text-base font-bold tracking-tight text-white">THE K</div>
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-gold/70">리니지 클래식 도우미</div>
-        </div>
-      </div>
+      </button>
 
       <nav className="flex shrink-0 flex-row items-center gap-0.5 min-[900px]:flex-1 min-[900px]:flex-col min-[900px]:items-stretch">
         {TOP_ITEMS.map(({ route: r, icon: Icon }) => (
@@ -64,7 +67,7 @@ export function Sidebar({ route, onNavigate }: SidebarProps) {
           </SidebarLink>
         ))}
 
-        <div className="min-[900px]:mt-3">
+        <div className="min-[900px]:mt-4">
           {BOTTOM_ITEMS.map(({ route: r, icon: Icon }) => (
             <SidebarLink key={r} active={route === r} onClick={() => onNavigate(r)}>
               <Icon size={24} />
@@ -108,13 +111,13 @@ function SidebarLink({
       type="button"
       onClick={onClick}
       className={cn(
-        'relative flex h-11 shrink-0 items-center gap-3 whitespace-nowrap rounded-xl px-3 text-base font-medium text-text-sub transition-colors duration-200',
+        'relative flex h-11 shrink-0 items-center gap-4 whitespace-nowrap rounded-xl px-3 text-base font-medium text-text-sub transition-colors duration-200',
         'hover:bg-white/[0.05] hover:text-text',
         indent && 'min-[900px]:ml-2 min-[900px]:h-10 min-[900px]:pl-3 min-[900px]:text-[14px]',
-        active && 'bg-gold-dim text-gold hover:bg-gold-dim hover:text-gold'
+        active && 'bg-primary-dim text-primary hover:bg-primary-dim hover:text-primary'
       )}
     >
-      {active && <span className="absolute -left-4 top-2 bottom-2 hidden w-[3px] rounded-full bg-gold min-[900px]:block" />}
+      {active && <span className="absolute -left-4 top-2 bottom-2 hidden w-[3px] rounded-full bg-primary min-[900px]:block" />}
       {children}
     </button>
   );

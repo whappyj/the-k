@@ -21,7 +21,7 @@ export function SimulationCard({ core, levelUp }: { core: Calculator24Core | nul
   return (
     <Card className="border-t-[3px] border-t-purple bg-purple/[0.04]">
       <div className="mb-4 text-[13px] text-text-sub">시간당 경험치를 직접 바꿔보면서 예상 레벨업 날짜를 미리 확인해보세요.</div>
-      <div className="mb-[18px] flex items-center gap-3">
+      <div className="mb-[18px] flex items-center gap-4">
         <Label className="whitespace-nowrap">시간당 경험치 (%)</Label>
         <Input type="number" step={0.0001} className="max-w-[200px]" value={simRate ?? ''} onChange={(e) => setSimRate(e.target.value === '' ? null : Number(e.target.value))} />
         <Button variant="secondary" size="sm" onClick={() => setSimRate(core?.hourExp ?? null)}>

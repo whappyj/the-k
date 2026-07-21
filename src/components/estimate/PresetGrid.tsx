@@ -75,10 +75,10 @@ export function PresetGrid({ presets, currentEstimate, onAdd, onUpdate, onDelete
     <div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
         {sorted.map((p) => (
-          <Card key={p.id} className={cn('flex flex-col gap-3 rounded-2xl border-[#1D2530] bg-[#0B1016] p-5', p.readonly && 'border-dashed')}>
+          <Card key={p.id} className={cn('flex flex-col gap-4 rounded-2xl border-[#1D2530] bg-[#0B1016] p-6', p.readonly && 'border-dashed')}>
             <div className="flex items-start justify-between gap-2">
-              <div>
-                <div className="text-sm font-bold text-white">{p.name}</div>
+              <div className="min-w-0 flex-1">
+                <div className="break-words text-sm font-bold text-white">{p.name}</div>
                 <div className="text-[11px] text-[#9AA1AC]">{p.readonly ? '기본 프리셋 · 읽기전용' : '사용자 프리셋'}</div>
               </div>
               <Button

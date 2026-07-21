@@ -53,16 +53,16 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
   };
 
   return (
-    <Card onKeyDown={onEnterSave} className="flex flex-col">
+    <Card onKeyDown={onEnterSave} className="flex flex-col p-8">
       {/* ① 사냥 방식 */}
       <SectionHeader icon={MapPin} title="사냥 방식" />
-      <div className="mb-5 grid grid-cols-2 gap-3">
+      <div className="mb-6 grid grid-cols-2 gap-4">
         <ModeTab active={mode === 'solo'} icon={User} label="단독사냥" onClick={() => setMode('solo')} />
         <ModeTab active={mode === 'party'} icon={Users} label="파티사냥" onClick={() => setMode('party')} />
       </div>
 
       {/* ② 사냥터 */}
-      <div className="mb-5 flex flex-col gap-1.5">
+      <div className="mb-6 flex flex-col gap-1.5">
         <Label>사냥터</Label>
         <Input list="hunt-area-list" value={values.huntArea} placeholder="사냥터를 입력하거나 선택하세요" onChange={(e) => onChange({ huntArea: e.target.value })} />
         <datalist id="hunt-area-list">
@@ -75,7 +75,7 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
       {/* ③ 파티일 경우에만: 파티구성/몰이/비비기 */}
       {mode === 'party' && (
         <>
-          <div className="mb-4 grid grid-cols-3 gap-3">
+          <div className="mb-6 grid grid-cols-3 gap-4">
             <PartyInput label="기사" value={values.knight} onChange={(v) => onChange({ knight: v })} />
             <PartyInput label="요정" value={values.elf} onChange={(v) => onChange({ elf: v })} />
             <PartyInput label="법사" value={values.wizard} onChange={(v) => onChange({ wizard: v })} />
@@ -87,7 +87,7 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
             </span>
           </div>
 
-          <div className="mb-5 grid grid-cols-2 gap-3 rounded-xl border border-[#1D2530] bg-white/[0.02] p-4">
+          <div className="mb-6 grid grid-cols-2 gap-4 rounded-xl border border-[#1D2530] bg-white/[0.02] p-6">
             <div>
               <div className="mb-2 flex items-center justify-between">
                 <Label className="!text-sm !text-text">몰이 사용</Label>
@@ -114,7 +114,7 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
         </>
       )}
 
-      <div className="mb-6 flex flex-col gap-1.5">
+      <div className="mb-7 flex flex-col gap-1.5">
         <Label>마을 체류(엠탐) 시간 (분)</Label>
         <Input type="number" min={0} step={1} value={values.townMinutes} placeholder="0" onChange={(e) => onChange({ townMinutes: Number(e.target.value) || 0 })} />
       </div>
@@ -122,7 +122,7 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
       <Divider />
 
       {/* ② 시작 / ③ 종료 */}
-      <div className="mb-2 grid grid-cols-2 gap-5 max-[720px]:grid-cols-1">
+      <div className="mb-2 grid grid-cols-2 gap-6 max-[720px]:grid-cols-1">
         <TimeSection
           title="시작"
           accent="green"
@@ -166,7 +166,7 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
       <div className="mb-6 mt-1 text-right text-[11px] text-text-faint">{values.memo.length} / 300</div>
 
       {/* ⑥ 저장 */}
-      <div className="mb-3 flex justify-end gap-2">
+      <div className="mb-4 flex justify-end gap-2">
         {isEditing && (
           <Button variant="ghost" size="sm" onClick={onCancelEdit}>
             수정 취소
@@ -176,7 +176,7 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
           초기화
         </Button>
       </div>
-      <Button variant="gold" className="w-full" onClick={onSave}>
+      <Button variant="primary" className="w-full" onClick={onSave}>
         <Save size={18} />
         {isEditing ? '수정 완료' : '기록 저장'}
       </Button>
@@ -187,8 +187,8 @@ export function ExperienceForm({ values, onChange, huntAreaOptions, isEditing, o
 function SectionHeader({ icon: Icon, title }: { icon: typeof MapPin; title: string }) {
   return (
     <div className="mb-4 flex items-center gap-2.5">
-      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-dim text-gold">
-        <Icon size={15} />
+      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-dim text-primary">
+        <Icon size={16} />
       </span>
       <span className="text-[15px] font-bold text-white">{title}</span>
     </div>
@@ -205,8 +205,8 @@ function ModeTab({ active, icon: Icon, label, onClick }: { active: boolean; icon
       type="button"
       onClick={onClick}
       className={cn(
-        'flex h-16 items-center justify-center gap-2.5 rounded-xl border text-[15px] font-bold transition-all duration-200',
-        active ? 'border-gold/50 bg-gold-dim text-gold' : 'border-[#1D2530] bg-white/[0.02] text-text-sub hover:bg-white/[0.04]'
+        'flex h-[72px] items-center justify-center gap-4 rounded-xl border text-[16px] font-bold transition-all duration-200',
+        active ? 'border-primary/50 bg-primary-dim text-primary' : 'border-[#1D2530] bg-white/[0.02] text-text-sub hover:bg-white/[0.045]'
       )}
     >
       <Icon size={20} />
@@ -253,7 +253,7 @@ function TimeSection({
           type="button"
           onClick={onCapture}
           className={cn(
-            'mb-3 flex h-14 w-full items-center justify-center gap-2 rounded-xl text-[14px] font-bold transition-colors duration-150',
+            'mb-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl text-[14px] font-bold transition-colors duration-150',
             accent === 'green' ? 'bg-success-dim text-success hover:bg-success/[0.22]' : 'bg-danger-dim text-danger hover:bg-danger/[0.22]'
           )}
         >
@@ -261,7 +261,7 @@ function TimeSection({
           {hasTime ? `${date} ${time}` : `${title} 기록`}
         </button>
       ) : (
-        <div className="mb-3">
+        <div className="mb-4">
           <Input
             type="datetime-local"
             value={toDateTimeLocalValue(date, time)}
@@ -274,7 +274,7 @@ function TimeSection({
       )}
 
       <label className="mb-4 flex items-center gap-2 text-[11.5px] font-medium text-text-sub">
-        <input type="checkbox" checked={manual} onChange={(e) => onToggleManual(e.target.checked)} className="h-3.5 w-3.5 accent-gold" />
+        <input type="checkbox" checked={manual} onChange={(e) => onToggleManual(e.target.checked)} className="h-3.5 w-3.5 accent-primary" />
         수동으로 수정
       </label>
 

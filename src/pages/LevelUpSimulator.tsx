@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Calendar, Clock, Target, Shield, Swords, Sunrise, Sword } from 'lucide-react';
+import { Calendar, Clock, Target, Shield, Swords, Sunrise, Sword, TrendingUp } from 'lucide-react';
 import { useAppData } from '@/hooks/useAppData';
 import { useFormatters } from '@/hooks/useFormatters';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -9,8 +9,9 @@ import { HELP_LEVELUP } from '@/lib/helpContent';
 import { Card, Panel } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { EmptyCell } from '@/components/common/EmptyState';
+import { EmptyState } from '@/components/common/EmptyState';
 import { simulateLevelUp } from '@/lib/levelUpSimulation';
+import { cn } from '@/utils/cn';
 
 const BATTLE_OPTIONS = Array.from({ length: 49 }, (_, i) => i * 30); // 0~1440분(24시간), 30분 단위
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
@@ -61,8 +62,8 @@ export function LevelUpSimulatorPage() {
   if (!records.length) {
     return (
       <div id="page-levelup-simulator">
-        <PageHeader title="📈 레벨업 시뮬레이터" subtitle="현재 시각부터 메인탐·정기점검·공성전을 자동 제외하고 목표 레벨까지 걸리는 시간을 계산합니다." actions={<HelpButton content={HELP_LEVELUP} />} />
-        <EmptyCell>경험치 기록이 쌓이면 레벨업 시뮬레이터를 사용할 수 있습니다.</EmptyCell>
+        <PageHeader title="📈 레벨업 시뮬레이터" actions={<HelpButton content={HELP_LEVELUP} />} />
+        <EmptyState icon={TrendingUp} title="기록이 필요합니다" description="경험치 기록이 쌓이면 레벨업 시뮬레이터를 사용할 수 있습니다." />
       </div>
     );
   }
@@ -93,13 +94,13 @@ export function LevelUpSimulatorPage() {
 
   return (
     <div id="page-levelup-simulator">
-      <PageHeader title="📈 레벨업 시뮬레이터" subtitle="현재 시각부터 메인탐·정기점검·공성전을 자동 제외하고 목표 레벨까지 걸리는 시간을 계산합니다." actions={<HelpButton content={HELP_LEVELUP} />} />
+      <PageHeader title="📈 레벨업 시뮬레이터" actions={<HelpButton content={HELP_LEVELUP} />} />
 
-      <div className="grid grid-cols-[1.1fr_1fr] items-start gap-6 max-[1100px]:grid-cols-1">
+      <div className="grid grid-cols-[1.1fr_1fr] items-start gap-8 max-[1100px]:grid-cols-1">
         <div className="flex flex-col gap-6">
-          <Card>
-            <div className="mb-4 text-[13px] font-bold text-text-sub">현재 상태 & 목표</div>
-            <div className="mb-4 grid grid-cols-2 gap-3">
+          <Card className="p-8">
+            <div className="mb-6 text-[14px] font-bold text-text-sub">현재 상태 & 목표</div>
+            <div className="mb-6 grid grid-cols-2 gap-4">
               <Field label="현재 레벨">
                 <Input type="number" min={1} value={currentLevel} onChange={(e) => setCurrentLevel(e.target.value === '' ? '' : Number(e.target.value))} />
               </Field>
@@ -107,19 +108,19 @@ export function LevelUpSimulatorPage() {
                 <Input type="number" min={0} max={100} value={currentExp} onChange={(e) => setCurrentExp(e.target.value === '' ? '' : Number(e.target.value))} />
               </Field>
             </div>
-            <div className="mb-4">
+            <div className="mb-6">
               <Field label="목표 레벨">
                 <Input type="number" min={1} value={targetLevel} placeholder={`${lvNow + 1}`} onChange={(e) => setTargetLevel(e.target.value === '' ? '' : Number(e.target.value))} />
               </Field>
             </div>
-            <div className="text-[11px] text-text-faint">
-              기준 시간당 경험치: <span className="font-display font-bold text-gold">{formatPercent(perHour)}/h</span> (최근 기록 기준)
+            <div className="text-[12px] text-text-faint">
+              기준 시간당 경험치: <span className="font-display font-bold text-primary">{formatPercent(perHour)}/h</span> (최근 기록 기준)
             </div>
           </Card>
 
-          <Card>
-            <div className="mb-4 text-[13px] font-bold text-text-sub">하루 사냥 계획</div>
-            <div className="mb-4 grid grid-cols-2 gap-3">
+          <Card className="p-8">
+            <div className="mb-6 text-[14px] font-bold text-text-sub">하루 사냥 계획</div>
+            <div className="mb-6 grid grid-cols-2 gap-4">
               <Field label="평균 하루 사냥시간 (h)">
                 <Input type="number" min={0} step={0.5} value={dailyHours} onChange={(e) => setDailyHours(e.target.value === '' ? '' : Number(e.target.value))} />
               </Field>
@@ -137,46 +138,47 @@ export function LevelUpSimulatorPage() {
                 </select>
               </Field>
             </div>
-            <div className="text-[11px] text-text-faint">메인탐(매일 4회×30분) · 정기점검(수요일 05:00~10:00) · 공성전(일요일 20:00~21:00)은 자동으로 제외됩니다.</div>
+            <div className="text-[12px] text-text-faint">메인탐(매일 4회×30분) · 정기점검(수요일 05:00~10:00) · 공성전(일요일 20:00~21:00)은 자동으로 제외됩니다.</div>
           </Card>
         </div>
 
-        <div className="sticky top-6 flex flex-col gap-5">
-          <Card className="p-7 sm:p-8">
-            <div className="mb-5 rounded-2xl border border-gold/25 bg-gradient-to-br from-gold-dim to-transparent p-7 text-center">
-              <div className="mb-2 text-[12px] font-bold uppercase tracking-wide text-gold/80">목표 Lv{target ?? '-'}</div>
+        <div className="sticky top-6 flex flex-col gap-6">
+          <Card className="p-8 sm:p-9">
+            <div className="mb-6 rounded-2xl border border-primary/25 bg-gradient-to-br from-primary-dim to-transparent p-8 text-center">
+              <div className="mb-2 text-[12px] font-bold uppercase tracking-wide text-primary/80">목표 Lv{target ?? '-'}</div>
               {completion ? (
                 <>
-                  <div className="mb-1 font-display text-[15px] font-bold text-text-sub">예상 완료</div>
-                  <div className="font-display text-[36px] font-bold leading-none text-gold">
-                    {completion.date} <span className="text-[18px] text-gold/70">({completion.weekday}) {completion.time}</span>
+                  <div className="mb-1.5 font-display text-[16px] font-bold text-text-sub">예상 완료</div>
+                  <div className="font-display text-[40px] font-bold leading-none text-primary">
+                    {completion.date} <span className="text-[19px] text-primary/70">({completion.weekday}) {completion.time}</span>
                   </div>
-                  <div className="mt-3 text-[13px] font-semibold text-white">남은시간 {formatDday(remainMs)}</div>
+                  <div className="mt-4 text-[14px] font-semibold text-white">남은시간 {formatDday(remainMs)}</div>
                 </>
               ) : (
-                <div className="font-display text-[40px] font-bold leading-none text-gold">-</div>
+                <div className="font-display text-[44px] font-bold leading-none text-primary">-</div>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <ResultStat icon={Calendar} tone="green" label="예상 완료" value={completion ? `${completion.date} ${completion.time}` : '-'} />
-              <ResultStat icon={Target} tone="gold" label="남은 경험치" value={remainingPercent !== null ? formatPercent(remainingPercent) : '-'} />
+              <ResultStat icon={Target} tone="primary" label="남은 경험치" value={remainingPercent !== null ? formatPercent(remainingPercent) : '-'} />
               <ResultStat icon={Clock} tone="blue" label="하루 사냥시간" value={`${dailyCap.toFixed(1)}h`} />
               <ResultStat icon={Clock} tone="red" label="총 소요일" value={result ? `${result.totalDays}일` : '-'} />
+              <ResultStat icon={TrendingUp} tone="primary" label="하루 획득 경험치" value={result ? formatPercent(result.effectiveDailyHoursAvg * perHour) : '-'} className="col-span-2" />
             </div>
           </Card>
 
           {result && (
-            <Panel title="자동 차감 로그" accent="gold">
-              <div className="grid grid-cols-2 gap-3">
+            <Panel title="자동 차감 로그" accent="primary">
+              <div className="grid grid-cols-2 gap-4">
                 <DeductStat icon={Sunrise} tone="blue" label="메인탐" count={`${result.maintownCount}회`} minutes={result.maintownMinutes} />
-                <DeductStat icon={Shield} tone="gold" label="정기점검" count={`${result.checkCount}회`} minutes={result.checkMinutes} />
+                <DeductStat icon={Shield} tone="primary" label="정기점검" count={`${result.checkCount}회`} minutes={result.checkMinutes} />
                 <DeductStat icon={Swords} tone="red" label="공성전" count={`${result.siegeCount}회`} minutes={result.siegeMinutes} />
                 <DeductStat icon={Sword} tone="green" label="전투 / 쟁" count="총 시간" minutes={result.battleMinutesTotal} />
               </div>
-              <div className="mt-3 flex items-center justify-between rounded-xl border border-[#1D2530] bg-white/[0.02] px-4 py-3">
-                <span className="text-[12.5px] font-semibold text-text-sub">총 차감시간</span>
-                <span className="font-display text-[15px] font-bold text-gold">
+              <div className="mt-4 flex items-center justify-between rounded-xl border border-[#1D2530] bg-white/[0.02] px-6 py-3.5">
+                <span className="text-[13px] font-semibold text-text-sub">총 차감시간</span>
+                <span className="font-display text-[16px] font-bold text-primary">
                   {formatDday(60000 * (result.maintownMinutes + result.checkMinutes + result.siegeMinutes + result.battleMinutesTotal))}
                 </span>
               </div>
@@ -189,18 +191,18 @@ export function LevelUpSimulatorPage() {
                 {levelSteps.map((s, i) => {
                   const t = s.result ? formatKoreanDateTime(s.result.completionDate) : null;
                   return (
-                    <div key={s.level} className="flex items-center gap-3">
+                    <div key={s.level} className="flex items-center gap-4">
                       <div className="flex flex-col items-center">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-dim font-display text-[11px] font-bold text-gold">Lv{s.level}</span>
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-dim font-display text-[11px] font-bold text-primary">Lv{s.level}</span>
                         {i < levelSteps.length - 1 && <span className="my-0.5 h-6 w-px bg-[#1D2530]" />}
                       </div>
-                      <div className="flex-1 border-b border-[#1D2530] py-2.5 last:border-none">
+                      <div className="flex-1 border-b border-[#1D2530] py-3.5 last:border-none">
                         {t ? (
-                          <div className="text-[13px] font-semibold text-white">
+                          <div className="text-[14px] font-semibold text-white">
                             {t.date} <span className="text-text-faint">({t.weekday})</span> {t.time}
                           </div>
                         ) : (
-                          <div className="text-[13px] text-text-faint">-</div>
+                          <div className="text-[14px] text-text-faint">-</div>
                         )}
                       </div>
                     </div>
@@ -228,17 +230,17 @@ const TONE_CLASS = {
   blue: 'bg-primary-dim text-primary',
   green: 'bg-success-dim text-success',
   red: 'bg-danger-dim text-danger',
-  gold: 'bg-gold-dim text-gold',
+  primary: 'bg-primary-dim text-primary',
 } as const;
 
-function ResultStat({ icon: Icon, tone, label, value }: { icon: typeof Target; tone: keyof typeof TONE_CLASS; label: string; value: string }) {
+function ResultStat({ icon: Icon, tone, label, value, className }: { icon: typeof Target; tone: keyof typeof TONE_CLASS; label: string; value: string; className?: string }) {
   return (
-    <div className="rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5">
-      <span className={`mb-2 flex h-7 w-7 items-center justify-center rounded-lg ${TONE_CLASS[tone]}`}>
-        <Icon size={13} />
+    <div className={cn('rounded-xl border border-[#1D2530] bg-white/[0.02] p-4', className)}>
+      <span className={`mb-2.5 flex h-8 w-8 items-center justify-center rounded-lg ${TONE_CLASS[tone]}`}>
+        <Icon size={16} />
       </span>
-      <div className="mb-1 text-[10.5px] text-text-sub">{label}</div>
-      <div className="font-display text-[14px] font-bold text-white">{value}</div>
+      <div className="mb-1 text-[11.5px] text-text-sub">{label}</div>
+      <div className="font-display text-[15px] font-bold text-white">{value}</div>
     </div>
   );
 }
@@ -247,12 +249,12 @@ function DeductStat({ icon: Icon, tone, label, count, minutes }: { icon: typeof 
   const h = Math.floor(minutes / 60);
   const m = Math.round(minutes % 60);
   return (
-    <div className="rounded-xl border border-[#1D2530] bg-white/[0.02] p-3.5">
-      <span className={`mb-2 flex h-7 w-7 items-center justify-center rounded-lg ${TONE_CLASS[tone]}`}>
-        <Icon size={13} />
+    <div className="rounded-xl border border-[#1D2530] bg-white/[0.02] p-4">
+      <span className={`mb-2.5 flex h-8 w-8 items-center justify-center rounded-lg ${TONE_CLASS[tone]}`}>
+        <Icon size={16} />
       </span>
-      <div className="mb-1 text-[10.5px] text-text-sub">{label}</div>
-      <div className="font-display text-[13px] font-bold text-white">
+      <div className="mb-1 text-[11.5px] text-text-sub">{label}</div>
+      <div className="font-display text-[14px] font-bold text-white">
         {count} · {h}시간 {m}분
       </div>
     </div>

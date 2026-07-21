@@ -22,8 +22,8 @@ export function InputPanel({ values, onChange, onSave }: InputPanelProps) {
 
   return (
     <Card>
-      <div className="grid grid-cols-2 gap-5 max-[900px]:grid-cols-1">
-        <div className="rounded-card border border-border/[0.08] bg-white/[0.03] p-5 border-t-[3px] border-t-primary">
+      <div className="grid grid-cols-2 gap-6 max-[900px]:grid-cols-1">
+        <div className="rounded-card border border-border/[0.08] bg-white/[0.03] p-6 border-t-[3px] border-t-primary">
           <div className="mb-3.5 text-[15px] font-semibold">시작 정보</div>
           <Field label="시작 날짜"><Input type="date" value={values.startDate} onChange={(e) => onChange({ startDate: e.target.value })} /></Field>
           <Field label="시작 시간"><Input type="time" value={values.startTime} onChange={(e) => onChange({ startTime: e.target.value })} /></Field>
@@ -37,7 +37,7 @@ export function InputPanel({ values, onChange, onSave }: InputPanelProps) {
           </div>
         </div>
 
-        <div className="rounded-card border border-border/[0.08] bg-white/[0.03] p-5 border-t-[3px] border-t-success">
+        <div className="rounded-card border border-border/[0.08] bg-white/[0.03] p-6 border-t-[3px] border-t-success">
           <div className="mb-3.5 text-[15px] font-semibold">종료 정보</div>
           <Field label="종료 날짜"><Input type="date" value={values.endDate} onChange={(e) => onChange({ endDate: e.target.value })} /></Field>
           <Field label="종료 시간"><Input type="time" value={values.endTime} onChange={(e) => onChange({ endTime: e.target.value })} /></Field>
@@ -52,7 +52,7 @@ export function InputPanel({ values, onChange, onSave }: InputPanelProps) {
         </div>
       </div>
 
-      <div className="my-5 h-px bg-border/[0.08]" />
+      <div className="my-6 h-px bg-border/[0.08]" />
 
       <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1">
         <div>
@@ -70,7 +70,7 @@ export function InputPanel({ values, onChange, onSave }: InputPanelProps) {
         </Field>
       </div>
 
-      <div className="mt-5 flex justify-end">
+      <div className="mt-6 flex justify-end">
         <Button variant="primary" onClick={onSave}>
           <Save size={18} />
           이 계산 저장

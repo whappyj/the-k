@@ -28,7 +28,7 @@ export function SettingsPage() {
             label: '일반',
             icon: SettingsIcon,
             content: (
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-6">
                 <JpgShortcuts />
                 <PreferencesForm />
                 <FutureTabs />
@@ -44,7 +44,10 @@ export function SettingsPage() {
         ]}
       />
 
-      <div className="mt-8 text-center text-[11px] text-text-faint">THE K v{APP_VERSION}</div>
+      <div className="mt-10 flex items-center justify-center gap-2 text-[12.5px] text-text-faint">
+        <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
+        THE K v{APP_VERSION}
+      </div>
     </div>
   );
 }

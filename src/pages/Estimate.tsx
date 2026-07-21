@@ -113,10 +113,9 @@ export function EstimatePage() {
     <div id="page-estimate">
       <PageHeader
         title="제작 비교 견적"
-        subtitle="재료 가격과 환율을 동시에 비교합니다."
-        actions={
+                actions={
           <div className="flex items-center gap-2">
-            <Button variant="gold" onClick={() => setSettingsOpen(true)}>
+            <Button variant="primary" onClick={() => setSettingsOpen(true)}>
               <SettingsIcon size={16} />
               비교 설정
             </Button>
@@ -127,8 +126,8 @@ export function EstimatePage() {
       />
 
       {estimateSyncStatus === 'error' && (
-        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-danger/30 bg-danger-dim p-5 min-[560px]:flex-row min-[560px]:items-center min-[560px]:justify-between">
-          <div className="flex items-start gap-3">
+        <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-danger/30 bg-danger-dim p-6 min-[560px]:flex-row min-[560px]:items-center min-[560px]:justify-between">
+          <div className="flex items-start gap-4">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-danger/20 text-danger">
               <AlertTriangle size={18} />
             </span>
@@ -141,7 +140,7 @@ export function EstimatePage() {
             </div>
           </div>
           <Button variant="secondary" size="sm" onClick={retryEstimateSync} className="shrink-0">
-            <RefreshCw size={14} />
+            <RefreshCw size={16} />
             다시 시도
           </Button>
         </div>
@@ -163,17 +162,17 @@ export function EstimatePage() {
         onApplyPreset={handleApplyPreset}
       />
 
-      <div className="mb-10">
+      <div className="mb-12">
         <EstimateMatrixTable materials={estimate.materials} rateA={estimate.rateA} rateB={estimate.rateB} feeA={estimate.feeA} feeB={estimate.feeB} />
       </div>
 
       <Section title="내보내기">
-        <Card className="flex flex-wrap gap-2.5 rounded-2xl border-[#1D2530] bg-[#0B1016]">
-          <Button variant="warning" onClick={() => exportPage('estimate')}>
+        <Card className="flex flex-wrap gap-4 rounded-2xl border-[#1D2530] bg-[#0B1016] p-8">
+          <Button variant="secondary" onClick={() => exportPage('estimate')}>
             <ImageDown size={18} />
             현재 견적 JPG 저장
           </Button>
-          <Button variant="success" onClick={handleExportJson}>
+          <Button variant="primary" onClick={handleExportJson}>
             <Download size={18} />
             현재 견적 JSON 저장
           </Button>

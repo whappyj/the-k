@@ -45,8 +45,8 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
   };
 
   return (
-    <div className="mb-6 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-5 sm:p-7">
-      <div className="mb-5 flex items-center justify-between">
+    <div className="mb-6 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-6 sm:p-8">
+      <div className="mb-6 flex items-center justify-between">
         <div className="text-[13px] font-semibold text-[#9AA1AC]">오늘 현황</div>
         <Button variant="secondary" size="sm" onClick={() => setSettingsOpen(true)}>
           <SettingsIcon size={16} />
@@ -63,8 +63,8 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
         </SummaryItem>
 
         <SummaryItem label="카카오톡 ID">
-          <div className="flex items-center gap-2">
-            <div className="truncate font-display text-lg font-bold text-white sm:text-xl">{settings.kakaoId || '-'}</div>
+          <div className="flex items-start gap-2">
+            <div className="min-w-0 flex-1 break-words font-display text-lg font-bold text-white sm:text-xl">{settings.kakaoId || '-'}</div>
             <button
               type="button"
               onClick={handleCopy}
@@ -74,7 +74,7 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
                 copied ? 'bg-success/15 text-success' : 'bg-white/[0.06] text-[#9AA1AC] hover:text-white'
               )}
             >
-              {copied ? <Check size={14} /> : <Copy size={14} />}
+              {copied ? <Check size={16} /> : <Copy size={16} />}
               {copied ? '완료' : '복사'}
             </button>
           </div>
@@ -89,10 +89,10 @@ export function PurchaseSummaryBar({ settings, onChange }: PurchaseSummaryBarPro
         </SummaryItem>
 
         <SummaryItem label="진행률">
-          <div className="font-display text-2xl font-bold text-gold sm:text-[28px]">{progress}%</div>
+          <div className="font-display text-2xl font-bold text-primary sm:text-[28px]">{progress}%</div>
           <div className="mt-2 h-2 w-full max-w-[160px] overflow-hidden rounded-full bg-white/[0.08]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-gold/70 to-gold transition-all duration-500 ease-out"
+              className="h-full rounded-full bg-gradient-to-r from-primary/70 to-primary transition-all duration-500 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>

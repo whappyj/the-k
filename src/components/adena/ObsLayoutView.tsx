@@ -80,7 +80,7 @@ export function ObsLayoutView({
         {/* 환율/ID/목표/현재/진행률 — 항상 상단 고정 */}
         <div className="sticky top-0 z-10 -mx-6 mb-8 border-b border-[#1D2530] bg-[#06080B]/97 px-6 pb-6 pt-2 backdrop-blur sm:-mx-10 sm:px-10">
           <div className="mb-4 flex items-center justify-between">
-            <div className="rounded-full bg-gold-dim px-4 py-1.5 text-[13px] font-bold text-gold">최상단 고정 (스크롤해도 항상 보임)</div>
+            <div className="rounded-full bg-primary-dim px-4 py-1.5 text-[13px] font-bold text-primary">최상단 고정 (스크롤해도 항상 보임)</div>
             <button
               type="button"
               onClick={onClose}
@@ -96,14 +96,14 @@ export function ObsLayoutView({
               <div className="font-display text-[32px] font-bold text-white">{rate.toLocaleString('ko-KR')}<span className="ml-1 text-base font-semibold text-text-sub">원</span></div>
             </ObsStat>
             <ObsStat label="카카오톡 ID">
-              <div className="flex items-center gap-2.5">
-                <div className="truncate font-display text-[28px] font-bold text-white">{settings.kakaoId || '-'}</div>
+              <div className="flex items-start gap-2.5">
+                <div className="min-w-0 flex-1 break-words font-display text-[28px] font-bold text-white">{settings.kakaoId || '-'}</div>
                 <button
                   type="button"
                   onClick={handleCopy}
                   className={`flex h-9 shrink-0 items-center gap-1 rounded-lg px-3 text-[13px] font-semibold ${copied ? 'bg-success/15 text-success' : 'bg-white/[0.06] text-text-sub'}`}
                 >
-                  {copied ? <Check size={15} /> : <Copy size={15} />}
+                  {copied ? <Check size={16} /> : <Copy size={16} />}
                   {copied ? '완료' : '복사'}
                 </button>
               </div>
@@ -115,9 +115,9 @@ export function ObsLayoutView({
               <div className="font-display text-[32px] font-bold text-primary">{formatAdenaAmount(current)}</div>
             </ObsStat>
             <ObsStat label="진행률">
-              <div className="font-display text-[32px] font-bold text-gold">{progress}%</div>
+              <div className="font-display text-[32px] font-bold text-primary">{progress}%</div>
               <div className="mt-2 h-2.5 w-full max-w-[220px] overflow-hidden rounded-full bg-white/[0.08]">
-                <div className="h-full rounded-full bg-gradient-to-r from-gold/70 to-gold transition-all duration-500" style={{ width: `${progress}%` }} />
+                <div className="h-full rounded-full bg-gradient-to-r from-primary/70 to-primary transition-all duration-500" style={{ width: `${progress}%` }} />
               </div>
             </ObsStat>
           </div>

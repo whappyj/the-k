@@ -24,8 +24,8 @@ export function SettingsTabs({ tabs }: { tabs: SettingsTab[] }) {
   const current = tabs.find((t) => t.id === active) ?? tabs[0];
 
   return (
-    <div className="grid grid-cols-[220px_1fr] gap-6 max-[860px]:grid-cols-1">
-      <nav className="flex flex-col gap-1 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-1.5 max-[860px]:flex-row max-[860px]:overflow-x-auto">
+    <div className="grid grid-cols-[260px_1fr] gap-8 max-[860px]:grid-cols-1">
+      <nav className="flex h-fit flex-col gap-2 rounded-2xl border border-[#1D2530] bg-[#0B1016] p-4 max-[860px]:flex-row max-[860px]:overflow-x-auto">
         {tabs.map((t) => {
           const Icon = t.icon;
           const isActive = t.id === current?.id;
@@ -35,11 +35,11 @@ export function SettingsTabs({ tabs }: { tabs: SettingsTab[] }) {
               type="button"
               onClick={() => setActive(t.id)}
               className={cn(
-                'flex shrink-0 items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-left text-[13px] font-semibold transition-all duration-200 active:scale-[0.98]',
-                isActive ? 'bg-gold/[0.14] text-gold' : 'text-[#9AA1AC] hover:bg-white/[0.05] hover:text-white'
+                'flex shrink-0 items-center gap-3.5 rounded-xl px-4 py-4 text-left text-[15px] font-semibold transition-all duration-200 active:scale-[0.98]',
+                isActive ? 'bg-primary/[0.14] text-primary' : 'text-[#9AA1AC] hover:bg-white/[0.05] hover:text-white'
               )}
             >
-              <Icon size={16} />
+              <Icon size={20} />
               <span className="whitespace-nowrap">{t.label}</span>
             </button>
           );

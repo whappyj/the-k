@@ -34,12 +34,12 @@ export function PinGate({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen items-center justify-center bg-[#06080B] px-5">
       <form onSubmit={handleSubmit} className="w-full max-w-[360px] rounded-2xl border border-[#1D2530] bg-[#0B1016] p-8 shadow-[0_4px_14px_rgba(0,0,0,0.4)]">
         <div className="mb-6 flex flex-col items-center gap-3 text-center">
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold-dim text-gold">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-dim text-primary">
             <Lock size={26} />
           </span>
           <div>
             <div className="text-[18px] font-bold text-white">THE K 관리자</div>
-            <div className="mt-0.5 text-[11px] font-semibold uppercase tracking-widest text-gold/70">제작 견적 데이터 관리</div>
+            <div className="mt-0.5 text-[11px] font-semibold uppercase tracking-widest text-primary/70">제작 견적 데이터 관리</div>
             <div className="mt-2 text-[13px] text-text-sub">PIN 번호를 입력해주세요</div>
           </div>
         </div>
@@ -55,14 +55,14 @@ export function PinGate({ children }: { children: React.ReactNode }) {
             setError(false);
           }}
           placeholder="PIN 6자리"
-          className="mb-3 h-14 w-full rounded-2xl border border-border/[0.12] bg-white/[0.04] px-5 text-center text-[22px] font-bold tracking-[0.3em] text-text outline-none focus:border-gold"
+          className="mb-3 h-14 w-full rounded-2xl border border-border/[0.12] bg-white/[0.04] px-5 text-center text-[22px] font-bold tracking-[0.3em] text-text outline-none focus:border-primary"
         />
 
         {error && <div className="mb-3 text-center text-[13px] font-semibold text-danger">PIN이 올바르지 않습니다. 다시 입력해주세요.</div>}
 
         <button
           type="submit"
-          className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-gold text-[16px] font-bold text-[#1A1408] shadow-md transition-all duration-200 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+          className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-[16px] font-bold text-white shadow-md transition-all duration-200 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
         >
           <ShieldCheck size={20} />
           확인

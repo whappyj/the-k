@@ -68,8 +68,8 @@ export function PurchaseRecordForm({
   const labelSize = large ? 'text-[14px]' : undefined;
 
   return (
-    <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016] p-6 sm:p-7">
-      <div className="grid grid-cols-[2fr_1fr_1fr_auto] items-end gap-3 max-[720px]:grid-cols-1">
+    <Card className="rounded-2xl border-[#1D2530] bg-[#0B1016] p-6 sm:p-8">
+      <div className="grid grid-cols-[2fr_1fr_1fr_auto] items-end gap-4 max-[720px]:grid-cols-1">
         <div>
           <Label className={labelSize ? `mb-1.5 block ${labelSize}` : 'mb-1.5 block'}>아이디</Label>
           <Input

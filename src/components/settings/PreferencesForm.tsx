@@ -32,7 +32,8 @@ export function PreferencesForm() {
   };
 
   return (
-    <Card>
+    <Card className="p-8">
+      <div className="mb-6 text-[16px] font-bold text-white">환경설정</div>
       <Row label="다크모드" desc="기본 ON. 끄면 라이트 테마로 전환됩니다.">
         <Switch
           checked={s.theme === 'dark'}
@@ -76,10 +77,10 @@ export function PreferencesForm() {
         </Select>
       </Row>
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-border/[0.08] pt-4">
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#1D2530] bg-white/[0.02] p-6">
         <div className="min-w-0">
-          <div className="text-sm font-semibold">설정 내보내기 / 불러오기</div>
-          <div className="mt-0.5 text-xs text-text-sub">위 환경설정 값만 담습니다 (다른 화면 데이터는 포함되지 않습니다).</div>
+          <div className="text-[14.5px] font-semibold text-white">설정 내보내기 / 불러오기</div>
+          <div className="mt-1 text-[13px] text-text-sub">위 환경설정 값만 담습니다 (다른 화면 데이터는 포함되지 않습니다).</div>
         </div>
         <ImportExportButtons label="설정" onExport={handleExportSection} onImportFile={handleImportSection} />
       </div>
@@ -89,10 +90,10 @@ export function PreferencesForm() {
 
 function Row({ label, desc, children, last }: { label: string; desc: string; children: ReactNode; last?: boolean }) {
   return (
-    <div className={`flex items-center justify-between gap-4 py-4 ${last ? '' : 'border-b border-border/[0.08]'}`}>
+    <div className={`flex items-center justify-between gap-4 py-6 ${last ? '' : 'border-b border-border/[0.08]'}`}>
       <div>
-        <div className="text-sm font-semibold">{label}</div>
-        <div className="mt-0.5 text-xs text-text-sub">{desc}</div>
+        <div className="text-[14.5px] font-semibold text-white">{label}</div>
+        <div className="mt-1 text-[13px] text-text-sub">{desc}</div>
       </div>
       {children}
     </div>

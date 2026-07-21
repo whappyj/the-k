@@ -39,7 +39,7 @@ export function ExpMultiplierSimulator() {
       />
 
       {base > 0 && (
-        <div className="mt-4 grid grid-cols-4 gap-3 max-[720px]:grid-cols-3 max-[480px]:grid-cols-2">
+        <div className="mt-4 grid grid-cols-4 gap-4 max-[720px]:grid-cols-3 max-[480px]:grid-cols-2">
           {MULTIPLIERS.map((m) => (
             <div key={m.hours} className="rounded-xl border border-[#1D2530] bg-white/[0.03] px-3 py-3 text-center">
               <div className="mb-1 text-xs text-text-sub">{m.label}</div>

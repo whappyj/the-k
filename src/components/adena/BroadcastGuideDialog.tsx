@@ -10,13 +10,13 @@ import { BROADCAST_GUIDE } from '@/lib/adenaGuideContent';
 export function BroadcastGuideDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <Dialog open={open} onClose={onClose} title="📺 방송 도움말">
-      <div className="mb-5 rounded-2xl border border-gold/30 bg-gold-dim p-4 text-[13px] font-semibold text-gold">
+      <div className="mb-6 rounded-2xl border border-primary/30 bg-primary-dim p-4 text-[13px] font-semibold text-primary">
         💡 어떤 프로그램을 쓰든 "브라우저 소스" 방식을 가장 추천합니다 — 창 캡처보다 화질이 선명하고 컴퓨터 자원도 적게 씁니다.
       </div>
       <div className="flex flex-col gap-6">
         {BROADCAST_GUIDE.map((g) => (
-          <section key={g.name} className="rounded-2xl border border-[#1D2530] bg-white/[0.02] p-5">
-            <div className="mb-3 text-[15px] font-bold text-primary">{g.name}</div>
+          <section key={g.name} className="rounded-2xl border border-[#1D2530] bg-white/[0.02] p-6">
+            <div className="mb-4 text-[15px] font-bold text-primary">{g.name}</div>
             <dl className="flex flex-col gap-2.5 text-[13px]">
               <Row label="브라우저 소스 추가 방법" value={g.browserSource} />
               <Row label="윈도우 캡처 방법" value={g.windowCapture} />
@@ -37,7 +37,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div>
       <dt className="mb-1 font-semibold text-text-sub">{label}</dt>
-      <dd className={highlight ? 'text-gold' : 'text-text'}>{value}</dd>
+      <dd className={highlight ? 'text-primary' : 'text-text'}>{value}</dd>
     </div>
   );
 }

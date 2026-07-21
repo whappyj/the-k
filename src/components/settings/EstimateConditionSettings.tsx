@@ -33,7 +33,7 @@ export function EstimateConditionSettings({
     <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
       <div className="rounded-xl border border-[#1D2530] bg-white/[0.02] p-4">
         <div className="mb-4 text-[13px] font-semibold text-[#9AA1AC]">아데나 시세 (1만 아데나 기준)</div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <Label className="text-primary">A 조건</Label>
             <div className="flex items-center gap-1.5">
@@ -56,7 +56,7 @@ export function EstimateConditionSettings({
         <Select
           value={keyMaterial?.id ?? ''}
           onChange={(e) => onKeyMaterialSelect(e.target.value)}
-          className="mb-3 rounded-xl border-[#1D2530] bg-white/[0.04]"
+          className="mb-4 rounded-xl border-[#1D2530] bg-white/[0.04]"
         >
           {materials.map((m) => (
             <option key={m.id} value={m.id}>
@@ -64,7 +64,7 @@ export function EstimateConditionSettings({
             </option>
           ))}
         </Select>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <Label className="text-primary">A 가격</Label>
             <Input

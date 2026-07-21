@@ -230,10 +230,10 @@ export function EstimateDataEditor() {
       <header className="pt-2">
         <div className="flex items-center justify-between gap-2">
           <h1 className="text-[22px] font-bold text-white">⚙ 제작 견적 데이터 관리</h1>
-          <span className="shrink-0 rounded-full bg-gold-dim px-3 py-1 text-[12px] font-bold text-gold">v{file.version}</span>
+          <span className="shrink-0 rounded-full bg-primary-dim px-3 py-1 text-[12px] font-bold text-primary">v{file.version}</span>
         </div>
         <p className="mt-2 text-[13px] text-text-sub">
-          저장하면 <b className="text-gold">estimate-data.json</b> 파일이 다운로드됩니다. 이 파일로 저장소의 같은 파일을 교체하고 Commit하면 배포됩니다.
+          저장하면 <b className="text-primary">estimate-data.json</b> 파일이 다운로드됩니다. 이 파일로 저장소의 같은 파일을 교체하고 Commit하면 배포됩니다.
         </p>
       </header>
 
@@ -244,7 +244,7 @@ export function EstimateDataEditor() {
             <div
               key={it.id}
               className={`rounded-2xl border p-3.5 transition-colors ${
-                it.id === selectedId ? 'border-gold/50 bg-gold-dim' : 'border-[#1D2530] bg-white/[0.02]'
+                it.id === selectedId ? 'border-primary/50 bg-primary-dim' : 'border-[#1D2530] bg-white/[0.02]'
               }`}
             >
               <div className="flex items-center gap-2.5">
@@ -256,11 +256,11 @@ export function EstimateDataEditor() {
                       onChange={(e) => renameItem(it.id, e.target.value)}
                       onBlur={() => setRenamingId(null)}
                       onKeyDown={(e) => e.key === 'Enter' && setRenamingId(null)}
-                      className="h-9 w-full rounded-lg border border-gold/40 bg-white/[0.06] px-2.5 text-[14px] font-bold text-white outline-none"
+                      className="h-9 w-full rounded-lg border border-primary/40 bg-white/[0.06] px-2.5 text-[14px] font-bold text-white outline-none"
                     />
                   ) : (
                     <div className="flex items-center gap-1.5">
-                      <span className={`truncate text-[14px] font-bold ${it.id === selectedId ? 'text-gold' : 'text-white'}`}>{it.name || '(이름 없음)'}</span>
+                      <span className={`truncate text-[14px] font-bold ${it.id === selectedId ? 'text-primary' : 'text-white'}`}>{it.name || '(이름 없음)'}</span>
                     </div>
                   )}
                   <div className="mt-0.5 text-[11px] text-text-faint">재료 {it.materials.length}개</div>
@@ -344,7 +344,7 @@ export function EstimateDataEditor() {
                   type="button"
                   onClick={() => updateSelectedItem({ qtyTier: tier })}
                   className={`h-14 rounded-2xl border text-[16px] font-bold transition-all duration-200 ${
-                    selected.qtyTier === tier ? 'border-gold/50 bg-gold-dim text-gold' : 'border-[#1D2530] bg-white/[0.02] text-text-sub'
+                    selected.qtyTier === tier ? 'border-primary/50 bg-primary-dim text-primary' : 'border-[#1D2530] bg-white/[0.02] text-text-sub'
                   }`}
                 >
                   {tier}개
@@ -387,7 +387,7 @@ export function EstimateDataEditor() {
         <button
           type="button"
           onClick={handleSaveClick}
-          className="mx-auto flex h-16 w-full max-w-[720px] items-center justify-center gap-2.5 rounded-2xl bg-gold text-[18px] font-bold text-[#1A1408] shadow-md transition-all duration-200 hover:scale-[1.01] hover:shadow-lg active:scale-[0.98]"
+          className="mx-auto flex h-16 w-full max-w-[720px] items-center justify-center gap-2.5 rounded-2xl bg-primary text-[18px] font-bold text-white shadow-md transition-all duration-200 hover:scale-[1.01] hover:shadow-lg active:scale-[0.98]"
         >
           <Save size={22} />
           저장 (estimate-data.json 생성)
@@ -398,7 +398,7 @@ export function EstimateDataEditor() {
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/70 px-5">
           <div className="w-full max-w-[380px] rounded-2xl border border-[#1D2530] bg-[#0B1016] p-7">
             <div className="mb-4 flex flex-col items-center gap-3 text-center">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-dim text-gold">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-dim text-primary">
                 <AlertTriangle size={24} />
               </span>
               <div>
@@ -414,7 +414,7 @@ export function EstimateDataEditor() {
               <button type="button" onClick={() => setConfirmOpen(false)} className="h-[52px] flex-1 rounded-xl border border-[#1D2530] bg-white/[0.02] py-3.5 text-[15px] font-semibold text-text-sub">
                 취소
               </button>
-              <button type="button" onClick={handleConfirmSave} className="h-[52px] flex-1 rounded-xl bg-gold py-3.5 text-[15px] font-bold text-[#1A1408]">
+              <button type="button" onClick={handleConfirmSave} className="h-[52px] flex-1 rounded-xl bg-primary py-3.5 text-[15px] font-bold text-white">
                 저장하기
               </button>
             </div>
@@ -454,7 +454,7 @@ function BigInput({ type, value, onChange, placeholder }: { type: 'text' | 'numb
       value={value}
       placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
-      className="h-[52px] w-full rounded-xl border border-border/[0.12] bg-white/[0.04] px-4 text-[15px] text-text outline-none focus:border-gold"
+      className="h-[52px] w-full rounded-xl border border-border/[0.12] bg-white/[0.04] px-4 text-[15px] text-text outline-none focus:border-primary"
     />
   );
 }
@@ -464,7 +464,7 @@ function SmallActionButton({ icon: Icon, label, onClick, full }: { icon: typeof 
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-11 items-center justify-center gap-1.5 rounded-xl bg-gold-dim px-4 text-[13px] font-bold text-gold ${full ? 'w-full' : ''}`}
+      className={`flex h-11 items-center justify-center gap-1.5 rounded-xl bg-primary-dim px-4 text-[13px] font-bold text-primary ${full ? 'w-full' : ''}`}
     >
       <Icon size={16} />
       {label}

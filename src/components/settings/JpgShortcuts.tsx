@@ -15,12 +15,15 @@ export function JpgShortcuts() {
   const { exportPage } = useJpgExport();
 
   return (
-    <Card>
-      <CardDescription>저장 즉시 페이지 이동 후 고화질 JPG로 다운로드됩니다.</CardDescription>
-      <div className="grid grid-cols-4 gap-3 max-[1100px]:grid-cols-2 max-[640px]:grid-cols-1">
+    <Card className="p-8">
+      <div className="mb-6">
+        <div className="mb-2 text-[16px] font-bold text-white">JPG 바로 저장</div>
+        <CardDescription>저장 즉시 페이지 이동 후 고화질 JPG로 다운로드됩니다.</CardDescription>
+      </div>
+      <div className="grid grid-cols-4 gap-4 max-[1100px]:grid-cols-2 max-[640px]:grid-cols-1">
         {SHORTCUTS.map(({ route, icon: Icon, label }) => (
-          <Button key={route} variant="warning" onClick={() => exportPage(route)} className="h-auto min-w-0 flex-col gap-2 whitespace-normal py-[18px] text-center">
-            <Icon size={20} />
+          <Button key={route} variant="secondary" onClick={() => exportPage(route)} className="h-auto min-w-0 flex-col gap-4 whitespace-normal py-8 text-center">
+            <Icon size={24} />
             {label}
           </Button>
         ))}

@@ -67,15 +67,15 @@ export function ExportPanel({ open, onClose, records, settings }: ExportPanelPro
                 type="button"
                 onClick={() => setFormat(f.key)}
                 className={cn(
-                  'flex items-start gap-3 rounded-2xl border p-4 text-left transition-colors',
-                  format === f.key ? 'border-gold/50 bg-gold-dim' : 'border-[#1D2530] bg-white/[0.02] hover:bg-white/[0.04]'
+                  'flex items-start gap-4 rounded-2xl border p-4 text-left transition-colors',
+                  format === f.key ? 'border-primary/50 bg-primary-dim' : 'border-[#1D2530] bg-white/[0.02] hover:bg-white/[0.045]'
                 )}
               >
-                <span className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-xl', format === f.key ? 'bg-gold/20 text-gold' : 'bg-white/[0.06] text-text-sub')}>
-                  <f.icon size={17} />
+                <span className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-xl', format === f.key ? 'bg-primary/20 text-primary' : 'bg-white/[0.06] text-text-sub')}>
+                  <f.icon size={18} />
                 </span>
                 <span>
-                  <div className={cn('text-[14px] font-bold', format === f.key ? 'text-gold' : 'text-white')}>{f.label}</div>
+                  <div className={cn('text-[14px] font-bold', format === f.key ? 'text-primary' : 'text-white')}>{f.label}</div>
                   <div className="mt-0.5 text-[11.5px] text-text-faint">{f.desc}</div>
                 </span>
               </button>
@@ -90,12 +90,12 @@ export function ExportPanel({ open, onClose, records, settings }: ExportPanelPro
           <pre className="h-[360px] overflow-auto whitespace-pre-wrap rounded-2xl border border-[#1D2530] bg-black/30 p-4 text-[11.5px] leading-relaxed text-text-sub">
             {txtPreview}
           </pre>
-          <div className="mt-3 flex gap-2.5">
+          <div className="mt-4 flex gap-2.5">
             <Button variant="secondary" className="flex-1" onClick={handleCopyPreview}>
               {copied ? <Check size={16} /> : <Copy size={16} />}
               미리보기 복사
             </Button>
-            <Button variant="gold" className="flex-1" onClick={handleDownload}>
+            <Button variant="primary" className="flex-1" onClick={handleDownload}>
               <Download size={16} />
               {format === 'xlsx' ? '다운로드 (.xlsx)' : format === 'csv' ? '다운로드 (.csv)' : format === 'json' ? '다운로드 (.json)' : '다운로드 (.txt)'}
             </Button>

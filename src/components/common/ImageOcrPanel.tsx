@@ -169,7 +169,7 @@ export function ImageOcrPanel({ onRecognized, hint, fullMode = 'full', onStart, 
         <div>
           <div
             ref={containerRef}
-            className="relative mb-3 inline-block max-w-full cursor-crosshair select-none overflow-hidden rounded-xl border border-border/[0.08]"
+            className="relative mb-4 inline-block max-w-full cursor-crosshair select-none overflow-hidden rounded-xl border border-border/[0.08]"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}

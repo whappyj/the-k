@@ -25,7 +25,7 @@ export function ExpDashboardWidget({ records, goal }: { records: ExperienceRecor
 
   return (
     <Card className="rounded-2xl border-[#1D2530] bg-gradient-to-br from-primary/10 to-success/[0.06]">
-      <div className="mb-3 text-[15px] font-bold">📈 경험치 대시보드</div>
+      <div className="mb-4 text-[15px] font-bold">📈 경험치 대시보드</div>
       <div className="grid grid-cols-4 gap-4 max-[900px]:grid-cols-2 max-[480px]:grid-cols-1">
         <Item label="현재" value={`Lv${latest.endLevel} ${formatPercent(latest.endExp)}`} />
         <Item label="오늘 획득" value={`+${formatPercent(todayGained)}`} tone="text-success" />

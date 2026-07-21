@@ -43,45 +43,48 @@ export function DataManagement() {
   };
 
   return (
-    <Card>
-      <div className="mb-5 grid grid-cols-6 gap-4 max-[1100px]:grid-cols-3 max-[640px]:grid-cols-2 max-[420px]:grid-cols-1">
+    <Card className="p-8">
+      <div className="mb-6 text-[16px] font-bold text-white">저장된 데이터 현황</div>
+      <div className="mb-8 grid grid-cols-6 gap-4 max-[1100px]:grid-cols-3 max-[640px]:grid-cols-2 max-[420px]:grid-cols-1">
         {counts.map((c) => (
-          <div key={c.label} className="rounded-2xl border border-border/[0.08] bg-white/[0.03] p-[18px] text-center">
-            <div className="mb-2 text-xs text-text-sub">{c.label}</div>
-            <div className="font-display text-[22px] font-bold">{c.value}개</div>
+          <div key={c.label} className="rounded-2xl border border-border/[0.08] bg-white/[0.03] p-6 text-center">
+            <div className="mb-4 text-[12.5px] text-text-sub">{c.label}</div>
+            <div className="font-display text-[28px] font-bold">{c.value}개</div>
           </div>
         ))}
       </div>
 
-      <div className="mb-3 text-[13px] font-semibold text-text-sub">전체 백업 / 복원 (.thek)</div>
-      <div className="mb-1 text-[12px] text-text-faint">
-        위 6개 항목(제작견적/경험치/24시간계산기/즐겨찾기/아이템/아데나매입) + 설정을 통째로 담습니다. 다른 PC로 옮기거나 만약을 대비해 주기적으로 백업해두세요.
-      </div>
+      <div className="rounded-2xl border border-primary/25 bg-gradient-to-br from-primary-dim to-transparent p-8">
+        <div className="mb-2.5 text-[15px] font-bold text-white">전체 백업 / 복원 (.thek)</div>
+        <div className="mb-6 text-[13px] text-text-faint">
+          위 6개 항목(제작견적/경험치/24시간계산기/즐겨찾기/아이템/아데나매입) + 설정을 통째로 담습니다. 다른 PC로 옮기거나 만약을 대비해 주기적으로 백업해두세요.
+        </div>
 
-      <div className="mt-3 flex flex-wrap gap-2.5">
-        <Button variant="success" onClick={() => downloadJSON(data)}>
-          <Download size={18} />
-          전체 백업 (.thek)
-        </Button>
-        <Button variant="primary" onClick={() => fileInputRef.current?.click()}>
-          <Upload size={18} />
-          백업 파일 복원 (.thek)
-        </Button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".thek,.json,application/json"
-          className="hidden"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) handleImportFile(file);
-            e.target.value = '';
-          }}
-        />
-        <Button variant="danger" onClick={handleResetAll}>
-          <Trash2 size={18} />
-          전체 데이터 삭제
-        </Button>
+        <div className="flex flex-wrap gap-4">
+          <Button variant="primary" onClick={() => downloadJSON(data)}>
+            <Download size={18} />
+            전체 백업 (.thek)
+          </Button>
+          <Button variant="primary" onClick={() => fileInputRef.current?.click()}>
+            <Upload size={18} />
+            백업 파일 복원 (.thek)
+          </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".thek,.json,application/json"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleImportFile(file);
+              e.target.value = '';
+            }}
+          />
+          <Button variant="danger" onClick={handleResetAll}>
+            <Trash2 size={18} />
+            전체 데이터 삭제
+          </Button>
+        </div>
       </div>
     </Card>
   );

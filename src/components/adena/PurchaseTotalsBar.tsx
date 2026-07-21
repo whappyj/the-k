@@ -24,11 +24,11 @@ export function PurchaseTotalsBar({ records, settings }: PurchaseTotalsBarProps)
   const remainingCash = remainingAmount * rate;
 
   return (
-    <Card className="mt-5 rounded-2xl border-[#1D2530] bg-[#0B1016] p-5 sm:p-6">
+    <Card className="mt-6 rounded-2xl border-[#1D2530] bg-[#0B1016] p-6 sm:p-6">
       <div className="grid grid-cols-2 gap-x-6 gap-y-4 min-[720px]:grid-cols-5">
         <TotalItem label="전체 매입 건수" value={`${totalCount}건`} />
         <TotalItem label="총 매입량" value={formatAdenaAmount(totalAmount)} tone="primary" />
-        <TotalItem label="총 매입금액" value={`${totalCash.toLocaleString('ko-KR')}원`} tone="gold" />
+        <TotalItem label="총 매입금액" value={`${totalCash.toLocaleString('ko-KR')}원`} tone="primary" />
         <TotalItem label="남은 목표량" value={formatAdenaAmount(remainingAmount)} />
         <TotalItem label="남은 목표금액" value={`${remainingCash.toLocaleString('ko-KR')}원`} />
       </div>
@@ -37,8 +37,8 @@ export function PurchaseTotalsBar({ records, settings }: PurchaseTotalsBarProps)
   );
 }
 
-function TotalItem({ label, value, tone }: { label: string; value: string; tone?: 'primary' | 'gold' }) {
-  const color = tone === 'primary' ? 'text-primary' : tone === 'gold' ? 'text-gold' : 'text-white';
+function TotalItem({ label, value, tone }: { label: string; value: string; tone?: 'primary' }) {
+  const color = tone === 'primary' ? 'text-primary' : 'text-white';
   return (
     <div>
       <div className="mb-1.5 text-[11px] font-medium text-text-sub">{label}</div>

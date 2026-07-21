@@ -35,12 +35,12 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
   const bestOverall = records.length ? records.reduce((b, r) => (r.expPerHour > b.expPerHour ? r : b)) : null;
 
   return (
-    <div className="mb-6 grid grid-cols-4 gap-5 max-[1100px]:grid-cols-2">
+    <div className="mb-6 grid grid-cols-4 gap-6 max-[1100px]:grid-cols-2">
       <SummaryCard icon={Sparkles} tone="green" label="오늘 최고 효율">
         {todayBest ? (
           <>
             <div className="font-display text-[18px] font-bold text-white">{formatPercent(todayBest.expPerHour)}/h</div>
-            <div className="mt-0.5 truncate text-[11px] text-text-faint">{todayBest.huntArea}</div>
+            <div className="mt-0.5 break-words text-[11px] text-text-faint">{todayBest.huntArea}</div>
           </>
         ) : (
           <div className="text-[12px] text-text-faint">오늘 기록 없음</div>
@@ -50,8 +50,8 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
       <SummaryCard icon={Trophy} tone="gold" label="이번 주 최고 효율">
         {weekBest ? (
           <>
-            <div className="truncate text-[18px] font-bold text-gold">{formatPercent(weekBest.expPerHour)}/h</div>
-            <div className="mt-0.5 truncate text-[11px] text-text-faint">{weekBest.huntArea}</div>
+            <div className="break-words text-[18px] font-bold text-gold">{formatPercent(weekBest.expPerHour)}/h</div>
+            <div className="mt-0.5 break-words text-[11px] text-text-faint">{weekBest.huntArea}</div>
           </>
         ) : (
           <div className="text-[12px] text-text-faint">이번 주 기록 없음</div>
@@ -61,7 +61,7 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
       <SummaryCard icon={MapPin} tone="blue" label="가장 많이 간 사냥터">
         {mostVisited ? (
           <>
-            <div className="truncate text-[18px] font-bold text-white">{mostVisited.area}</div>
+            <div className="break-words text-[18px] font-bold text-white">{mostVisited.area}</div>
             <div className="mt-0.5 text-[11px] text-text-faint">{mostVisited.count}회 방문</div>
           </>
         ) : (
@@ -72,7 +72,7 @@ export function QuickSummaryStrip({ records }: { records: ExperienceRecord[] }) 
       <SummaryCard icon={Star} tone="red" label="최고 효율 사냥터">
         {bestOverall ? (
           <>
-            <div className="truncate text-[18px] font-bold text-white">{bestOverall.huntArea}</div>
+            <div className="break-words text-[18px] font-bold text-white">{bestOverall.huntArea}</div>
             <div className="mt-0.5 text-[11px] text-text-faint">{formatPercent(bestOverall.expPerHour)}/h</div>
           </>
         ) : (
@@ -102,9 +102,9 @@ function SummaryCard({
   children: ReactNode;
 }) {
   return (
-    <Card className="flex h-[140px] flex-col p-5">
+    <Card className="flex min-h-[140px] flex-col p-6">
       <span className={`mb-2.5 flex h-8 w-8 items-center justify-center rounded-lg ${TONE_CLASS[tone]}`}>
-        <Icon size={14} />
+        <Icon size={16} />
       </span>
       <div className="mb-1.5 text-[10.5px] font-semibold text-text-faint">{label}</div>
       {children}
