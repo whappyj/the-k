@@ -44,12 +44,15 @@ export function Sidebar({ route, onNavigate }: SidebarProps) {
         className="mb-0 flex shrink-0 items-center gap-3 rounded-2xl border border-transparent pr-3 text-left transition-colors min-[900px]:mb-6 min-[900px]:w-full min-[900px]:border-border/[0.07] min-[900px]:bg-gradient-to-br min-[900px]:from-white/[0.04] min-[900px]:to-white/[0.015] min-[900px]:px-3 min-[900px]:py-3.5 min-[900px]:pr-3 min-[900px]:shadow-[0_2px_10px_rgba(0,0,0,0.2)] min-[900px]:hover:border-primary/25 min-[900px]:hover:from-white/[0.055]"
         aria-label="홈으로 이동"
       >
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] border border-primary/30 bg-[#06080B] p-1.5 shadow-[0_2px_10px_rgba(79,140,255,0.25)] min-[900px]:h-14 min-[900px]:w-14 min-[900px]:rounded-2xl min-[900px]:p-2.5">
-          <img src="/logo.png" alt="THE K" className="h-full w-full object-contain" />
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] border border-primary/30 bg-[#06080B] p-1.5 shadow-[0_2px_10px_rgba(79,140,255,0.25)] min-[900px]:h-14 min-[900px]:w-14 min-[900px]:rounded-2xl min-[900px]:p-2">
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="THE K" className="h-full w-full object-contain" />
         </div>
         <div className="hidden min-[900px]:flex min-[900px]:flex-col min-[900px]:justify-center">
-          <div className="text-[19px] font-extrabold leading-tight tracking-tight text-white">THE K</div>
-          <div className="mt-1 text-[10px] font-semibold uppercase leading-tight tracking-widest text-primary/75">리니지 클래식 도우미</div>
+          <div className="text-[20px] leading-tight text-white">
+            <span className="font-semibold tracking-tight">THE</span>
+            <span className="ml-[3px] font-bold tracking-tight">K</span>
+          </div>
+          <div className="mt-1 text-[10px] font-semibold uppercase leading-tight tracking-widest text-primary/70">리니지 클래식 도우미</div>
         </div>
       </button>
 
